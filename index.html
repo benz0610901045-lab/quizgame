@@ -8698,20 +8698,18 @@ async function openLeaderboard() {
     } catch (e) {}
 
     if (!leaders || leaders.length === 0) {
-        // Fallback to local merged leaders
-        const defaultChamps = [
-            { name: "🥇 @shrtrcng_champ", score: 4250, gamesPlayed: 42 },
-            { name: "🥈 SpeedKing99", score: 3890, gamesPlayed: 35 },
-            { name: "🥉 JDM_Legend", score: 3120, gamesPlayed: 28 },
-            { name: "4. TurboRacer", score: 2750, gamesPlayed: 19 }
-        ];
         leaders = [...localLeaders];
-        defaultChamps.forEach(d => {
-            if (!leaders.some(l => l.name.includes(d.name.replace(/^[🥇🥈🥉\d.\s]+/, '')))) {
-                leaders.push(d);
-            }
-        });
-        leaders.sort((a, b) => b.score - a.score);
+    }
+
+    if (!leaders || leaders.length === 0) {
+        list.innerHTML = `
+            <div style="padding:28px 16px;text-align:center;color:var(--txt2);">
+                <div style="font-size:42px;margin-bottom:8px;">🏆</div>
+                <div style="font-weight:800;color:#fff;font-size:15px;margin-bottom:4px;">Таблица лидеров сброшена!</div>
+                <div style="font-size:12px;line-height:1.4;">Соверши заезд прямо сейчас и займи 1-е место! 🏎️💨</div>
+            </div>
+        `;
+        return;
     }
 
     const player = getPlayerInfo();
