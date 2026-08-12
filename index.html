@@ -56,19 +56,20 @@
         @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
         /* TOP BAR */
-        .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;z-index:10;gap:6px;}
-        .lang-select{display:flex;gap:2px;background:var(--card);padding:3px;border-radius:14px;border:1px solid var(--glass-border);backdrop-filter:blur(10px);height:36px;align-items:center;flex-shrink:0;}
+        .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;z-index:10;gap:4px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+        .top-bar::-webkit-scrollbar{display:none;}
+        .lang-select{display:flex;gap:2px;background:var(--card);padding:3px;border-radius:12px;border:1px solid var(--glass-border);backdrop-filter:blur(10px);height:36px;align-items:center;flex-shrink:0;}
         .lang-btn{background:transparent;border:none;color:var(--txt2);padding:3px 6px;font-size:10px;font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s ease;min-width:32px;text-align:center;}
         .lang-btn.active{background:var(--speed);color:#fff;box-shadow:0 2px 10px rgba(255,51,68,0.4)}
         
-        .top-right-btns{display:flex;gap:4px;height:36px;align-items:center;flex-wrap:nowrap;}
-        .donate-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:3px 8px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;height:32px}
+        .top-right-btns{display:flex;gap:4px;height:36px;align-items:center;flex-shrink:0;}
+        .donate-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:3px 7px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;height:32px;flex-shrink:0;}
         .donate-top-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,0.5)}
-        .leader-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:var(--card);border:1px solid rgba(255,215,0,0.4);backdrop-filter:blur(10px);color:var(--gold);padding:3px 8px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:all .2s ease;white-space:nowrap;height:32px}
+        .leader-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:var(--card);border:1px solid rgba(255,215,0,0.4);backdrop-filter:blur(10px);color:var(--gold);padding:3px 7px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:all .2s ease;white-space:nowrap;height:32px;flex-shrink:0;}
         .leader-top-btn:hover{background:rgba(255,215,0,0.12);box-shadow:0 4px 15px rgba(255,215,0,0.2)}
 
-        .ig-link{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:14px;color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:all .2s ease;box-shadow:0 4px 15px rgba(253,29,29,0.3);width:100%;max-width:420px;margin-top:12px;}
-        .ig-link:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(253,29,29,0.5);}
+        a.ig-link, .ig-link{display:flex !important;align-items:center !important;justify-content:center !important;gap:8px !important;padding:14px 18px !important;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) !important;border-radius:16px !important;color:#ffffff !important;font-weight:800 !important;font-size:14px !important;text-decoration:none !important;box-shadow:0 6px 20px rgba(253,29,29,0.4) !important;width:100% !important;max-width:420px !important;margin-top:14px !important;margin-bottom:20px !important;text-align:center !important;}
+        a.ig-link:hover, .ig-link:hover{transform:translateY(-1px) !important;box-shadow:0 8px 25px rgba(253,29,29,0.6) !important;}
 
         /* START SCREEN */
         .logo-box{position:relative;margin-top:8px;text-align:center}
@@ -216,9 +217,7 @@
 
     <button class="btn-go" onclick="go()">🏁 <span id="t-start">СТАРТ</span></button>
 
-    <a href="https://www.instagram.com/shrtrcng/" target="_blank" class="ig-link" style="width:100%;max-width:420px;margin-top:12px">
-        📸 Short Racing (@shrtrcng) в Instagram
-    </a>
+    <a href="https://www.instagram.com/shrtrcng/" target="_blank" class="ig-link">📸 Short Racing (@shrtrcng) в Instagram</a>
 </div>
 
 <!-- GAME SCREEN -->
