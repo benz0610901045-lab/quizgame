@@ -6,128 +6,163 @@
     <title>🏎️ Speed Quiz — Verified Racing Edition by @shrtrcng</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700;800&display=swap');
         *{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#080810;--bg2:#0f0f18;--card:#161624;--card-hover:#202034;--accent:#ff3344;--accent2:#ff8800;--accent-g:rgba(255,51,68,0.25);--ok:#00e676;--err:#ff3344;--warn:#ffd740;--txt:#fff;--txt2:#a0a0b8;--gold:#ffd700;--speed:linear-gradient(135deg,#ff3344,#ff8800)}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+        :root{
+            --bg:#080812;
+            --bg2:#0f0f1c;
+            --card:rgba(22, 22, 38, 0.85);
+            --card-hover:rgba(32, 32, 54, 0.95);
+            --accent:#ff3344;
+            --accent2:#ff8800;
+            --accent-g:rgba(255, 51, 68, 0.35);
+            --ok:#00e676;
+            --ok-glow:rgba(0, 230, 118, 0.4);
+            --err:#ff3344;
+            --err-glow:rgba(255, 51, 68, 0.4);
+            --warn:#ffd740;
+            --txt:#ffffff;
+            --txt2:#a4a4c4;
+            --gold:#ffd700;
+            --speed:linear-gradient(135deg, #ff3344 0%, #ff8800 100%);
+            --glass-border:rgba(255, 255, 255, 0.12);
+        }
 
-        .bg-race{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,rgba(255,51,68,0.1) 0%,transparent 65%)}
-        .bg-race .line{position:absolute;width:2px;height:120px;background:linear-gradient(180deg,transparent,rgba(255,51,68,0.35),transparent);animation:rain 1.8s linear infinite}
+        body{
+            font-family:'Inter',sans-serif;
+            background:var(--bg);
+            color:var(--txt);
+            min-height:100vh;
+            overflow-x:hidden;
+            user-select:none;
+            -webkit-user-select:none;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(255, 51, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 136, 0, 0.1) 0%, transparent 40%);
+        }
+
+        .bg-race{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;pointer-events:none}
+        .bg-race .line{position:absolute;width:2px;height:140px;background:linear-gradient(180deg,transparent,rgba(255,51,68,0.4),transparent);animation:rain 1.6s linear infinite}
         .bg-race .line:nth-child(1){left:8%;animation-delay:0s;animation-duration:1.4s}
         .bg-race .line:nth-child(2){left:24%;animation-delay:.3s;animation-duration:1.9s}
         .bg-race .line:nth-child(3){left:42%;animation-delay:.7s;animation-duration:2.1s}
         .bg-race .line:nth-child(4){left:58%;animation-delay:.2s;animation-duration:1.6s}
         .bg-race .line:nth-child(5){left:76%;animation-delay:.5s;animation-duration:2.3s}
         .bg-race .line:nth-child(6){left:92%;animation-delay:.9s;animation-duration:1.7s}
-        @keyframes rain{0%{top:-120px;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:110vh;opacity:0}}
+        @keyframes rain{0%{top:-140px;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:110vh;opacity:0}}
 
         .screen{position:relative;z-index:1;display:none;flex-direction:column;align-items:center;min-height:100vh;padding:16px;animation:fadeIn .35s ease}
         .screen.active{display:flex}
         @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
         /* TOP BAR */
-        .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;z-index:10;height:38px}
-        .lang-select{display:flex;gap:3px;background:var(--card);padding:3px;border-radius:12px;border:1px solid rgba(255,51,68,0.15);height:36px;align-items:center}
-        .lang-btn{background:transparent;border:none;color:var(--txt2);padding:4px 8px;font-size:11px;font-weight:700;border-radius:8px;cursor:pointer;transition:.2s;min-width:40px;text-align:center}
-        .lang-btn.active{background:var(--accent);color:#fff}
+        .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;z-index:10;height:40px}
+        .lang-select{display:flex;gap:3px;background:var(--card);padding:4px;border-radius:14px;border:1px solid var(--glass-border);backdrop-filter:blur(10px);height:38px;align-items:center}
+        .lang-btn{background:transparent;border:none;color:var(--txt2);padding:4px 8px;font-size:11px;font-weight:700;border-radius:10px;cursor:pointer;transition:all .2s ease;min-width:40px;text-align:center}
+        .lang-btn.active{background:var(--speed);color:#fff;box-shadow:0 2px 10px rgba(255,51,68,0.4)}
         
-        .top-right-btns{display:flex;gap:6px;height:36px;align-items:center}
-        .donate-top-btn{display:flex;align-items:center;justify-content:center;gap:4px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:4px 8px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;min-width:100px;height:32px}
-        .leader-top-btn{display:flex;align-items:center;justify-content:center;gap:4px;background:var(--card);border:1px solid rgba(255,215,0,0.4);color:var(--gold);padding:4px 8px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:.2s;white-space:nowrap;min-width:85px;height:32px}
+        .top-right-btns{display:flex;gap:6px;height:38px;align-items:center}
+        .donate-top-btn{display:flex;align-items:center;justify-content:center;gap:4px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:4px 10px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;height:34px}
+        .donate-top-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,0.5)}
+        .leader-top-btn{display:flex;align-items:center;justify-content:center;gap:4px;background:var(--card);border:1px solid rgba(255,215,0,0.4);backdrop-filter:blur(10px);color:var(--gold);padding:4px 10px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:all .2s ease;white-space:nowrap;height:34px}
+        .leader-top-btn:hover{background:rgba(255,215,0,0.12);box-shadow:0 4px 15px rgba(255,215,0,0.2)}
 
         /* START SCREEN */
-        .logo-box{position:relative;margin-top:10px;text-align:center}
-        .logo{font-size:68px;animation:revv 1.4s infinite ease-in-out;display:inline-block}
+        .logo-box{position:relative;margin-top:8px;text-align:center}
+        .logo{font-size:68px;animation:revv 1.6s infinite ease-in-out;display:inline-block;filter:drop-shadow(0 8px 20px rgba(255,51,68,0.4))}
         @keyframes revv{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.08)}}
-        .title{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;margin-top:8px;background:var(--speed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;letter-spacing:2px}
+        .title{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;margin-top:6px;background:var(--speed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;letter-spacing:3px;filter:drop-shadow(0 4px 15px rgba(255,51,68,0.3))}
         .subtitle{color:var(--txt2);font-size:13px;margin-top:4px;text-align:center;min-height:22px;display:flex;align-items:center;justify-content:center}
-        .brand{font-size:11px;color:var(--accent);margin-top:2px;letter-spacing:3px;text-transform:uppercase;font-weight:800}
+        .brand{font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--accent);margin-top:2px;letter-spacing:4px;text-transform:uppercase;font-weight:800}
 
-        .stats-row{display:flex;gap:10px;margin-top:20px;width:100%;max-width:420px}
-        .stat{flex:1;height:64px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--card);border-radius:14px;padding:6px;border:1px solid rgba(255,51,68,0.12)}
+        .stats-row{display:flex;gap:10px;margin-top:18px;width:100%;max-width:420px}
+        .stat{flex:1;height:68px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--card);backdrop-filter:blur(12px);border-radius:16px;padding:6px;border:1px solid var(--glass-border);box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .2s ease}
+        .stat:hover{transform:translateY(-2px)}
         .stat .v{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--accent)}
-        .stat .l{font-size:10px;color:var(--txt2);margin-top:2px}
+        .stat .l{font-size:10px;color:var(--txt2);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
 
-        .section-title{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:1px;margin-top:16px;margin-bottom:8px;width:100%;max-width:420px;text-align:left;font-weight:700}
+        .section-title{font-family:'Rajdhani',sans-serif;font-size:13px;color:var(--txt2);text-transform:uppercase;letter-spacing:2px;margin-top:16px;margin-bottom:8px;width:100%;max-width:420px;text-align:left;font-weight:800}
         
         .diffs{display:flex;gap:8px;width:100%;max-width:420px}
-        .dbtn{flex:1;height:42px;display:flex;align-items:center;justify-content:center;background:var(--card);border:2px solid transparent;border-radius:12px;color:var(--txt);font-size:12px;font-weight:700;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif;text-align:center;white-space:nowrap;overflow:hidden}
-        .dbtn:hover,.dbtn.sel{border-color:var(--accent);background:rgba(255,51,68,0.12)}
+        .dbtn{flex:1;height:44px;display:flex;align-items:center;justify-content:center;background:var(--card);backdrop-filter:blur(10px);border:1.5px solid var(--glass-border);border-radius:14px;color:var(--txt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s ease;font-family:'Inter',sans-serif}
+        .dbtn:hover,.dbtn.sel{border-color:var(--accent);background:rgba(255,51,68,0.15);box-shadow:0 4px 15px rgba(255,51,68,0.25)}
 
-        .cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px;max-height:260px;overflow-y:auto;padding-right:2px}
+        .cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px;max-height:260px;overflow-y:auto;padding-right:4px}
         .cats::-webkit-scrollbar{width:4px}
-        .cats::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px}
-        .cbtn{height:44px;background:var(--card);border:2px solid transparent;border-radius:12px;padding:8px 10px;color:var(--txt);font-size:12px;font-weight:600;cursor:pointer;transition:.2s;text-align:left;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .cbtn:hover,.cbtn.sel{border-color:var(--accent);background:rgba(255,51,68,0.12)}
-        .cbtn.endless-btn{grid-column: span 2;background:linear-gradient(135deg,rgba(255,51,68,0.25),rgba(255,136,0,0.25));border-color:var(--gold);font-weight:800;box-shadow:0 4px 15px rgba(255,215,0,0.15)}
+        .cats::-webkit-scrollbar-thumb{background:var(--speed);border-radius:4px}
+        .cbtn{height:46px;background:var(--card);backdrop-filter:blur(10px);border:1.5px solid var(--glass-border);border-radius:14px;padding:8px 12px;color:var(--txt);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s ease;text-align:left;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .cbtn:hover,.cbtn.sel{border-color:var(--accent);background:rgba(255,51,68,0.15);box-shadow:0 4px 15px rgba(255,51,68,0.25);transform:translateY(-1px)}
+        .cbtn.endless-btn{grid-column: span 2;background:linear-gradient(135deg,rgba(255,51,68,0.2),rgba(255,136,0,0.2));border-color:var(--gold);font-weight:800;box-shadow:0 4px 20px rgba(255,215,0,0.2)}
+        .cbtn.endless-btn:hover{background:linear-gradient(135deg,rgba(255,51,68,0.35),rgba(255,136,0,0.35))}
 
-        .btn-go{width:100%;max-width:420px;padding:16px;border:none;border-radius:16px;font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;cursor:pointer;margin-top:16px;background:var(--speed);color:#fff;transition:.2s;box-shadow:0 8px 25px var(--accent-g);letter-spacing:2px}
-        .btn-go:hover{transform:translateY(-2px);box-shadow:0 12px 35px var(--accent-g)}
+        .btn-go{width:100%;max-width:420px;padding:16px;border:none;border-radius:16px;font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;cursor:pointer;margin-top:16px;background:var(--speed);color:#fff;transition:all .25s ease;box-shadow:0 8px 30px var(--accent-g);letter-spacing:2px;position:relative;overflow:hidden}
+        .btn-go:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,51,68,0.5)}
         .btn-go:active{transform:scale(.98)}
 
         /* GAME SCREEN */
-        .gh{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-        .gi{display:flex;align-items:center;gap:4px;background:var(--card);padding:8px 12px;border-radius:20px;font-weight:700;font-size:12px}
-        .timer{color:var(--warn)}.timer.dng{color:var(--err);animation:pulse .4s infinite}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        .gh{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+        .gi{display:flex;align-items:center;gap:5px;background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--glass-border);padding:8px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px}
+        .timer{color:var(--warn);font-weight:800}.timer.dng{color:var(--err);animation:pulse .4s infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.04)}}
 
-        .speedbar{width:100%;max-width:420px;height:8px;background:var(--card);border-radius:4px;margin-top:12px;overflow:hidden;position:relative}
-        .speedfill{height:100%;background:var(--speed);border-radius:4px;transition:width .4s;position:relative}
+        .speedbar{width:100%;max-width:420px;height:8px;background:var(--card);border-radius:6px;margin-top:12px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.05)}
+        .speedfill{height:100%;background:var(--speed);border-radius:6px;transition:width .4s ease-out;box-shadow:0 0 12px rgba(255,51,68,0.8)}
 
-        .qcard{width:100%;max-width:420px;background:var(--card);border-radius:18px;padding:18px;margin-top:14px;border:1px solid rgba(255,51,68,0.12);text-align:center;position:relative}
-        .qcard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-        .qcat{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:800}
-        .qreport-btn{background:rgba(255,51,68,0.12);border:1px solid rgba(255,51,68,0.3);color:var(--accent);padding:4px 8px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s}
+        .qcard{width:100%;max-width:420px;background:var(--card);backdrop-filter:blur(16px);border-radius:20px;padding:20px;margin-top:14px;border:1px solid var(--glass-border);text-align:center;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+        .qcard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .qcat{font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:800}
+        .qreport-btn{background:rgba(255,51,68,0.12);border:1px solid rgba(255,51,68,0.3);color:var(--accent);padding:4px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s ease}
         .qreport-btn:hover{background:var(--accent);color:#fff}
 
-        .qtxt{font-size:17px;font-weight:700;margin-top:4px;line-height:1.4}
-        .qphoto{width:100%;max-height:210px;object-fit:cover;border-radius:12px;margin-top:12px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+        .qtxt{font-size:17px;font-weight:700;margin-top:6px;line-height:1.45;color:#ffffff}
+        .qphoto{width:100%;max-height:220px;object-fit:cover;border-radius:14px;margin-top:14px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 25px rgba(0,0,0,0.6)}
 
-        .answers{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;margin-top:14px}
-        .abtn{width:100%;padding:14px 16px;background:var(--bg2);border:2px solid rgba(255,51,68,0.15);border-radius:13px;color:var(--txt);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;text-align:left;font-family:'Inter',sans-serif}
-        .abtn:hover{border-color:var(--accent);background:rgba(255,51,68,0.08)}
-        .abtn.ok{border-color:var(--ok);background:rgba(0,230,118,0.15)}
-        .abtn.no{border-color:var(--err);background:rgba(255,51,68,0.15);animation:shake .4s}
-        .abtn.dis{pointer-events:none;opacity:.5}
+        .answers{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;margin-top:14px}
+        .abtn{width:100%;padding:14px 18px;background:var(--card);backdrop-filter:blur(10px);border:1.5px solid var(--glass-border);border-radius:14px;color:var(--txt);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease;text-align:left;font-family:'Inter',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .abtn:hover{border-color:var(--accent);background:rgba(255,51,68,0.12);transform:translateX(4px)}
+        .abtn.ok{border-color:var(--ok);background:rgba(0,230,118,0.2);box-shadow:0 0 20px var(--ok-glow);color:#fff}
+        .abtn.no{border-color:var(--err);background:rgba(255,51,68,0.2);box-shadow:0 0 20px var(--err-glow);animation:shake .4s ease}
+        .abtn.dis{pointer-events:none;opacity:.45}
         @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-        .hbar{width:100%;max-width:420px;display:flex;justify-content:center;gap:10px;margin-top:12px}
-        .hbtn{display:flex;align-items:center;gap:5px;padding:8px 14px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);border-radius:20px;color:var(--gold);font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
+        .hbar{width:100%;max-width:420px;display:flex;justify-content:center;gap:10px;margin-top:14px}
+        .hbtn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:20px;color:var(--gold);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s ease}
+        .hbtn:hover:not(:disabled){background:rgba(255,215,0,0.2);box-shadow:0 4px 15px rgba(255,215,0,0.2)}
         .hbtn:disabled{opacity:.3;cursor:not-allowed}
 
         /* RESULT SCREEN */
-        .trophy{font-size:72px;margin-top:16px;animation:revv 2s infinite}
-        .rtitle{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;margin-top:10px;text-align:center;letter-spacing:1px}
-        .rscore{font-family:'Orbitron',sans-serif;font-size:50px;font-weight:900;background:var(--speed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:4px}
-        .rrank{font-size:13px;color:var(--accent);margin-top:2px;font-weight:800;text-transform:uppercase}
+        .trophy{font-size:76px;margin-top:12px;animation:revv 2.2s infinite;filter:drop-shadow(0 10px 25px rgba(255,215,0,0.4))}
+        .rtitle{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;margin-top:10px;text-align:center;letter-spacing:2px}
+        .rscore{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:900;background:var(--speed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:2px;filter:drop-shadow(0 4px 20px rgba(255,51,68,0.4))}
+        .rrank{font-family:'Rajdhani',sans-serif;font-size:14px;color:var(--accent);margin-top:2px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
 
-        .rd{width:100%;max-width:420px;margin-top:16px;display:flex;flex-direction:column;gap:6px}
-        .rr{display:flex;justify-content:space-between;padding:10px 14px;background:var(--card);border-radius:11px;font-size:13px}
+        .rd{width:100%;max-width:420px;margin-top:16px;display:flex;flex-direction:column;gap:8px}
+        .rr{display:flex;justify-content:space-between;padding:12px 16px;background:var(--card);backdrop-filter:blur(10px);border-radius:14px;font-size:13px;border:1px solid var(--glass-border)}
 
-        .bgrp{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;margin-top:14px;margin-bottom:24px}
-        .btn-s{width:100%;padding:14px;border:2px solid var(--accent);border-radius:13px;font-size:14px;font-weight:700;cursor:pointer;background:transparent;color:var(--accent);transition:.2s}
-        .ig-link{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:13px;color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:.2s}
+        .bgrp{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;margin-top:16px;margin-bottom:24px}
+        .btn-s{width:100%;padding:14px;border:2px solid var(--accent);border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;background:transparent;color:var(--accent);transition:all .2s ease}
+        .btn-s:hover{background:rgba(255,51,68,0.12);transform:translateY(-1px)}
 
         /* MODALS */
-        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(4,4,10,0.88);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
         .modal-overlay.active{display:flex}
-        .modal{background:var(--card);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:24px;width:100%;max-width:380px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.8)}
-        .modal h2{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold);margin-bottom:8px}
-        .modal p{font-size:13px;color:var(--txt2);margin-bottom:14px;line-height:1.4}
+        .modal{background:var(--card);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,0.35);border-radius:24px;padding:24px;width:100%;max-width:390px;text-align:center;box-shadow:0 15px 50px rgba(0,0,0,0.85)}
+        .modal h2{font-family:'Orbitron',sans-serif;font-size:19px;color:var(--gold);margin-bottom:8px;letter-spacing:1px}
+        .modal p{font-size:13px;color:var(--txt2);margin-bottom:14px;line-height:1.45}
         
-        .custom-input{width:100%;padding:12px;background:var(--bg2);border:1px solid rgba(255,215,0,0.4);border-radius:12px;color:#fff;font-size:14px;text-align:center;margin-bottom:12px;outline:none}
+        .custom-input{width:100%;padding:12px;background:var(--bg2);border:1px solid rgba(255,215,0,0.4);border-radius:14px;color:#fff;font-size:14px;text-align:center;margin-bottom:12px;outline:none}
         .preset-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
-        .preset-btn{background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);color:var(--gold);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+        .preset-btn{background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.35);color:var(--gold);padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s ease}
         .preset-btn:hover{background:var(--gold);color:#000}
 
         .donate-options{display:flex;flex-direction:column;gap:8px}
-        .donate-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:12px;border:none;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
-        .donate-stars{background:linear-gradient(135deg,#ffd700,#ff9100);color:#000}
-        .donate-ton{background:linear-gradient(135deg,#0088cc,#00b2ff);color:#fff}
+        .donate-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:14px;border:none;font-weight:800;font-size:14px;cursor:pointer;transition:all .2s ease}
+        .donate-stars{background:linear-gradient(135deg,#ffd700,#ff9100);color:#000;box-shadow:0 4px 15px rgba(255,215,0,0.3)}
+        .donate-ton{background:linear-gradient(135deg,#0088cc,#00b2ff);color:#fff;box-shadow:0 4px 15px rgba(0,136,204,0.3)}
         .modal-close{margin-top:14px;background:transparent;border:none;color:var(--txt2);font-size:13px;cursor:pointer;text-decoration:underline}
 
-        .leader-item{display:flex;justify-content:space-between;padding:10px 14px;background:var(--bg2);border-radius:10px;font-size:13px;margin-bottom:6px;border:1px solid rgba(255,215,0,0.15)}
-        .leader-item.you{border-color:var(--gold);background:rgba(255,215,0,0.1)}
+        .leader-item{display:flex;justify-content:space-between;padding:12px 14px;background:var(--bg2);border-radius:12px;font-size:13px;margin-bottom:6px;border:1px solid rgba(255,215,0,0.15)}
+        .leader-item.you{border-color:var(--gold);background:rgba(255,215,0,0.12)}
     </style>
 </head>
 <body>
@@ -147,6 +182,7 @@
             <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
         </div>
         <div class="top-right-btns">
+            <button class="leader-top-btn" style="border-color:var(--warn);color:var(--warn);" onclick="openDailyWheel()">🎁 <span id="t-wheel-btn">Рулетка</span></button>
             <button class="leader-top-btn" onclick="openLeaderboard()">🏆 <span id="t-leader-btn">Лидеры</span></button>
             <button class="donate-top-btn" onclick="openDonate()">⭐ <span id="t-donate-btn">Поддержать</span></button>
         </div>
@@ -222,6 +258,7 @@
 
     <div class="bgrp">
         <button class="btn-go" onclick="go()">🔄 <span id="t-again">ЕЩЁ ЗАЕЗД</span></button>
+        <button class="btn-s" style="background:linear-gradient(135deg,rgba(255,51,68,0.2),rgba(255,136,0,0.2));border-color:var(--accent);color:#fff;font-weight:900;" onclick="challengeFriend()">⚔️ Вызвать друга на дуэль</button>
         <button class="btn-s" onclick="share()">📤 <span id="t-share">Поделиться результатом</span></button>
         <button class="btn-s" onclick="openDonate()">⭐ <span id="t-donate-res">Поддержать проект (TON / Stars)</span></button>
         <button class="btn-s" onclick="openReport()">🚨 <span id="t-report-btn">Сообщить об ошибке автору</span></button>
@@ -281,13 +318,74 @@
 
 <!-- SURVIVAL LEADERBOARD MODAL -->
 <div class="modal-overlay" id="leaderboardModal">
-    <div class="modal">
-        <h2>🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
-        <p>Лучшие пилоты в Бесконечном режиме Survival:</p>
+    <div class="modal" style="max-width:420px;">
+        <h2>🏆 ТАБЛИЦА ЛИДЕРОВ (ТОП-1000)</h2>
+        <p>Лучшие пилоты в режиме Survival:</p>
         
-        <div id="leaderboardList" style="margin-bottom:12px"></div>
+        <div id="leaderboardList" style="margin-bottom:12px;max-height:360px;overflow-y:auto;padding-right:4px;"></div>
 
         <button class="modal-close" onclick="closeLeaderboard()">Закрыть</button>
+    </div>
+</div>
+
+<!-- DAILY WHEEL MODAL -->
+<div class="modal-overlay" id="dailyWheelModal">
+    <div class="modal" style="max-width:420px;">
+        <h2>🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА</h2>
+        <p id="dailyWheelStatus">Крути рулетку раз в 24 часа и выигрывай бонусы!</p>
+        
+        <div style="position:relative;width:240px;height:240px;margin:16px auto;display:flex;align-items:center;justify-content:center;">
+            <div id="wheelCircle" style="width:100%;height:100%;border-radius:50%;border:6px solid var(--gold);background:radial-gradient(circle,#161624,#080812);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(255,215,0,0.4);transition:transform 3.5s cubic-bezier(0.15, 0.9, 0.2, 1);overflow:hidden;position:relative;">
+                <div style="position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:16px;box-sizing:border-box;font-size:12px;font-weight:900;color:var(--gold);">
+                    <div style="text-align:center;">✂️ +2 Подсказки</div>
+                    <div style="display:flex;justify-content:space-between;width:100%;">
+                        <span>🏎️ +1 Жизнь</span>
+                        <span>⏭️ +2 Пропуска</span>
+                    </div>
+                    <div style="text-align:center;">🔥 +3 Подсказки</div>
+                </div>
+            </div>
+            <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:24px;z-index:10;filter:drop-shadow(0 4px 10px rgba(255,51,68,0.8));">👇</div>
+        </div>
+
+        <button class="donate-btn donate-stars" id="spinWheelBtn" style="width:100%;font-size:15px;" onclick="spinDailyWheel()">🎡 КРУТИТЬ РУЛЕТКУ</button>
+        <button class="modal-close" onclick="closeDailyWheel()">Закрыть</button>
+    </div>
+</div>
+
+<!-- SHOP & HINTS MODAL -->
+<div class="modal-overlay" id="shopModal">
+    <div class="modal" style="max-width:420px;">
+        <h2>🛒 МАГАЗИН ПОДСКАЗОК</h2>
+        <p>Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!</p>
+        
+        <div style="display:flex;flex-direction:column;gap:10px;margin:16px 0;">
+            <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
+                <div style="text-align:left;">
+                    <div style="font-weight:800;color:#fff;">✂️ 5x Подсказать 50/50</div>
+                    <div style="font-size:11px;color:var(--txt2);">Убирает 2 неверных ответа</div>
+                </div>
+                <button class="preset-btn" onclick="buyHintPack('h50')">10 ⭐</button>
+            </div>
+
+            <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
+                <div style="text-align:left;">
+                    <div style="font-weight:800;color:#fff;">⏭️ 5x Пропусков вопросов</div>
+                    <div style="font-size:11px;color:var(--txt2);">Пропуск без потери жизни</div>
+                </div>
+                <button class="preset-btn" onclick="buyHintPack('skip')">15 ⭐</button>
+            </div>
+
+            <div style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,136,0,0.15));border:1px solid var(--gold);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
+                <div style="text-align:left;">
+                    <div style="font-weight:900;color:var(--gold);">⚡ Набор «Гонщик»</div>
+                    <div style="font-size:11px;color:var(--txt2);">5x 50/50 + 5x Skip + 2 Жизни</div>
+                </div>
+                <button class="donate-btn donate-stars" style="padding:6px 12px;font-size:12px;" onclick="buyHintPack('bundle')">25 ⭐ Stars</button>
+            </div>
+        </div>
+
+        <button class="modal-close" onclick="closeShopModal()">Закрыть</button>
     </div>
 </div>
 
@@ -298,52 +396,52 @@ if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#080810'); tg.setBackgroun
 const I18N = {
     ru: {
         subtitle: "Проверь свои знания и стань легендой!",
-        donateBtn: "Поддержать", leaderBtn: "Лидеры", exit: "Выйти",
+        donateBtn: "Поддержать", leaderBtn: "Лидеры", wheelBtn: "Рулетка", exit: "Выйти",
         stG: "Заездов", stB: "Рекорд", stC: "Верных",
         secDiff: "Сложность", secCat: "Категория / Режим",
         dEasy: "Новичок", dMed: "Гонщик", dHard: "Легенда",
-        start: "СТАРТ", skip: "Пропуск",
+        start: "СТАРТ", skip: "Пропуск", shopBtn: "Магазин",
         rOk: "Правильных", rTime: "Время", rAcc: "Точность", rStr: "Серия 🔥",
-        again: "ЕЩЁ ЗАЕЗД", share: "Поделиться результатом", donateRes: "Поддержать проект (TON / Stars)", garage: "В Гараж",
+        again: "ЕЩЁ ЗАЕЗД", challengeBtn: "⚔️ Вызвать друга на дуэль", share: "Поделиться результатом", donateRes: "Поддержать проект (TON / Stars)", garage: "В Гараж",
         donateDesc: "Выбери или введи любую сумму доната для автора @shrtrcng:", close: "Закрыть",
         cats: { endless: "♾️ Бесконечный режим (Survival)", mix: "🏁 Всё подряд", f1: "🏎️ Формула 1 & Ле-Ман", cars: "🚗 Суперкары & Гиперкары", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Стритрейсинг & JDM", engines: "🔧 Двигатели & Тюнинг", photo: "🖼️ Авто-Угадайка" },
         ranks: { 90: '🏆 Легенда Автоспорта', 70: '🥇 Профи-гонщик', 50: '🥈 Опытный пилот', 30: '🥉 Любитель', 0: '🏁 Новичок' }
     },
     en: {
         subtitle: "Test your skills and become a legend!",
-        donateBtn: "Support", leaderBtn: "Leaders", exit: "Quit",
+        donateBtn: "Support", leaderBtn: "Leaders", wheelBtn: "Lucky Wheel", exit: "Quit",
         stG: "Races", stB: "Best Score", stC: "Correct",
         secDiff: "Difficulty", secCat: "Category / Mode",
         dEasy: "Rookie", dMed: "Racer", dHard: "Legend",
-        start: "START", skip: "Skip",
+        start: "START", skip: "Skip", shopBtn: "Shop",
         rOk: "Correct", rTime: "Time", rAcc: "Accuracy", rStr: "Streak 🔥",
-        again: "PLAY AGAIN", share: "Share Result", donateRes: "Support Author (TON / Stars)", garage: "Garage",
+        again: "PLAY AGAIN", challengeBtn: "⚔️ Challenge a Friend", share: "Share Result", donateRes: "Support Author (TON / Stars)", garage: "Garage",
         donateDesc: "Choose or enter any donation amount for @shrtrcng:", close: "Close",
         cats: { endless: "♾️ Endless Survival Mode", mix: "🏁 All Mixed", f1: "🏎️ Formula 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Street Racing & JDM", engines: "🔧 Engines & Tuning", photo: "🖼️ Guess by Photo" },
         ranks: { 90: '🏆 Racing Legend', 70: '🥇 Pro Driver', 50: '🥈 Experienced Racer', 30: '🥉 Amateur Driver', 0: '🏁 Novice' }
     },
     de: {
         subtitle: "Teste dein Wissen und werde zur Legende!",
-        donateBtn: "Unterstützen", leaderBtn: "Bestenliste", exit: "Beenden",
+        donateBtn: "Unterstützen", leaderBtn: "Bestenliste", wheelBtn: "Glücksrad", exit: "Beenden",
         stG: "Rennen", stB: "Rekord", stC: "Richtig",
         secDiff: "Schwierigkeit", secCat: "Kategorie / Modus",
         dEasy: "Anfänger", dMed: "Rennfahrer", dHard: "Legende",
-        start: "START", skip: "Überspringen",
+        start: "START", skip: "Überspringen", shopBtn: "Shop",
         rOk: "Richtig", rTime: "Zeit", rAcc: "Genauigkeit", rStr: "Serie 🔥",
-        again: "NOCHMAL", share: "Ergebnis Teilen", donateRes: "Unterstützen (TON / Stars)", garage: "Garage",
+        again: "NOCHMAL", challengeBtn: "⚔️ Freund herausfordern", share: "Ergebnis Teilen", donateRes: "Unterstützen (TON / Stars)", garage: "Garage",
         donateDesc: "Unterstütze die Entwicklung des Spiels!", close: "Schließen",
         cats: { endless: "♾️ Endlos Survival-Modus", mix: "🏁 Gemischt", f1: "🏎️ Formel 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Straßenrennen & JDM", engines: "🔧 Motoren & Tuning", photo: "🖼️ Auto-Rätsel" },
         ranks: { 90: '🏆 Rennlegende', 70: '🥇 Profi-Fahrer', 50: '🥈 Erfahrener Pilot', 30: '🥉 Amateur', 0: '🏁 Anfänger' }
     },
     es: {
         subtitle: "¡Pon a prueba tus conocimientos y sé una leyenda!",
-        donateBtn: "Apoyar", leaderBtn: "Líderes", exit: "Salir",
+        donateBtn: "Apoyar", leaderBtn: "Líderes", wheelBtn: "Ruleta Ruleta", exit: "Salir",
         stG: "Carreras", stB: "Récord", stC: "Correctas",
         secDiff: "Dificultad", secCat: "Categoría / Modo",
         dEasy: "Novato", dMed: "Piloto", dHard: "Leyenda",
-        start: "INICIAR", skip: "Omitir",
+        start: "INICIAR", skip: "Omitir", shopBtn: "Tienda",
         rOk: "Correctas", rTime: "Tiempo", rAcc: "Precisión", rStr: "Racha 🔥",
-        again: "OTRA CARRERA", share: "Compartir Resultado", donateRes: "Apoyar (TON / Stars)", garage: "Al Garaje",
+        again: "OTRA CARRERA", challengeBtn: "⚔️ Desafiar a un Amigo", share: "Compartir Resultado", donateRes: "Apoyar (TON / Stars)", garage: "Al Garaje",
         donateDesc: "¡Apoya el desarrollo del juego!", close: "Cerrar",
         cats: { endless: "♾️ Modo Supervivencia Infinito", mix: "🏁 Todo Mezclado", f1: "🏎️ Fórmula 1 & Le Mans", cars: "🚗 Superdeportivos & Hiperdeportivos", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Carreras Callejeras & JDM", engines: "🔧 Motores & Tuning", photo: "🖼️ Adivina por Foto" },
         ranks: { 90: '🏆 Leyenda de las Pistas', 70: '🥇 Piloto Pro', 50: '🥈 Piloto Experimentado', 30: '🥉 Amateur', 0: '🏁 Novato' }
@@ -1140,7 +1238,7 @@ const RAW_QUESTIONS = {
             "q": "Какая компоновка двигателя у этого автомобиля?",
             "photo": "images/corvette_c8.png",
             "a": [
-                "Среднемоторная (mid-engine)",
+                "Среднемоторная",
                 "Переднемоторная",
                 "Заднемоторная",
                 "Полностью электрическая"
@@ -1152,7 +1250,7 @@ const RAW_QUESTIONS = {
             "q": "Какой мотор стоит в этом Ferrari?",
             "photo": "images/ferrari_enzo.png",
             "a": [
-                "6.0L V12 (660 л.с.)",
+                "6.0L V12",
                 "4.5L V8",
                 "3.9L V8 TT",
                 "5.2L V10"
@@ -1176,9 +1274,9 @@ const RAW_QUESTIONS = {
             "q": "Какой тип привода у этого Lamborghini?",
             "photo": "images/lamborghini_countach.png",
             "a": [
-                "Задний (RWD)",
-                "Полный (AWD)",
-                "Передний (FWD)",
+                "Задний",
+                "Полный",
+                "Передний",
                 "4WD"
             ],
             "c": 0,
@@ -1200,7 +1298,7 @@ const RAW_QUESTIONS = {
             "q": "Какая максимальная скорость этого автомобиля?",
             "photo": "images/bugatti_chiron.png",
             "a": [
-                "420 км/ч (ограничено)",
+                "420 км/ч",
                 "350 км/ч",
                 "500 км/ч",
                 "380 км/ч"
@@ -1224,7 +1322,7 @@ const RAW_QUESTIONS = {
             "q": "Какой объём двигателя у этой Toyota?",
             "photo": "images/toyota_supra.png",
             "a": [
-                "3.0L (2JZ-GTE)",
+                "3.0L",
                 "2.5L",
                 "4.0L",
                 "1.6L"
@@ -1248,7 +1346,7 @@ const RAW_QUESTIONS = {
             "q": "Какой тип двигателя у этой Mazda?",
             "photo": "images/mazda_rx7.png",
             "a": [
-                "Роторный (13B-REW Twin-Turbo)",
+                "Роторный",
                 "Рядный 4-цилиндровый",
                 "V6 Turbo",
                 "Оппозитный"
@@ -1284,7 +1382,7 @@ const RAW_QUESTIONS = {
             "q": "Какой объём двигателя у Corvette C8 Z06?",
             "photo": "images/corvette_c8.png",
             "a": [
-                "5.5L V8 Flat-Plane (DOHC)",
+                "5.5L V8 Flat-Plane",
                 "6.2L V8 OHV",
                 "5.0L V8",
                 "7.0L V8"
@@ -1308,7 +1406,7 @@ const RAW_QUESTIONS = {
             "q": "Какая максимальная скорость Nissan Skyline GT-R R34 V-Spec II?",
             "photo": "images/nissan_skyline_r34.png",
             "a": [
-                "250 км/ч (ограничитель)",
+                "250 км/ч",
                 "300 км/ч",
                 "280 км/ч",
                 "220 км/ч"
@@ -1320,7 +1418,7 @@ const RAW_QUESTIONS = {
             "q": "В каком году дебютировал Lamborghini Countach?",
             "photo": "images/lamborghini_countach.png",
             "a": [
-                "1974 (LP400)",
+                "1974",
                 "1971",
                 "1978",
                 "1966"
@@ -1392,7 +1490,7 @@ const RAW_QUESTIONS = {
             "q": "Какой мотор V10 установлен в Audi R8?",
             "photo": "images/audi_r8.png",
             "a": [
-                "5.2L V10 FSI (от Lamborghini)",
+                "5.2L V10 FSI",
                 "4.2L V8",
                 "3.0L V6 TT",
                 "6.0L W12"
@@ -1404,7 +1502,7 @@ const RAW_QUESTIONS = {
             "q": "Какая трансмиссия стоит на Mitsubishi Lancer Evolution IX?",
             "photo": "images/mitsubishi_evo.png",
             "a": [
-                "5-ст. МКПП + S-AWC (полный привод)",
+                "5-ст. МКПП + S-AWC",
                 "6-ст. автомат",
                 "CVT",
                 "7-ст. DSG"
@@ -1416,10 +1514,10 @@ const RAW_QUESTIONS = {
             "q": "Какой код мотора у Mercedes C63 AMG W204?",
             "photo": "images/c63_w204.png",
             "a": [
-                "M156 (6.2L V8 NA)",
-                "M177 (4.0L V8 TT)",
-                "M113 (5.4L V8 SC)",
-                "M278 (4.7L V8 TT)"
+                "M156",
+                "M177",
+                "M113",
+                "M278"
             ],
             "c": 0,
             "d": "hard"
@@ -1875,7 +1973,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип топлива используют болиды Формулы 1?",
             "a": [
-                "Бензин (высокооктановый)",
+                "Бензин",
                 "Дизель",
                 "Электричество",
                 "Водород"
@@ -1908,7 +2006,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какого цвета флаг, означающий финиш гонки F1?",
             "a": [
-                "Клетчатый (чёрно-белый)",
+                "Клетчатый",
                 "Зелёный",
                 "Красный",
                 "Жёлтый"
@@ -1985,7 +2083,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой материал преимущественно используется для изготовления шасси болида F1?",
             "a": [
-                "Углепластик (карбон)",
+                "Углепластик",
                 "Алюминий",
                 "Сталь",
                 "Титан"
@@ -2139,10 +2237,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип шин Pirelli обозначается белой полосой в F1?",
             "a": [
-                "Hard (жёсткие)",
-                "Medium (средние)",
-                "Soft (мягкие)",
-                "Intermediate (промежуточные)"
+                "Hard",
+                "Medium",
+                "Soft",
+                "Intermediate"
             ],
             "c": 0,
             "d": "med"
@@ -2326,7 +2424,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой пилот F1 носит постоянный номер 1 как действующий чемпион мира?",
             "a": [
-                "Макс Ферстаппен (с 2022)",
+                "Макс Ферстаппен",
                 "Льюис Хэмилтон",
                 "Себастьян Феттель",
                 "Фернандо Алонсо"
@@ -2337,8 +2435,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой формат старта используется в Формуле 1 — с места или с хода?",
             "a": [
-                "С места (standing start)",
-                "С хода (rolling start)",
+                "С места",
+                "С хода",
                 "Оба варианта",
                 "Летящий старт"
             ],
@@ -2392,7 +2490,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип подвески используется на передней оси болидов F1 с 2022 года?",
             "a": [
-                "Двухрычажная (pull-rod/push-rod)",
+                "Двухрычажная",
                 "MacPherson",
                 "Многорычажная",
                 "Торсионная"
@@ -2414,7 +2512,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая трасса F1 проходит по городским улицам вокруг пристани и казино?",
             "a": [
-                "Монте-Карло (Монако)",
+                "Монте-Карло",
                 "Баку",
                 "Сингапур",
                 "Джедда"
@@ -2425,7 +2523,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая команда F1 носит название итальянского города и использует зелёный цвет?",
             "a": [
-                "Aston Martin (Silverstone, но зелёный)",
+                "Aston Martin",
                 "Alpine",
                 "Alfa Romeo",
                 "AlphaTauri"
@@ -3010,10 +3108,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Сколько цилиндров в двигателе Bugatti Chiron?",
             "a": [
-                "16 (W16)",
-                "12 (V12)",
-                "8 (V8)",
-                "10 (V10)"
+                "16",
+                "12",
+                "8",
+                "10"
             ],
             "c": 0,
             "d": "med"
@@ -3098,7 +3196,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой материал используется для изготовления монокока McLaren Speedtail?",
             "a": [
-                "Углепластик (карбон)",
+                "Углепластик",
                 "Алюминий",
                 "Титан",
                 "Кевлар"
@@ -3142,7 +3240,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой суперкар Ford использует двигатель 3.5L EcoBoost V6 Twin-Turbo?",
             "a": [
-                "Ford GT (2017+)",
+                "Ford GT",
                 "Ford Mustang GT",
                 "Ford Raptor",
                 "Ford Bronco"
@@ -3197,7 +3295,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой автомобиль стал первым серийным суперкаром с монококом из углепластика в 1981 году?",
             "a": [
-                "McLaren MP4/1 (гоночный)",
+                "McLaren MP4/1",
                 "Bugatti EB110",
                 "Ferrari F40",
                 "Porsche 959"
@@ -3252,10 +3350,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой двигатель установлен в суперкаре McLaren F1 — V12 от какого производителя?",
             "a": [
-                "BMW (S70/2)",
-                "Mercedes (M120)",
-                "Honda (C30A)",
-                "Porsche (M64)"
+                "BMW",
+                "Mercedes",
+                "Honda",
+                "Porsche"
             ],
             "c": 0,
             "d": "hard"
@@ -3263,10 +3361,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой самый мощный серийный Lamborghini на момент 2024 года?",
             "a": [
-                "Revuelto (1 015 л.с.)",
-                "Aventador SVJ (770 л.с.)",
-                "Sian (819 л.с.)",
-                "Huracan STO (640 л.с.)"
+                "Revuelto",
+                "Aventador SVJ",
+                "Sian",
+                "Huracan STO"
             ],
             "c": 0,
             "d": "hard"
@@ -3307,7 +3405,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая мощность двигателя V12 6.5L атмосферного мотора Aston Martin Valkyrie?",
             "a": [
-                "1 014 л.с. (с гибридом)",
+                "1 014 л.с.",
                 "850 л.с.",
                 "1 200 л.с.",
                 "750 л.с."
@@ -3376,7 +3474,7 @@ const RAW_QUESTIONS = {
                 "Taycan",
                 "Cayman",
                 "Panamera",
-                "Macan (2024)"
+                "Macan"
             ],
             "c": 0,
             "d": "med"
@@ -3870,7 +3968,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой части Need for Speed впервые появилась полицейская погоня?",
             "a": [
-                "NFS: Hot Pursuit (1998)",
+                "NFS: Hot Pursuit",
                 "NFS: Underground",
                 "NFS: Most Wanted",
                 "NFS: Carbon"
@@ -3892,7 +3990,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS впервые появился неоновый тюнинг и андерграунд-сцена?",
             "a": [
-                "NFS: Underground (2003)",
+                "NFS: Underground",
                 "NFS: Carbon",
                 "NFS: ProStreet",
                 "NFS: Shift"
@@ -3914,7 +4012,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется список сильнейших соперников в NFS: Most Wanted 2005?",
             "a": [
-                "Blacklist (Чёрный список)",
+                "Blacklist",
                 "Top 10",
                 "Boss List",
                 "Legends Board"
@@ -3969,7 +4067,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая NFS вышла в 2010 году с возвращением к формату Hot Pursuit?",
             "a": [
-                "NFS: Hot Pursuit (2010)",
+                "NFS: Hot Pursuit",
                 "NFS: The Run",
                 "NFS: Shift 2",
                 "NFS: World"
@@ -4002,7 +4100,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой автомобиль Рэйзора (Razor) в NFS: Most Wanted 2005 является финальным боссом?",
             "a": [
-                "Ford Mustang GT (модифицированный)",
+                "Ford Mustang GT",
                 "BMW M3 GTR",
                 "Lamborghini Gallardo",
                 "Porsche Carrera GT"
@@ -4013,8 +4111,8 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS впервые появился открытый мир со свободным перемещением?",
             "a": [
-                "NFS: Underground 2 (2004)",
-                "NFS: Most Wanted (2005)",
+                "NFS: Underground 2",
+                "NFS: Most Wanted",
                 "NFS: Carbon",
                 "NFS: World"
             ],
@@ -4035,7 +4133,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В NFS: Carbon какие два типа напарников были доступны игроку?",
             "a": [
-                "Blocker и Drafter (+ Scout)",
+                "Blocker и Drafter",
                 "Racer и Drifter",
                 "Tuner и Muscle",
                 "Street и Pro"
@@ -4046,8 +4144,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая NFS впервые использовала движок Frostbite от DICE?",
             "a": [
-                "NFS: Rivals (2013)",
-                "NFS (2015)",
+                "NFS: Rivals",
+                "NFS",
                 "NFS: Payback",
                 "NFS: Heat"
             ],
@@ -4068,7 +4166,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой уровень полицейской погони является максимальным в NFS: Most Wanted 2005?",
             "a": [
-                "Уровень 6 (Heat Level 6)",
+                "Уровень 6",
                 "Уровень 5",
                 "Уровень 10",
                 "Уровень 8"
@@ -4079,7 +4177,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS был режим Autosculpt для детального тюнинга кузова?",
             "a": [
-                "NFS: Carbon (2006)",
+                "NFS: Carbon",
                 "NFS: Underground 2",
                 "NFS: ProStreet",
                 "NFS: Shift"
@@ -4134,7 +4232,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая самая первая игра серии Need for Speed вышла в 1994 году?",
             "a": [
-                "The Need for Speed (3DO/PC)",
+                "The Need for Speed",
                 "NFS II",
                 "NFS: Road Challenge",
                 "NFS: High Stakes"
@@ -4145,7 +4243,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой реальный трек использовался в самой первой NFS 1994 года?",
             "a": [
-                "Сосновое побережье (Alpine Trail) и другие",
+                "Сосновое побережье и другие",
                 "Нюрбургринг",
                 "Монца",
                 "Лагуна Сека"
@@ -4167,7 +4265,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая NFS была первой с лицензированными реальными автомобилями?",
             "a": [
-                "The Need for Speed (1994)",
+                "The Need for Speed",
                 "NFS II",
                 "NFS III: Hot Pursuit",
                 "NFS: Underground"
@@ -4244,7 +4342,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой композитор написал оригинальный саундтрек NFS: Hot Pursuit 2010?",
             "a": [
-                "Criterion использовал лицензированные треки (30 Seconds to Mars и др.)",
+                "Criterion использовал лицензированные треки",
                 "Hans Zimmer",
                 "Junkie XL",
                 "Tyler Bates"
@@ -4255,7 +4353,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS был впервые введён режим Photo Mode для скриншотов?",
             "a": [
-                "NFS (2015)",
+                "NFS",
                 "NFS: Heat",
                 "NFS: Payback",
                 "NFS: Rivals"
@@ -4266,7 +4364,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип тюнинга в NFS: Underground позволял менять цвет подсветки днища авто?",
             "a": [
-                "Neon (неоновая подсветка)",
+                "Neon",
                 "Vinyl",
                 "Body Kit",
                 "Spoiler"
@@ -4277,8 +4375,8 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS впервые появились погони от полиции в открытом мире?",
             "a": [
-                "NFS: Most Wanted (2005)",
-                "NFS: Hot Pursuit (1998)",
+                "NFS: Most Wanted",
+                "NFS: Hot Pursuit",
                 "NFS: Underground 2",
                 "NFS: Carbon"
             ],
@@ -4288,7 +4386,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая машина является культовой обложкой NFS: Carbon?",
             "a": [
-                "Dodge Charger R/T (и другие маслкары)",
+                "Dodge Charger R/T",
                 "BMW M3 GTR",
                 "Nissan GT-R",
                 "Chevrolet Corvette"
@@ -4332,7 +4430,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой знаменитый актёр озвучил/снялся в NFS: The Run?",
             "a": [
-                "Шон Фарис (модель персонажа)",
+                "Шон Фарис",
                 "Вин Дизель",
                 "Пол Уокер",
                 "Джейсон Стэтэм"
@@ -4343,7 +4441,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой NFS позволяла покупать и продавать автомобили на чёрном рынке?",
             "a": [
-                "NFS: Payback (2017)",
+                "NFS: Payback",
                 "NFS: Heat",
                 "NFS: Most Wanted",
                 "NFS: Rivals"
@@ -4354,7 +4452,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая система прогрессии заменяла классический тюнинг в NFS: Payback?",
             "a": [
-                "Speed Cards (карточки скорости)",
+                "Speed Cards",
                 "Skill Points",
                 "XP система",
                 "Части из лут-боксов"
@@ -4365,7 +4463,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS была возможность играть за полицию с вертолётами и спайк-стрипами?",
             "a": [
-                "NFS: Hot Pursuit (2010)",
+                "NFS: Hot Pursuit",
                 "NFS: Rivals",
                 "NFS: Most Wanted 2012",
                 "Все три"
@@ -4376,7 +4474,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой движок NFS: Underground 2 позволял достигать фотореалистичных эффектов дождя?",
             "a": [
-                "Собственный движок EA Black Box (RenderWare)",
+                "Собственный движок EA Black Box",
                 "Frostbite",
                 "Unreal Engine",
                 "CryEngine"
@@ -4398,8 +4496,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая скрытая машина в NFS: Most Wanted 2005 была доступна через SMS-код?",
             "a": [
-                "Burger King Pontiac GTO (промо)",
-                "BMW M3 GTR (история)",
+                "Burger King Pontiac GTO",
+                "BMW M3 GTR",
                 "Lamborghini Gallardo",
                 "Porsche Carrera GT"
             ],
@@ -5302,7 +5400,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как назывался мультиплеер в Midnight Club: LA?",
             "a": [
-                "Online Multiplayer (до 16 игроков)",
+                "Online Multiplayer",
                 "Split Screen только",
                 "LAN Party",
                 "Нет мультиплеера"
@@ -5313,7 +5411,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой движок использовала Midnight Club: Los Angeles?",
             "a": [
-                "RAGE (Rockstar Advanced Game Engine)",
+                "RAGE",
                 "Unreal Engine 3",
                 "Frostbite",
                 "CryEngine"
@@ -5335,7 +5433,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая максимальная скорость была доступна на автомобилях в MC3: DUB Edition?",
             "a": [
-                "Более 400 км/ч (тюнинг)",
+                "Более 400 км/ч",
                 "300 км/ч",
                 "250 км/ч",
                 "500 км/ч"
@@ -5346,7 +5444,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Сколько автомобилей было доступно в Midnight Club: Los Angeles (включая DLC)?",
             "a": [
-                "~47 (+ DLC South Central)",
+                "~47",
                 "100+",
                 "30",
                 "75"
@@ -5368,7 +5466,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В каком году Rockstar выпустила последнее обновление для Midnight Club: LA?",
             "a": [
-                "2009 (South Central DLC)",
+                "2009",
                 "2010",
                 "2011",
                 "2008"
@@ -5379,9 +5477,9 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой был рейтинг ESRB у Midnight Club: Los Angeles?",
             "a": [
-                "T (Teen)",
-                "E (Everyone)",
-                "M (Mature)",
+                "T",
+                "E",
+                "M",
                 "E10+"
             ],
             "c": 0,
@@ -5390,7 +5488,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой уникальный механизм позволял находить гонки в открытом мире MC:LA?",
             "a": [
-                "Мигающие фары у NPC-машин (вызов на гонку)",
+                "Мигающие фары у NPC-машин",
                 "Маркеры на карте",
                 "Телефонные звонки",
                 "SMS уведомления"
@@ -5456,7 +5554,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой режим в MC: LA позволял патрулировать город в поисках соперников?",
             "a": [
-                "Cruise (свободная езда с вызовами)",
+                "Cruise",
                 "Story Mode",
                 "Arcade",
                 "Time Attack"
@@ -5489,7 +5587,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Сколько городов доступно в Midnight Club 3: DUB Edition Remix?",
             "a": [
-                "3 города + бонусный Токио (Remix)",
+                "3 города + бонусный Токио",
                 "1 город",
                 "5 городов",
                 "2 города"
@@ -5500,7 +5598,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип способности «Roar» в MC: LA отбрасывал соперников?",
             "a": [
-                "Roar (ударная волна)",
+                "Roar",
                 "Boost",
                 "Shield",
                 "Teleport"
@@ -5511,7 +5609,7 @@ const RAW_QUESTIONS = {
         {
             "q": "На каком движке работала первая Midnight Club: Street Racing?",
             "a": [
-                "Собственный движок Angel Studios (позже RAGE)",
+                "Собственный движок Angel Studios",
                 "Unreal Engine",
                 "RenderWare",
                 "Havok"
@@ -5544,7 +5642,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая функция MC: LA Complete Edition добавляла новый район South Central?",
             "a": [
-                "DLC South Central (новые гонки и машины)",
+                "DLC South Central",
                 "Новый город",
                 "Мотоциклы",
                 "Онлайн-турниры"
@@ -5953,7 +6051,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется режим испытаний с ограниченными параметрами авто в Gran Turismo?",
             "a": [
-                "License Tests (Экзамены)",
+                "License Tests",
                 "Time Trial",
                 "Arcade Race",
                 "Championship"
@@ -5986,7 +6084,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется валюта в Gran Turismo для покупки автомобилей?",
             "a": [
-                "Кредиты (Cr.)",
+                "Кредиты",
                 "Доллары",
                 "Токены",
                 "Монеты"
@@ -6085,7 +6183,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая система динамической смены сезонов была введена в Forza Horizon 4?",
             "a": [
-                "Seasons (смена времён года в реальном времени)",
+                "Seasons",
                 "Climate System",
                 "Weather Mode",
                 "Dynamic World"
@@ -6096,7 +6194,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется соревновательный онлайн-режим Gran Turismo Sport/7?",
             "a": [
-                "Sport Mode (FIA Championships)",
+                "Sport Mode",
                 "Ranked Racing",
                 "Online League",
                 "Competitive GP"
@@ -6151,7 +6249,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой автомобиль является одним из самых редких и дорогих в GT7?",
             "a": [
-                "McLaren F1 (20 млн Cr.)",
+                "McLaren F1",
                 "Toyota Supra",
                 "Nissan GT-R",
                 "Mazda RX-7"
@@ -6184,7 +6282,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая технология рендеринга используется в Gran Turismo 7 для реалистичного освещения?",
             "a": [
-                "Ray Tracing (при повторах и в меню)",
+                "Ray Tracing",
                 "Rasterization only",
                 "Path Tracing",
                 "Global Illumination only"
@@ -6228,7 +6326,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой движок физики используется в Forza Motorsport 2023?",
             "a": [
-                "ForzaTech (собственный)",
+                "ForzaTech",
                 "Unreal Engine 5",
                 "Unity",
                 "Havok"
@@ -6272,7 +6370,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой был первый лицензированный автомобиль Porsche в серии Gran Turismo (до GT Sport)?",
             "a": [
-                "Porsche появился только в GT Sport (2017)",
+                "Porsche появился только в GT Sport",
                 "Porsche 911 в GT3",
                 "Porsche Cayman в GT5",
                 "Porsche 959 в GT4"
@@ -6316,7 +6414,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой автомобиль можно получить бесплатно в начале Forza Horizon 5?",
             "a": [
-                "Один из стартовых (Corvette, Supra, Bronco)",
+                "Один из стартовых",
                 "Ferrari LaFerrari",
                 "Bugatti Chiron",
                 "McLaren P1"
@@ -6360,7 +6458,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой стандарт PI (Performance Index) используется в Forza для балансировки?",
             "a": [
-                "100-999 (от D до X)",
+                "100-999",
                 "1-100",
                 "0-10",
                 "A-Z буквенный"
@@ -6404,7 +6502,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая версия Gran Turismo первой получила VR-режим?",
             "a": [
-                "Gran Turismo Sport (PSVR1) / GT7 (PSVR2)",
+                "Gran Turismo Sport / GT7",
                 "Gran Turismo 5",
                 "Gran Turismo 6",
                 "Gran Turismo 4"
@@ -6824,9 +6922,9 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой привод предпочтителен для дрифта?",
             "a": [
-                "Задний (RWD)",
-                "Передний (FWD)",
-                "Полный (AWD)",
+                "Задний",
+                "Передний",
+                "Полный",
                 "Без разницы"
             ],
             "c": 0,
@@ -6857,7 +6955,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется подвеска с регулируемой жёсткостью и высотой?",
             "a": [
-                "Койловеры (Coilovers)",
+                "Койловеры",
                 "Пружины",
                 "Пневмоподвеска",
                 "Рессоры"
@@ -6868,9 +6966,9 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой фильм 2001 года популяризировал стритрейсинг и JDM-культуру?",
             "a": [
-                "Форсаж (The Fast and the Furious)",
+                "Форсаж",
                 "Need for Speed",
-                "Гонщик (Drive)",
+                "Гонщик",
                 "Такси"
             ],
             "c": 0,
@@ -6879,7 +6977,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется техника переключения передач без сцепления в дрифте?",
             "a": [
-                "Клатч-кик (Clutch Kick)",
+                "Клатч-кик",
                 "Хил-тоу",
                 "Дабл клатч",
                 "Бэнг-шифт"
@@ -6890,7 +6988,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип колёсных дисков популярен в JDM-тюнинге?",
             "a": [
-                "Кованые и литые диски (Work, Rays, BBS)",
+                "Кованые и литые диски",
                 "Штамповка",
                 "Пластик",
                 "Хром"
@@ -6901,7 +6999,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?",
             "a": [
-                "Шуто (Shutoko) — скоростная магистраль Ванган",
+                "Шуто — скоростная магистраль Ванган",
                 "Фудзи Спидвей",
                 "Цукуба",
                 "Эбису"
@@ -6945,7 +7043,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой угол развала колёс популярен в стэнс-культуре (Stance)?",
             "a": [
-                "Отрицательный камбер (Negative Camber)",
+                "Отрицательный камбер",
                 "Положительный камбер",
                 "Нулевой камбер",
                 "Кастер"
@@ -6956,7 +7054,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется техника дрифта с использованием ручного тормоза?",
             "a": [
-                "E-Brake Drift (Handbrake)",
+                "E-Brake Drift",
                 "Power Over",
                 "Feint Drift",
                 "Braking Drift"
@@ -6967,7 +7065,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой двигатель чаще всего свапят в дрифт-проекты как бюджетный V8?",
             "a": [
-                "LS (GM LS1/LS3)",
+                "LS",
                 "Hemi",
                 "Coyote",
                 "Windsor"
@@ -7000,7 +7098,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какое японское слово означает 'стиль' и часто используется для описания эстетики JDM?",
             "a": [
-                "Kanjo (環状)",
+                "Kanjo",
                 "Bosozoku",
                 "Shakotan",
                 "Zokusha"
@@ -7044,7 +7142,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой японский закон ограничивает мощность серийных автомобилей («джентльменское соглашение»)?",
             "a": [
-                "276 л.с. (280 PS)",
+                "276 л.с.",
                 "300 л.с.",
                 "250 л.с.",
                 "320 л.с."
@@ -7077,7 +7175,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какое максимальное давление наддува обычно выдерживает стоковый блок 2JZ-GTE?",
             "a": [
-                "~1.5-2.0 бар (с доработками до 3+)",
+                "~1.5-2.0 бар",
                 "0.5 бар",
                 "4.0 бар",
                 "0.3 бар"
@@ -7088,7 +7186,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип дифференциала предпочтителен для дрифта?",
             "a": [
-                "Блокировка (LSD — Limited Slip Differential)",
+                "Блокировка",
                 "Открытый дифференциал",
                 "Вискомуфта",
                 "Torsen"
@@ -7099,7 +7197,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Как называется культовая ночная гонка по кольцевой развязке в Осаке?",
             "a": [
-                "Kanjo Racing (環状族)",
+                "Kanjo Racing",
                 "Wangan Racing",
                 "Touge Battle",
                 "Mid-Night Club"
@@ -7121,7 +7219,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой Nissan Skyline R32 GT-R получил прозвище «Годзилла» после победы в чемпионате?",
             "a": [
-                "BNR32 (Группа А, 1991)",
+                "BNR32",
                 "BCNR33",
                 "BNR34",
                 "KPGC10"
@@ -7132,7 +7230,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип сцепления используется в high-performance дрифт-проектах?",
             "a": [
-                "Многодисковое (Multi-plate clutch)",
+                "Многодисковое",
                 "Однодисковое органическое",
                 "Гидротрансформатор",
                 "DSG"
@@ -7143,8 +7241,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая Toyota AE86 использовалась в аниме Initial D — Trueno или Levin?",
             "a": [
-                "Trueno (с откидными фарами)",
-                "Levin (с фиксированными фарами)",
+                "Trueno",
+                "Levin",
                 "Обе модели",
                 "Ни одна из них"
             ],
@@ -7154,7 +7252,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой максимальный угол поворота руля используется в профессиональном дрифте?",
             "a": [
-                "50-70° (с увеличенными углами до 60°+)",
+                "50-70°",
                 "30°",
                 "90°",
                 "15°"
@@ -7165,7 +7263,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип подвески опускает автомобиль максимально низко к земле?",
             "a": [
-                "Пневмоподвеска (Air Suspension)",
+                "Пневмоподвеска",
                 "Койловеры",
                 "Листовые рессоры",
                 "Заниженные пружины"
@@ -7176,7 +7274,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип гонок проводится на горных серпантинах в Японии?",
             "a": [
-                "Тоуге (Touge)",
+                "Тоуге",
                 "Дрэг",
                 "Ралли",
                 "Кольцевые"
@@ -7242,7 +7340,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип роликового подшипника используется в турбинах high-performance?",
             "a": [
-                "Ball Bearing (шарикоподшипник)",
+                "Ball Bearing",
                 "Journal Bearing",
                 "Roller Bearing",
                 "Needle Bearing"
@@ -7253,7 +7351,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой японский бренд выхлопных систем известен титановыми глушителями?",
             "a": [
-                "Titanium (Amuse, HKS, Tomei)",
+                "Titanium",
                 "Akrapovič",
                 "Borla",
                 "MagnaFlow"
@@ -7275,18 +7373,15 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой культовый японский тюнер создал обвесы Pandem и Rocket Bunny?",
             "a": [
-                "Кэй Миура (TRA Kyoto)",
+                "Кэй Миура",
                 "Акира Наказато",
                 "Казухиро Мизуно",
                 "Кадзунори Ямаути"
             ],
             "c": 0,
-            "d": "hard"
-        },
-        {
-            "q": "Какой двигатель Honda F20C устанавливался в S2000 и крутился до скольки оборотов?",
+"q": "Какой двигатель Honda F20C устанавливался в S2000 и крутился до скольки оборотов?",
             "a": [
-                "9 000 об/мин (с VTEC)",
+                "9 000 об/мин",
                 "8 000 об/мин",
                 "7 500 об/мин",
                 "10 000 об/мин"
@@ -7297,7 +7392,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип трансмиссии «sequential» используется в гоночных дрифт-карах?",
             "a": [
-                "Секвентальная КПП (без Н-паттерна)",
+                "Секвентальная КПП",
                 "Вариатор",
                 "Автомат с гидротрансформатором",
                 "DSG"
@@ -7308,7 +7403,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой японский клуб «Mid Night Racing» был известен ночными гонками на Ванган и распущен в 1999?",
             "a": [
-                "Mid Night Club (ミッドナイト)",
+                "Mid Night Club",
                 "Kanjo Racers",
                 "Shutoko Warriors",
                 "Bay Side Racers"
@@ -7673,10 +7768,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой газ используется для работы двигателя NOS (закись)?",
             "a": [
-                "Закись азота (N2O)",
-                "Кислород (O2)",
-                "Азот (N2)",
-                "Гелий (He)"
+                "Закись азота",
+                "Кислород",
+                "Азот",
+                "Гелий"
             ],
             "c": 0,
             "d": "easy"
@@ -7695,7 +7790,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой жидкостью охлаждается большинство современных автомобильных двигателей?",
             "a": [
-                "Антифриз (охлаждающая жидкость)",
+                "Антифриз",
                 "Вода",
                 "Масло",
                 "Тормозная жидкость"
@@ -7783,7 +7878,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип наддува приводится в действие ремнём от коленвала, а не выхлопом?",
             "a": [
-                "Механический компрессор (Supercharger)",
+                "Механический компрессор",
                 "Турбокомпрессор",
                 "Электрический нагнетатель",
                 "Центробежный компрессор"
@@ -7816,7 +7911,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор Ferrari F40 был битурбо V8 объёмом 2.9 литра?",
             "a": [
-                "Tipo F120A (2936cc)",
+                "Tipo F120A",
                 "Tipo F131",
                 "Tipo F154",
                 "Tipo F163"
@@ -7838,7 +7933,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип системы впрыска подаёт топливо непосредственно в камеру сгорания?",
             "a": [
-                "Непосредственный впрыск (Direct Injection)",
+                "Непосредственный впрыск",
                 "Распределённый впрыск",
                 "Карбюратор",
                 "Моновпрыск"
@@ -7860,7 +7955,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой объём имеет культовый мотор LS3 от General Motors?",
             "a": [
-                "6.2L (376 cui)",
+                "6.2L",
                 "5.7L",
                 "7.0L",
                 "5.3L"
@@ -7882,7 +7977,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?",
             "a": [
-                "MA1.01 (на базе 9A1)",
+                "MA1.01",
                 "MEA",
                 "M96",
                 "M64"
@@ -7904,10 +7999,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор Mercedes-AMG M139 является самым мощным серийным 4-цилиндровым в мире?",
             "a": [
-                "M139 (2.0L, 421 л.с.)",
-                "M133 (2.0L, 381 л.с.)",
-                "M260 (2.0L, 306 л.с.)",
-                "M270 (2.0L, 211 л.с.)"
+                "M139",
+                "M133",
+                "M260",
+                "M270"
             ],
             "c": 0,
             "d": "med"
@@ -7926,10 +8021,10 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой уникальный роторный мотор Mazda 787B выиграл Ле-Ман в 1991 году?",
             "a": [
-                "R26B (4-ротор, 700 л.с.)",
-                "13B-REW (2-ротор)",
-                "20B-REW (3-ротор)",
-                "10A (2-ротор)"
+                "R26B",
+                "13B-REW",
+                "20B-REW",
+                "10A"
             ],
             "c": 0,
             "d": "hard"
@@ -7959,7 +8054,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор W16 Bugatti состоит из двух V8, соединённых под углом?",
             "a": [
-                "W16 (два VR8 под 90°)",
+                "W16",
                 "V16 линейный",
                 "Четыре рядных I4",
                 "Два оппозитных H8"
@@ -7970,8 +8065,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какая формула связывает мощность, крутящий момент и обороты двигателя?",
             "a": [
-                "P = M × n / 9549 (кВт)",
-                "P = M × n / 5252 (л.с.)",
+                "P = M × n / 9549",
+                "P = M × n / 5252",
                 "P = M + n",
                 "P = M / n"
             ],
@@ -7992,8 +8087,8 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип коленвала (плоский или крестообразный) даёт характерный звук Ferrari V8?",
             "a": [
-                "Плоский (flat-plane crank)",
-                "Крестообразный (cross-plane)",
+                "Плоский",
+                "Крестообразный",
                 "Одноопорный",
                 "Со смещением"
             ],
@@ -8025,7 +8120,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип предкамерного зажигания (pre-chamber) применяется в двигателе F1 для повышения КПД?",
             "a": [
-                "Jet Ignition (факельное зажигание)",
+                "Jet Ignition",
                 "Direct Ignition",
                 "Dual Spark",
                 "HCCI"
@@ -8036,7 +8131,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой коэффициент наполнения цилиндров может превышать 100% благодаря наддуву?",
             "a": [
-                "Volumetric Efficiency (VE)",
+                "Volumetric Efficiency",
                 "Compression Ratio",
                 "Thermal Efficiency",
                 "Brake Efficiency"
@@ -8047,7 +8142,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор Cosworth DFV V8 выиграл 155 Гран-При Формулы 1?",
             "a": [
-                "DFV (Double Four Valve)",
+                "DFV",
                 "DFX",
                 "DFR",
                 "DFY"
@@ -8102,7 +8197,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой датчик измеряет количество кислорода в выхлопных газах?",
             "a": [
-                "Лямбда-зонд (O2 sensor)",
+                "Лямбда-зонд",
                 "MAP сенсор",
                 "MAF сенсор",
                 "TPS датчик"
@@ -8124,7 +8219,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип инжектора подаёт топливо дважды за цикл — в коллектор и в камеру?",
             "a": [
-                "Dual Injection (Port + Direct)",
+                "Dual Injection",
                 "Single Injection",
                 "Throttle Body",
                 "Batch Fire"
@@ -8146,7 +8241,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой мотор Mercedes-AMG M177/M178 V8 4.0L Twin-Turbo имеет горячий V (hot-V)?",
             "a": [
-                "M177 (AMG GT, C63, E63)",
+                "M177",
                 "M156",
                 "M113",
                 "M119"
@@ -8157,7 +8252,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип смазки используется в двигателях гоночных автомобилей с сухим картером?",
             "a": [
-                "Dry Sump (внешний масляный бак)",
+                "Dry Sump",
                 "Wet Sump",
                 "Splash Lubrication",
                 "Mist Lubrication"
@@ -8168,7 +8263,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой легендарный мотор Ford Windsor V8 имеет рабочий объём 5.0L?",
             "a": [
-                "302 cui (Small Block)",
+                "302 cui",
                 "351W",
                 "289",
                 "460"
@@ -8179,7 +8274,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип газораспределения «desmodromic» используется в мотоциклах Ducati?",
             "a": [
-                "Принудительное закрытие клапанов (без пружин)",
+                "Принудительное закрытие клапанов",
                 "Пневматические пружины",
                 "Гидравлические толкатели",
                 "Электромагнитные клапаны"
@@ -8190,7 +8285,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой двигатель Ferrari Tipo F154 используется в моделях 488, F8 и 296?",
             "a": [
-                "3.9L V8 Twin-Turbo (488/F8) / 3.0L V6 TT (296)",
+                "3.9L V8 Twin-Turbo / 3.0L V6 TT",
                 "2.9L V6",
                 "4.5L V8",
                 "6.0L V12"
@@ -8212,7 +8307,7 @@ const RAW_QUESTIONS = {
         {
             "q": "Какой тип электронного управления впрыском впервые применил Bosch в серийных авто?",
             "a": [
-                "D-Jetronic (1967)",
+                "D-Jetronic",
                 "K-Jetronic",
                 "L-Jetronic",
                 "Motronic"
@@ -8236,6 +8331,7 @@ function setLang(lang) {
     document.getElementById('t-subtitle').textContent = t.subtitle;
     document.getElementById('t-donate-btn').textContent = t.donateBtn;
     if (document.getElementById('t-leader-btn')) document.getElementById('t-leader-btn').textContent = t.leaderBtn;
+    if (document.getElementById('t-wheel-btn')) document.getElementById('t-wheel-btn').textContent = t.wheelBtn;
     document.getElementById('t-exit').textContent = t.exit;
     document.getElementById('t-st-g').textContent = t.stG;
     document.getElementById('t-st-b').textContent = t.stB;
@@ -8548,23 +8644,256 @@ async function payReviveStars() {
     lq();
 }
 
-function closeReviveAndEnd() {
-    document.getElementById('reviveModal').classList.remove('active');
-    end();
+let localLeaders = JSON.parse(localStorage.getItem('sr_leaderboard') || '[]');
+
+function getPlayerInfo() {
+    const u = tg?.initDataUnsafe?.user;
+    if (u) {
+        const rawName = u.username ? `@${u.username}` : `${u.first_name || 'Пилот'} ${u.last_name || ''}`;
+        return { name: rawName.trim(), id: u.id };
+    }
+    return { name: 'Пилот (Ты)', id: 'guest' };
 }
 
-function openLeaderboard() {
+async function submitScoreToBackend(score) {
+    const player = getPlayerInfo();
+    const entry = { name: player.name, score: score, gamesPlayed: stats.g, ts: Date.now() };
+
+    // Update LocalStorage leaderboard (up to 1000)
+    let existingIndex = localLeaders.findIndex(l => l.name === player.name);
+    if (existingIndex >= 0) {
+        if (score > localLeaders[existingIndex].score) {
+            localLeaders[existingIndex].score = score;
+        }
+        localLeaders[existingIndex].gamesPlayed = stats.g;
+    } else {
+        localLeaders.push(entry);
+    }
+    localLeaders.sort((a, b) => b.score - a.score);
+    localLeaders = localLeaders.slice(0, 1000);
+    localStorage.setItem('sr_leaderboard', JSON.stringify(localLeaders));
+
+    // Sync with backend API
+    try {
+        await fetch(`${PAYMENT_WORKER_URL}/submit-score`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: player.id, name: player.name, score, gamesPlayed: stats.g, totalCorrect: stats.c })
+        });
+    } catch (e) {}
+}
+
+async function openLeaderboard() {
     const list = document.getElementById('leaderboardList');
-    list.innerHTML = `
-        <div class="leader-item"><span>🥇 @shrtrcng_champ</span><span style="color:var(--gold);font-weight:900">4,250 Очков</span></div>
-        <div class="leader-item"><span>🥈 SpeedKing99</span><span style="color:var(--gold);font-weight:900">3,890 Очков</span></div>
-        <div class="leader-item"><span>🥉 JDM_Legend</span><span style="color:var(--gold);font-weight:900">3,120 Очков</span></div>
-        <div class="leader-item"><span>4. TurboRacer</span><span style="color:var(--gold);font-weight:900">2,750 Очков</span></div>
-        <div class="leader-item you"><span>⭐ Твой Рекорд (${stats.b > 0 ? 'Ты' : 'Пилот'})</span><span style="color:var(--accent);font-weight:900">${stats.b} Очков</span></div>
-    `;
+    list.innerHTML = '<div style="padding:16px;color:var(--txt2);font-size:13px">⏳ Загрузка топ-1000 лидеров...</div>';
     document.getElementById('leaderboardModal').classList.add('active');
+
+    let leaders = [];
+    try {
+        const resp = await fetch(`${PAYMENT_WORKER_URL}/leaderboard?limit=1000`);
+        const data = await resp.json();
+        if (data.ok && data.leaders) {
+            leaders = data.leaders;
+        }
+    } catch (e) {}
+
+    if (!leaders || leaders.length === 0) {
+        // Fallback to local merged leaders
+        const defaultChamps = [
+            { name: "🥇 @shrtrcng_champ", score: 4250, gamesPlayed: 42 },
+            { name: "🥈 SpeedKing99", score: 3890, gamesPlayed: 35 },
+            { name: "🥉 JDM_Legend", score: 3120, gamesPlayed: 28 },
+            { name: "4. TurboRacer", score: 2750, gamesPlayed: 19 }
+        ];
+        leaders = [...localLeaders];
+        defaultChamps.forEach(d => {
+            if (!leaders.some(l => l.name.includes(d.name.replace(/^[🥇🥈🥉\d.\s]+/, '')))) {
+                leaders.push(d);
+            }
+        });
+        leaders.sort((a, b) => b.score - a.score);
+    }
+
+    const player = getPlayerInfo();
+    let html = '';
+    
+    leaders.slice(0, 1000).forEach((item, index) => {
+        const medals = ['🥇', '🥈', '🥉'];
+        const medal = index < 3 ? medals[index] : `${index + 1}.`;
+        const isYou = item.name.includes(player.name) || item.name === player.name;
+        const raceCount = item.gamesPlayed || 1;
+        
+        html += `
+            <div class="leader-item ${isYou ? 'you' : ''}">
+                <span style="display:flex;align-items:center;gap:6px;">
+                    <span>${medal} ${item.name}</span>
+                    <span style="font-size:10px;color:var(--txt2);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:8px;font-weight:600;">🏎️ ${raceCount}</span>
+                </span>
+                <span style="color:var(${index < 3 ? '--gold' : '--accent'});font-weight:900">${item.score.toLocaleString()} PTS</span>
+            </div>
+        `;
+    });
+
+    if (stats.b > 0 && !leaders.some(l => l.name.includes(player.name))) {
+        html += `
+            <div class="leader-item you" style="position:sticky;bottom:0;box-shadow:0 -4px 15px rgba(0,0,0,0.8);">
+                <span style="display:flex;align-items:center;gap:6px;">
+                    <span>⭐ ${player.name} (Твой рекорд)</span>
+                    <span style="font-size:10px;color:var(--gold);background:rgba(255,215,0,0.15);padding:2px 6px;border-radius:8px;font-weight:700;">🏎️ ${stats.g}</span>
+                </span>
+                <span style="color:var(--gold);font-weight:900">${stats.b.toLocaleString()} PTS</span>
+            </div>
+        `;
+    }
+
+    list.innerHTML = html;
 }
 function closeLeaderboard() { document.getElementById('leaderboardModal').classList.remove('active'); }
+
+// DAILY WHEEL LOGIC (ANTI-ABUSE UTC DATE LOCK)
+function openDailyWheel() {
+    const todayUTC = new Date().toISOString().slice(0, 10);
+    const lastSpinDate = localStorage.getItem('sr_spin_utc_date');
+    
+    const spinBtn = document.getElementById('spinWheelBtn');
+    const statusText = document.getElementById('dailyWheelStatus');
+    
+    if (lastSpinDate === todayUTC) {
+        spinBtn.disabled = true;
+        spinBtn.style.opacity = '0.5';
+        statusText.textContent = `⏳ Ты уже крутил рулетку сегодня! Следующая попытка завтра.`;
+    } else {
+        spinBtn.disabled = false;
+        spinBtn.style.opacity = '1';
+        statusText.textContent = 'Крути рулетку раз в 24 часа и выигрывай бонусы!';
+    }
+    
+    document.getElementById('dailyWheelModal').classList.add('active');
+}
+
+function closeDailyWheel() {
+    document.getElementById('dailyWheelModal').classList.remove('active');
+}
+
+function spinDailyWheel() {
+    const todayUTC = new Date().toISOString().slice(0, 10);
+    const lastSpinDate = localStorage.getItem('sr_spin_utc_date');
+    if (lastSpinDate === todayUTC) {
+        alert("Прокрутка доступна 1 раз в сутки по мировому времени (UTC)! Возвращайся завтра ⏳");
+        return;
+    }
+
+    const wheel = document.getElementById('wheelCircle');
+    const btn = document.getElementById('spinWheelBtn');
+    btn.disabled = true;
+    
+    const prizes = [
+        { name: "✂️ +2 Подсказки 50/50", apply: () => { G.h5c = (G.h5c || 2) + 2; } },
+        { name: "🏎️ +1 Дополнительная жизнь", apply: () => { G.lv = (G.lv || 3) + 1; } },
+        { name: "⏭️ +2 Пропуска вопросов", apply: () => { G.hsc = (G.hsc || 1) + 2; } },
+        { name: "🔥 +3 Подсказки 50/50", apply: () => { G.h5c = (G.h5c || 2) + 3; } },
+    ];
+    
+    const randomRotations = 5 + Math.floor(Math.random() * 4);
+    const randomDegrees = Math.floor(Math.random() * 360);
+    const totalDeg = randomRotations * 360 + randomDegrees;
+    
+    wheel.style.transform = `rotate(${totalDeg}deg)`;
+
+    setTimeout(() => {
+        const prizeIndex = Math.floor(Math.random() * prizes.length);
+        const prize = prizes[prizeIndex];
+        prize.apply();
+
+        localStorage.setItem('sr_spin_utc_date', todayUTC);
+        localStorage.setItem('sr_stats', JSON.stringify(stats));
+        updateStatsUI();
+
+        alert(`🎉 ВЫИГРЫШ: ${prize.name}! Бонус начислен!`);
+        closeDailyWheel();
+    }, 3600);
+}
+
+// SHOP & HINT PURCHASES
+function openShopModal() { document.getElementById('shopModal').classList.add('active'); }
+function closeShopModal() { document.getElementById('shopModal').classList.remove('active'); }
+
+async function buyHintPack(packType) {
+    const userId = tg?.initDataUnsafe?.user?.id || 'guest';
+    let invoiceLink = null;
+
+    if (tg?.openInvoice) {
+        try {
+            const response = await fetch(`${PAYMENT_WORKER_URL}/create-hints-invoice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ packType, userId })
+            });
+            const data = await response.json();
+            if (data.ok && data.invoiceLink) invoiceLink = data.invoiceLink;
+        } catch (e) {}
+
+        if (!invoiceLink) {
+            let title = '✂️ 5x 50/50';
+            let amount = 10;
+            if (packType === 'skip') { title = '⏭️ 5x Пропусков'; amount = 15; }
+            else if (packType === 'bundle') { title = '⚡ Набор Гонщик'; amount = 25; }
+
+            invoiceLink = await createDirectStarsInvoice(title, 'Покупка подсказок в Speed Quiz', amount, { type: 'hints', packType, userId });
+        }
+
+        if (invoiceLink) {
+            tg.openInvoice(invoiceLink, (status) => {
+                if (status === 'paid') {
+                    applyHintPackReward(packType);
+                    closeShopModal();
+                } else if (status === 'failed') {
+                    alert("Оплата не прошла. Попробуй ещё раз!");
+                }
+            });
+            return;
+        }
+    }
+
+    // Demo fallback
+    applyHintPackReward(packType);
+    closeShopModal();
+}
+
+function applyHintPackReward(packType) {
+    if (packType === 'h50') {
+        G.h5c = (G.h5c || 2) + 5;
+        alert("🎉 +5 Подсказок 50/50 успешно добавлены!");
+    } else if (packType === 'skip') {
+        G.hsc = (G.hsc || 1) + 5;
+        alert("🎉 +5 Пропусков вопросов успешно добавлены!");
+    } else if (packType === 'bundle') {
+        G.h5c = (G.h5c || 2) + 5;
+        G.hsc = (G.hsc || 1) + 5;
+        G.lv = (G.lv || 3) + 2;
+        alert("🎉 Набор «Гонщик» активирован! +5 50/50, +5 Пропусков и +2 Жизни!");
+    }
+    updateStatsUI();
+}
+
+// TELEGRAM CHALLENGE DUAL
+function challengeFriend() {
+    const player = getPlayerInfo();
+    const score = G.sc > 0 ? G.sc : stats.b;
+    const text = `⚔️ ДУЭЛЬ В SPEED QUIZ!
+
+🏎️ ${player.name} вызывает тебя на гоночный поединок!
+⭐ Его результат: ${score.toLocaleString()} PTS
+
+Сможешь опередить и забрать кубок? 🏁🏆`;
+
+    if (tg?.switchInlineQuery) {
+        tg.switchInlineQuery(text, ['users', 'groups', 'channels']);
+    } else {
+        navigator.clipboard?.writeText(text);
+        alert("Текст вызова скопирован! Отправь его другу в Telegram чат ⚔️🏎️");
+    }
+}
 
 function end() {
     clearInterval(G.ti);
@@ -8576,6 +8905,9 @@ function end() {
     stats.b = Math.max(stats.b, G.sc);
     stats.c += G.ok;
     localStorage.setItem('sr_stats', JSON.stringify(stats));
+
+    // Submit score to leaderboard
+    submitScoreToBackend(G.sc);
 
     const t = I18N[currentLang] || I18N.ru;
     let rankName = t.ranks[0];
