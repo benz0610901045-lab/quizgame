@@ -326,6 +326,7 @@
             <button class="donate-btn donate-stars" onclick="payReviveStars()">⭐ Продолжить за 25 Stars</button>
             <button class="btn-s" style="margin-top:4px;" onclick="closeReviveAndEnd()">🏁 Завершить заезд</button>
         </div>
+        <button class="modal-close" onclick="closeReviveAndEnd()">Закрыть</button>
     </div>
 </div>
 
@@ -8675,6 +8676,11 @@ async function payReviveStars() {
     G.revived = true;
     document.getElementById('reviveModal').classList.remove('active');
     lq();
+}
+
+function closeReviveAndEnd() {
+    document.getElementById('reviveModal').classList.remove('active');
+    end();
 }
 
 let localLeaders = JSON.parse(localStorage.getItem('sr_leaderboard') || '[]');
