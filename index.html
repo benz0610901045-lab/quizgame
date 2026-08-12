@@ -56,16 +56,20 @@
         @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
         /* TOP BAR */
-        .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;z-index:10;gap:4px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-        .top-bar::-webkit-scrollbar{display:none;}
-        .lang-select{display:flex;gap:2px;background:var(--card);padding:3px;border-radius:12px;border:1px solid var(--glass-border);backdrop-filter:blur(10px);height:36px;align-items:center;flex-shrink:0;}
-        .lang-btn{background:transparent;border:none;color:var(--txt2);padding:3px 6px;font-size:10px;font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s ease;min-width:32px;text-align:center;}
-        .lang-btn.active{background:var(--speed);color:#fff;box-shadow:0 2px 10px rgba(255,51,68,0.4)}
+        .top-bar{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;z-index:10;}
+        .top-bar-row1{width:100%;display:flex;justify-content:space-between;align-items:center;}
+        .lang-dropdown-container{position:relative;display:inline-block;z-index:20;}
+        .lang-dropdown-btn{background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--glass-border);color:var(--txt);padding:6px 12px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;height:34px;}
+        .lang-dropdown-btn:hover{border-color:var(--accent);background:rgba(255,51,68,0.12);}
+        .lang-dropdown-menu{position:absolute;top:105%;left:0;background:var(--bg2);backdrop-filter:blur(16px);border:1px solid rgba(255,215,0,0.35);border-radius:14px;padding:6px;display:none;flex-direction:column;gap:4px;min-width:145px;box-shadow:0 10px 30px rgba(0,0,0,0.9);z-index:100;}
+        .lang-dropdown-menu.active{display:flex;animation:fadeIn 0.2s ease;}
+        .lang-opt{padding:8px 12px;border-radius:10px;font-size:12px;font-weight:700;color:var(--txt);cursor:pointer;transition:all 0.2s ease;text-align:left;display:flex;align-items:center;gap:6px;}
+        .lang-opt:hover,.lang-opt.selected{background:var(--speed);color:#fff;box-shadow:0 2px 10px rgba(255,51,68,0.4);}
         
-        .top-right-btns{display:flex;gap:4px;height:36px;align-items:center;flex-shrink:0;}
-        .donate-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:3px 7px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;height:32px;flex-shrink:0;}
+        .top-right-btns{display:flex;gap:6px;width:100%;height:36px;align-items:center;}
+        .donate-top-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;background:linear-gradient(135deg,#ffd700,#ff8800);border:none;color:#000;padding:4px 6px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 4px 15px rgba(255,215,0,0.3);white-space:nowrap;height:36px;}
         .donate-top-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,0.5)}
-        .leader-top-btn{display:flex;align-items:center;justify-content:center;gap:3px;background:var(--card);border:1px solid rgba(255,215,0,0.4);backdrop-filter:blur(10px);color:var(--gold);padding:3px 7px;font-size:10px;font-weight:800;border-radius:10px;cursor:pointer;transition:all .2s ease;white-space:nowrap;height:32px;flex-shrink:0;}
+        .leader-top-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;background:var(--card);border:1px solid rgba(255,215,0,0.4);backdrop-filter:blur(10px);color:var(--gold);padding:4px 6px;font-size:11px;font-weight:800;border-radius:12px;cursor:pointer;transition:all .2s ease;white-space:nowrap;height:36px;}
         .leader-top-btn:hover{background:rgba(255,215,0,0.12);box-shadow:0 4px 15px rgba(255,215,0,0.2)}
 
         a.ig-link, .ig-link{display:flex !important;align-items:center !important;justify-content:center !important;gap:8px !important;padding:14px 18px !important;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) !important;border-radius:16px !important;color:#ffffff !important;font-weight:800 !important;font-size:14px !important;text-decoration:none !important;box-shadow:0 6px 20px rgba(253,29,29,0.4) !important;width:100% !important;max-width:420px !important;margin-top:14px !important;margin-bottom:20px !important;text-align:center !important;}
@@ -179,11 +183,18 @@
 <!-- START SCREEN -->
 <div id="S1" class="screen active">
     <div class="top-bar">
-        <div class="lang-select">
-            <button class="lang-btn active" onclick="setLang('ru')">🇷🇺 RU</button>
-            <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
-            <button class="lang-btn" onclick="setLang('de')">🇩🇪 DE</button>
-            <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+        <div class="top-bar-row1">
+            <div class="lang-dropdown-container">
+                <button class="lang-dropdown-btn" onclick="toggleLangDropdown(event)">
+                    🌐 <span id="currentLangLabel">🇷🇺 RU</span> <span style="font-size:9px;color:var(--txt2);">▼</span>
+                </button>
+                <div class="lang-dropdown-menu" id="langDropdownMenu">
+                    <div class="lang-opt selected" data-lang="ru" onclick="selectLang('ru')">🇷🇺 Русский</div>
+                    <div class="lang-opt" data-lang="en" onclick="selectLang('en')">🇬🇧 English</div>
+                    <div class="lang-opt" data-lang="de" onclick="selectLang('de')">🇩🇪 Deutsch</div>
+                    <div class="lang-opt" data-lang="es" onclick="selectLang('es')">🇪🇸 Español</div>
+                </div>
+            </div>
         </div>
         <div class="top-right-btns">
             <button class="leader-top-btn" style="border-color:var(--warn);color:var(--warn);" onclick="openDailyWheel()">🎁 <span id="t-wheel-btn">Рулетка</span></button>
@@ -196,7 +207,7 @@
         <div class="logo">🏎️</div>
         <h1 class="title">SPEED QUIZ</h1>
         <p class="subtitle" id="t-subtitle">Проверь свои знания и стань легендой!</p>
-        <p class="brand">by @shrtrcng</p>
+        <p class="brand">BY @SHORT RACING</p>
     </div>
 
     <div class="stats-row">
@@ -8323,12 +8334,32 @@ const RAW_QUESTIONS = {
 let G = { sc: 0, lv: 3, cq: 0, tq: 10, ok: 0, str: 0, bstr: 0, tl: 15, ti: null, cat: 'mix', diff: 'easy', qq: [], h50: 2, hsk: 1, st: 0, ans: 0, baseTime: 15, revived: false };
 let stats = JSON.parse(localStorage.getItem('sr_stats') || '{"g":0,"b":0,"c":0}');
 
+function toggleLangDropdown(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('langDropdownMenu')?.classList.toggle('active');
+}
+
+function selectLang(lang) {
+    setLang(lang);
+    document.getElementById('langDropdownMenu')?.classList.remove('active');
+}
+
+document.addEventListener('click', () => {
+    document.getElementById('langDropdownMenu')?.classList.remove('active');
+});
+
 function setLang(lang) {
     currentLang = lang;
     localStorage.setItem('sr_lang', lang);
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`)?.classList.add('active');
-    
+
+    const labels = { ru: '🇷🇺 RU', en: '🇬🇧 EN', de: '🇩🇪 DE', es: '🇪🇸 ES' };
+    if (document.getElementById('currentLangLabel')) {
+        document.getElementById('currentLangLabel').textContent = labels[lang] || '🇷🇺 RU';
+    }
+    document.querySelectorAll('.lang-opt').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.lang === lang);
+    });
+
     const t = I18N[lang] || I18N.ru;
     document.getElementById('t-subtitle').textContent = t.subtitle;
     document.getElementById('t-donate-btn').textContent = t.donateBtn;
