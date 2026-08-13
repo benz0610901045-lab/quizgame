@@ -126,17 +126,23 @@
         .qphoto{width:100%;max-height:220px;object-fit:cover;border-radius:14px;margin-top:14px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 25px rgba(0,0,0,0.6)}
 
         .answers{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;margin-top:14px}
-        .abtn{width:100%;padding:14px 18px;background:var(--card);backdrop-filter:blur(10px);border:1.5px solid var(--glass-border);border-radius:14px;color:var(--txt);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease;text-align:left;font-family:'Inter',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
-        .abtn:hover{border-color:var(--accent);background:rgba(255,51,68,0.12);transform:translateX(4px)}
-        .abtn.ok{border-color:var(--ok);background:rgba(0,230,118,0.2);box-shadow:0 0 20px var(--ok-glow);color:#fff}
-        .abtn.no{border-color:var(--err);background:rgba(255,51,68,0.2);box-shadow:0 0 20px var(--err-glow);animation:shake .4s ease}
+        .abtn{width:100%;padding:14px 18px;background:var(--card);backdrop-filter:blur(10px);border:1.5px solid var(--glass-border);border-radius:14px;color:var(--txt);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease;text-align:left;font-family:'Inter',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,0.3);outline:none;-webkit-tap-highlight-color:transparent;}
+        @media (hover: hover) {
+            .abtn:hover:not(.dis):not(.ok):not(.no){border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);transform:translateX(4px)}
+        }
+        .abtn:focus, .abtn:focus-visible{outline:none;border-color:var(--glass-border);}
+        .abtn.ok{border-color:var(--ok) !important;background:rgba(0,230,118,0.2) !important;box-shadow:0 0 20px var(--ok-glow) !important;color:#fff !important}
+        .abtn.no{border-color:var(--err) !important;background:rgba(255,51,68,0.2) !important;box-shadow:0 0 20px var(--err-glow) !important;animation:shake .4s ease}
         .abtn.dis{pointer-events:none;opacity:.45}
         @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-        .hbar{width:100%;max-width:420px;display:flex;justify-content:center;gap:10px;margin-top:14px}
-        .hbtn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:20px;color:var(--gold);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s ease}
-        .hbtn:hover:not(:disabled){background:rgba(255,215,0,0.2);box-shadow:0 4px 15px rgba(255,215,0,0.2)}
-        .hbtn:disabled{opacity:.3;cursor:not-allowed}
+        .hbar{width:100%;max-width:420px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:14px}
+        .hbtn{display:flex;align-items:center;justify-content:center;gap:4px;padding:9px 4px;background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.28);border-radius:14px;color:var(--gold);font-size:11px;font-weight:800;cursor:pointer;transition:all .2s ease;white-space:nowrap;width:100%;box-shadow:0 4px 15px rgba(0,0,0,0.35);-webkit-tap-highlight-color:transparent;}
+        .hbtn .hcount{background:rgba(255,215,0,0.18);border:1px solid rgba(255,215,0,0.35);color:var(--gold);padding:1px 6px;border-radius:8px;font-size:10px;font-weight:900;}
+        @media (hover: hover) {
+            .hbtn:hover:not(:disabled){background:rgba(255,215,0,0.15);border-color:var(--gold);box-shadow:0 4px 15px rgba(255,215,0,0.25)}
+        }
+        .hbtn:disabled{opacity:.35;cursor:not-allowed;filter:grayscale(0.8)}
 
         /* RESULT SCREEN */
         .trophy{font-size:76px;margin-top:12px;animation:revv 2.2s infinite;filter:drop-shadow(0 10px 25px rgba(255,215,0,0.4))}
@@ -279,9 +285,9 @@
     </div>
     <div class="answers" id="ac"></div>
     <div class="hbar">
-        <button class="hbtn" id="h50" onclick="h5()">✂️ 50/50 (<span id="h5c">2</span>)</button>
-        <button class="hbtn" id="hfr" onclick="hf()">⏱️ +10с (<span id="hfc">0</span>)</button>
-        <button class="hbtn" id="hsk" onclick="hs()">⏭ <span id="t-skip">Пропуск</span> (<span id="hsc">1</span>)</button>
+        <button class="hbtn" id="h50" onclick="h5()">✂️ 50/50 <span class="hcount" id="h5c">2</span></button>
+        <button class="hbtn" id="hfr" onclick="hf()">⏱️ +10с <span class="hcount" id="hfc">0</span></button>
+        <button class="hbtn" id="hsk" onclick="hs()">⏭ <span id="t-skip">Пропуск</span> <span class="hcount" id="hsc">1</span></button>
     </div>
     <div id="ctxOfferContainer"></div>
 </div>
@@ -351,10 +357,10 @@
 <div class="modal-overlay" id="reviveModal">
     <div class="modal">
         <h2>🔥 СОХРАНИТЬ РЕКОРД!</h2>
-        <p>Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 25 ⭐ Stars!</p>
+        <p>Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 35 ⭐ Stars!</p>
         
         <div class="donate-options">
-            <button class="donate-btn donate-stars" onclick="payReviveStars()">⭐ Продолжить за 25 Stars</button>
+            <button class="donate-btn donate-stars" onclick="payReviveStars()">⭐ Продолжить за 35 Stars</button>
             <button class="btn-s" style="margin-top:4px;" onclick="closeReviveAndEnd()">🏁 Завершить заезд</button>
         </div>
         <button class="modal-close" onclick="closeReviveAndEnd()">Закрыть</button>
@@ -394,7 +400,7 @@
         </div>
 
         <button class="donate-btn donate-stars" id="spinWheelBtn" style="width:100%;font-size:15px;" onclick="spinDailyWheel()">🎡 КРУТИТЬ РУЛЕТКУ</button>
-        <button class="donate-btn donate-ton" id="bonusSpinBtn" style="width:100%;font-size:13px;margin-top:6px;display:none;" onclick="buyBonusSpin()">🎡 Бонусный спин за 5 ⭐ Stars</button>
+        <button class="donate-btn donate-ton" id="bonusSpinBtn" style="width:100%;font-size:13px;margin-top:6px;display:none;" onclick="buyBonusSpin()">🎡 Бонусный спин за 10 ⭐ Stars</button>
         <button class="modal-close" onclick="closeDailyWheel()">Закрыть</button>
     </div>
 </div>
@@ -412,7 +418,7 @@
                     <div style="font-weight:800;color:#fff;">✂️ 5x Подсказать 50/50</div>
                     <div style="font-size:11px;color:var(--txt2);">Убирает 2 неверных ответа</div>
                 </div>
-                <button class="preset-btn" onclick="buyHintPack('h50')">10 ⭐</button>
+                <button class="preset-btn" onclick="buyHintPack('h50')">15 ⭐</button>
             </div>
 
             <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
@@ -420,7 +426,7 @@
                     <div style="font-weight:800;color:#fff;">⏭️ 5x Пропусков вопросов</div>
                     <div style="font-size:11px;color:var(--txt2);">Пропуск без потери жизни</div>
                 </div>
-                <button class="preset-btn" onclick="buyHintPack('skip')">15 ⭐</button>
+                <button class="preset-btn" onclick="buyHintPack('skip')">25 ⭐</button>
             </div>
 
             <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
@@ -428,7 +434,7 @@
                     <div style="font-weight:800;color:#fff;">⏱️ 5x Заморозка времени</div>
                     <div style="font-size:11px;color:var(--txt2);">+10 секунд к таймеру</div>
                 </div>
-                <button class="preset-btn" onclick="buyHintPack('freeze')">12 ⭐</button>
+                <button class="preset-btn" onclick="buyHintPack('freeze')">20 ⭐</button>
             </div>
         </div>
 
@@ -439,7 +445,7 @@
                     <div style="font-weight:900;color:var(--gold);">⚡ Набор «Чемпион»</div>
                     <div style="font-size:11px;color:var(--txt2);">5x 50/50 + 5x Skip + 3x ⏱️ + 2 Жизни</div>
                 </div>
-                <button class="donate-btn donate-stars" style="padding:6px 12px;font-size:12px;" onclick="buyHintPack('bundle')">35 ⭐</button>
+                <button class="donate-btn donate-stars" style="padding:6px 12px;font-size:12px;" onclick="buyHintPack('bundle')">50 ⭐</button>
             </div>
         </div>
 
@@ -499,8 +505,8 @@ const I18N = {
         donateDesc: "Выбери или введи любую сумму доната для автора @shrtrcng:", close: "Закрыть",
         reportBtn: "Сообщить об ошибке автору",
         ctxBuyHints: "Нужны подсказки?", ctxBuyFreeze: "Добавь времени!", ctxBuyBundle: "Набор «Чемпион» поможет!",
-        bonusSpin: "🎡 Бонусный спин за 5 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
-        vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 75 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
+        bonusSpin: "🎡 Бонусный спин за 10 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
+        vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
         cats: { endless: "♾️ Бесконечный режим (Survival)", mix: "🏁 Всё подряд", f1: "🏎️ Формула 1 & Ле-Ман", cars: "🚗 Суперкары & Гиперкары", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Стритрейсинг & JDM", engines: "🔧 Двигатели & Тюнинг", photo: "🖼️ Авто-Угадайка" },
         ranks: { 90: '🏆 Легенда Автоспорта', 70: '🥇 Профи-гонщик', 50: '🥈 Опытный пилот', 30: '🥉 Любитель', 0: '🏁 Новичок' }
     },
@@ -517,8 +523,8 @@ const I18N = {
         donateDesc: "Choose or enter any donation amount for @shrtrcng:", close: "Close",
         reportBtn: "Report an error to author",
         ctxBuyHints: "Need hints?", ctxBuyFreeze: "Add more time!", ctxBuyBundle: "Champion Bundle will help!",
-        bonusSpin: "🎡 Bonus spin for 5 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
-        vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 75 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
+        bonusSpin: "🎡 Bonus spin for 10 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
+        vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
         cats: { endless: "♾️ Endless Survival Mode", mix: "🏁 All Mixed", f1: "🏎️ Formula 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Street Racing & JDM", engines: "🔧 Engines & Tuning", photo: "🖼️ Guess by Photo" },
         ranks: { 90: '🏆 Racing Legend', 70: '🥇 Pro Driver', 50: '🥈 Experienced Racer', 30: '🥉 Amateur Driver', 0: '🏁 Novice' }
     },
@@ -535,8 +541,8 @@ const I18N = {
         donateDesc: "Unterstütze die Entwicklung des Spiels!", close: "Schließen",
         reportBtn: "Fehler melden",
         ctxBuyHints: "Hinweise nötig?", ctxBuyFreeze: "Mehr Zeit!", ctxBuyBundle: "Champion-Paket hilft!",
-        bonusSpin: "🎡 Bonusdreh für 5 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
-        vipTitle: "🏅 GOLD RACER", vipDesc: "Für immer: 🏅 Abzeichen, +3s Timer, 2 Drehs/Tag, +1 gratis 50/50", vipBuy: "VIP für 75 ⭐", vipOwned: "🏅 VIP Gold Racer — Aktiv!",
+        bonusSpin: "🎡 Bonusdreh für 20 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
+        vipTitle: "🏅 GOLD RACER", vipDesc: "Für immer: 🏅 Abzeichen, +3s Timer, 2 Drehs/Tag, +1 gratis 50/50", vipBuy: "VIP für 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Aktiv!",
         cats: { endless: "♾️ Endlos Survival-Modus", mix: "🏁 Gemischt", f1: "🏎️ Formel 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Straßenrennen & JDM", engines: "🔧 Motoren & Tuning", photo: "🖼️ Auto-Rätsel" },
         ranks: { 90: '🏆 Rennlegende', 70: '🥇 Profi-Fahrer', 50: '🥈 Erfahrener Pilot', 30: '🥉 Amateur', 0: '🏁 Anfänger' }
     },
@@ -8562,6 +8568,9 @@ function go() {
 }
 
 function lq() {
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+    }
     if (G.lv <= 0) {
         if (G.cat === 'endless' && !G.revived) {
             document.getElementById('reviveModal').classList.add('active');
@@ -8673,11 +8682,11 @@ function showCtxOffer() {
     const container = document.getElementById('ctxOfferContainer');
     let text = t.ctxBuyHints;
     let pack = 'h50';
-    let price = '10 ⭐';
+    let price = '15 ⭐';
     if (G.h50 <= 0 && G.hfr <= 0) {
-        text = t.ctxBuyBundle; pack = 'bundle'; price = '35 ⭐';
+        text = t.ctxBuyBundle; pack = 'bundle'; price = '50 ⭐';
     } else if (G.hfr <= 0) {
-        text = t.ctxBuyFreeze; pack = 'freeze'; price = '12 ⭐';
+        text = t.ctxBuyFreeze; pack = 'freeze'; price = '20 ⭐';
     }
     container.innerHTML = `
         <div class="ctx-offer">
@@ -8795,7 +8804,7 @@ async function payReviveStars() {
         { userId },
         '🔥 Продолжить заезд — Speed Quiz',
         'Восстановить 3 🏎️ жизни и сохранить рекорд!',
-        25,
+        35,
         { type: 'revive', userId }
     );
     
@@ -9027,10 +9036,10 @@ function closeShopModal() { document.getElementById('shopModal').classList.remov
 async function buyHintPack(packType) {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
     let title = '✂️ 5x 50/50';
-    let amount = 10;
-    if (packType === 'skip') { title = '⏭️ 5x Пропусков'; amount = 15; }
-    else if (packType === 'freeze') { title = '⏱️ 5x Заморозка времени'; amount = 12; }
-    else if (packType === 'bundle') { title = '⚡ Набор «Чемпион»'; amount = 35; }
+    let amount = 15;
+    if (packType === 'skip') { title = '⏭️ 5x Пропусков'; amount = 25; }
+    else if (packType === 'freeze') { title = '⏱️ 5x Заморозка времени'; amount = 20; }
+    else if (packType === 'bundle') { title = '⚡ Набор «Чемпион»'; amount = 50; }
 
     const invoiceLink = await fetchInvoiceLink(
         'create-hints-invoice',
@@ -9116,7 +9125,7 @@ async function buyVip() {
         { userId },
         '🏅 VIP Gold Racer — Speed Quiz',
         'Навсегда: бейдж 🏅, +3с таймер, 2 спина/день, +1 50/50',
-        75,
+        150,
         { type: 'vip', userId }
     );
 
@@ -9158,7 +9167,7 @@ async function buyBonusSpin() {
         { userId },
         '🎡 Бонусный спин рулетки',
         'Дополнительный спин с улучшенными призами!',
-        5,
+        10,
         { type: 'bonus_spin', userId }
     );
 
