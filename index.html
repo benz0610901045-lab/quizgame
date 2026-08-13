@@ -320,7 +320,7 @@
 <!-- CUSTOM DONATE MODAL -->
 <div class="modal-overlay" id="donateModal">
     <div class="modal">
-        <h2>⚡ ПОДДЕРЖАТЬ ПРОЕКТ</h2>
+        <h2 id="t-donate-modal-title">⚡ ПОДДЕРЖАТЬ ПРОЕКТ</h2>
         <p id="t-donate-desc">Выбери или введи любую сумму доната для автора @shrtrcng:</p>
         
         <div class="preset-row">
@@ -333,10 +333,10 @@
         <input type="number" id="customDonateVal" class="custom-input" placeholder="Введи свою сумму..." value="100" />
 
         <div class="donate-options">
-            <button class="donate-btn donate-stars" onclick="payCustomStars()">⭐ Поддержать Stars в Telegram</button>
-            <button class="donate-btn donate-ton" onclick="payCustomTON()">💎 Поддержать в TON Crypto</button>
+            <button class="donate-btn donate-stars" onclick="payCustomStars()"><span id="t-donate-stars-btn">⭐ Поддержать Stars в Telegram</span></button>
+            <button class="donate-btn donate-ton" onclick="payCustomTON()"><span id="t-donate-ton-btn">💎 Поддержать в TON Crypto</span></button>
         </div>
-        <button class="modal-close" onclick="closeDonate()" id="t-close">Закрыть</button>
+        <button class="modal-close" onclick="closeDonate()"><span id="t-donate-close">Закрыть</span></button>
     </div>
 </div>
 
@@ -504,6 +504,7 @@ const I18N = {
         rOk: "Правильных", rTime: "Время", rAcc: "Точность", rStr: "Серия 🔥",
         again: "ЕЩЁ ЗАЕЗД", challengeBtn: "⚔️ Вызвать друга на дуэль", share: "Поделиться результатом", donateRes: "Поддержать проект (TON / Stars)", garage: "В Гараж",
         donateDesc: "Выбери или введи любую сумму доната для автора @shrtrcng:", close: "Закрыть",
+        donateModalTitle: "⚡ ПОДДЕРЖАТЬ ПРОЕКТ", donateStarsBtn: "⭐ Поддержать Stars в Telegram", donateTonBtn: "💎 Поддержать в TON Crypto", donatePlaceholder: "Введи свою сумму...",
         reportBtn: "Сообщить об ошибке",
         ptsUnit: "Очков", secUnit: "с",
         qReportBtn: "Ошибка в вопросе?",
@@ -536,6 +537,7 @@ const I18N = {
         rOk: "Correct", rTime: "Time", rAcc: "Accuracy", rStr: "Streak 🔥",
         again: "PLAY AGAIN", challengeBtn: "⚔️ Challenge a Friend", share: "Share Result", donateRes: "Support Author (TON / Stars)", garage: "Garage",
         donateDesc: "Choose or enter any donation amount for @shrtrcng:", close: "Close",
+        donateModalTitle: "⚡ SUPPORT THE PROJECT", donateStarsBtn: "⭐ Support with Telegram Stars", donateTonBtn: "💎 Support with TON Crypto", donatePlaceholder: "Enter custom amount...",
         reportBtn: "Report an error",
         ptsUnit: "PTS", secUnit: "s",
         qReportBtn: "Report question?",
@@ -568,6 +570,7 @@ const I18N = {
         rOk: "Richtig", rTime: "Zeit", rAcc: "Genauigkeit", rStr: "Serie 🔥",
         again: "NOCHMAL", challengeBtn: "⚔️ Freund herausfordern", share: "Ergebnis Teilen", donateRes: "Unterstützen (TON / Stars)", garage: "Garage",
         donateDesc: "Unterstütze die Entwicklung des Spiels!", close: "Schließen",
+        donateModalTitle: "⚡ PROJEKT UNTERSTÜTZEN", donateStarsBtn: "⭐ Mit Telegram Stars unterstützen", donateTonBtn: "💎 Mit TON Crypto unterstützen", donatePlaceholder: "Betrag eingeben...",
         reportBtn: "Fehler melden",
         ptsUnit: "Punkte", secUnit: "s",
         qReportBtn: "Fehler melden?",
@@ -600,6 +603,7 @@ const I18N = {
         rOk: "Correctas", rTime: "Tiempo", rAcc: "Precisión", rStr: "Racha 🔥",
         again: "OTRA CARRERA", challengeBtn: "⚔️ Desafiar a un Amigo", share: "Compartir Resultado", donateRes: "Apoyar (TON / Stars)", garage: "Al Garaje",
         donateDesc: "¡Apoya el desarrollo del juego!", close: "Cerrar",
+        donateModalTitle: "⚡ APOYAR EL PROYECTO", donateStarsBtn: "⭐ Apoyar con Telegram Stars", donateTonBtn: "💎 Apoyar con TON Crypto", donatePlaceholder: "Introduce la cantidad...",
         reportBtn: "Reportar error",
         ptsUnit: "Puntos", secUnit: "s",
         qReportBtn: "¿Reportar pregunta?",
@@ -624,15 +628,145 @@ const I18N = {
 
 function translateGameText(str, lang) {
     if (!str || typeof str !== 'string' || lang === 'ru') return str;
-    let s = str;
+    let s = str.trim();
+
+    const ANSWERS_DICT = {
+        en: {
+            "Среднемоторная": "Mid-engine", "Переднемоторная": "Front-engine", "Заднемоторная": "Rear-engine",
+            "Полностью электрическая": "Fully electric", "Задний": "Rear-Wheel Drive (RWD)", "Задний привод": "Rear-Wheel Drive (RWD)",
+            "Полный": "All-Wheel Drive (AWD)", "Полный привод": "All-Wheel Drive (AWD)", "Передний": "Front-Wheel Drive (FWD)", "Передний привод": "Front-Wheel Drive (FWD)",
+            "Роторный мотор": "Rotary engine", "Роторный": "Rotary engine", "Рядный 4-цилиндровый": "Inline-4", "Рядный 6-цилиндровый": "Inline-6",
+            "V-образный 8-цилиндровый": "V8 engine", "V-образный 10-цилиндровый": "V10 engine", "V-образный 12-цилиндровый": "V12 engine",
+            "Оппозитный": "Flat / Boxer engine", "Электрический привод": "Electric drive", "Карбоновый кузов": "Carbon fiber body",
+            "Шуто — скоростная магистраль Ванаган": "Shuto Expressway (Wangan)", "Фудзи Спидвей": "Fuji Speedway", "Цукуба": "Tsukuba Circuit", "Эбису": "Ebisu Circuit",
+            "Клапан": "Valve", "Палец": "Piston Pin", "Толкатель": "Tappet", "Шатун": "Connecting Rod",
+            "Блок цилиндров": "Engine Block", "Маховик": "Flywheel", "Коленвал": "Crankshaft", "Распредвал": "Camshaft",
+            "Турбокомпрессор": "Turbocharger", "Интеркулер": "Intercooler", "Карбюратор": "Carburetor", "Сцепление": "Clutch",
+            "Коробка передач": "Gearbox", "Дифференциал": "Differential", "Подвеска": "Suspension", "Амортизатор": "Shock Absorber", "Тормозной диск": "Brake Disc",
+            "Кадзунори Ямаути": "Kazunori Yamauchi", "Такуми Фудзивара": "Takumi Fujiwara", "Кейити Цутия": "Keiichi Tsuchiya"
+        },
+        de: {
+            "Среднемоторная": "Mittelmotor", "Переднемоторная": "Frontmotor", "Заднемоторная": "Heckmotor",
+            "Полностью электрическая": "Voll elektrisch", "Задний": "Hinterradantrieb (RWD)", "Задний привод": "Hinterradantrieb (RWD)",
+            "Полный": "Allradantrieb (AWD)", "Полный привод": "Allradantrieb (AWD)", "Передний": "Vorderradantrieb (FWD)", "Передний привод": "Vorderradantrieb (FWD)",
+            "Роторный мотор": "Wankelmotor", "Роторный": "Wankelmotor", "Рядный 4-цилиндровый": "Reihen-4-Zylinder", "Рядный 6-цилиндровый": "Reihen-6-Zylinder",
+            "V-образный 8-цилиндровый": "V8-Motor", "V-образный 10-цилиндровый": "V10-Motor", "V-образный 12-цилиндровый": "V12-Motor",
+            "Оппозитный": "Boxermotor", "Электрический привод": "Elektroantrieb", "Карбоновый кузов": "Karbon-Karosserie",
+            "Шуто — скоростная магистраль Ванаган": "Shuto Autobahn (Wangan)", "Фудзи Спидвей": "Fuji Speedway", "Цукуба": "Tsukuba Circuit", "Эбису": "Ebisu Circuit",
+            "Клапан": "Ventil", "Палец": "Kolbenbolzen", "Толкатель": "Stößel", "Шатун": "Pleuel",
+            "Блок цилиндров": "Zylinderblock", "Маховик": "Schwungrad", "Коленвал": "Kurbelwelle", "Распредвал": "Nockenwelle",
+            "Турбокомпрессор": "Turbolader", "Интеркулер": "Ladeluftkühler", "Карбюратор": "Vergaser", "Сцепление": "Kupplung",
+            "Коробка передач": "Getriebe", "Дифференциал": "Differenzial", "Подвеска": "Aufhängung", "Амортизатор": "Stoßdämpfer", "Тормозной диск": "Bremsscheibe",
+            "Кадзунори Ямаути": "Kazunori Yamauchi", "Такуми Фудзивара": "Takumi Fujiwara", "Кейити Цутия": "Keiichi Tsuchiya"
+        },
+        es: {
+            "Среднемоторная": "Motor central", "Переднемоторная": "Motor delantero", "Заднемоторная": "Motor trasero",
+            "Полностью электрическая": "Totalmente eléctrico", "Задний": "Tracción trasera (RWD)", "Задний привод": "Tracción trasera (RWD)",
+            "Полный": "Tracción total (AWD)", "Полный привод": "Tracción total (AWD)", "Передний": "Tracción delantera (FWD)", "Передний привод": "Tracción delantera (FWD)",
+            "Роторный мотор": "Motor rotativo", "Роторный": "Motor rotativo", "Рядный 4-цилиндровый": "4 cilindros en línea", "Рядный 6-цилиндровый": "6 cilindros en línea",
+            "V-образный 8-цилиндровый": "Motor V8", "V-образный 10-цилиндровый": "Motor V10", "V-образный 12-цилиндровый": "Motor V12",
+            "Оппозитный": "Motor Bóxer", "Электрический привод": "Propulsión eléctrica", "Карбоновый кузов": "Carrocería de carbono",
+            "Шуто — скоростная магистраль Ванаган": "Autopista Shuto (Wangan)", "Фудзи Спидвей": "Fuji Speedway", "Цукуба": "Circuito de Tsukuba", "Эбису": "Circuito de Ebisu",
+            "Клапан": "Válvula", "Палец": "Bulón", "Толкатель": "Empujador", "Шатун": "Biela",
+            "Блок цилиндров": "Bloque del motor", "Маховик": "Volante de inercia", "Коленвал": "Cigüeñal", "Распредвал": "Árbol de levas",
+            "Турбокомпрессор": "Turbocompresor", "Интеркулер": "Intercooler", "Карбюратор": "Carburador", "Сцепление": "Embrague",
+            "Коробка передач": "Caja de cambios", "Дифференциал": "Diferencial", "Подвеска": "Suspensión", "Амортизатор": "Amortiguador", "Тормозной диск": "Disco de freno",
+            "Кадзунори Ямаути": "Kazunori Yamauchi", "Такуми Фудзивара": "Takumi Fujiwara", "Кейити Цутия": "Keiichi Tsuchiya"
+        }
+    };
+
+    if (ANSWERS_DICT[lang] && ANSWERS_DICT[lang][s]) {
+        return ANSWERS_DICT[lang][s];
+    }
+
+    const EXACT_Q = {
+        en: {
+            "Как называется спец-способность в Midnight Club 3, позволяющая расталкивать и таранить трафик силовой волной?": "What special ability in Midnight Club 3 allows pushing and ramming traffic with a shockwave?",
+            "Угадай автомобиль на фото:": "Guess the car in the photo:",
+            "Как называется деталь, соединяющая поршень с коленвалом?": "What is the name of the part connecting the piston to the crankshaft?",
+            "Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?": "Which constructor has won the most Constructors' Championships in Formula 1 history?",
+            "Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?": "Which engine of the Porsche 911 992 GT3 is naturally aspirated 4.0L?",
+            "Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?": "Which track in Tokyo is the legendary spot for 'Wangan' night racing?",
+            "Какая немецкая компания выпускает культовую спорт-модель 911?": "Which German company manufactures the iconic 911 sports model?",
+            "Какая модель считается самым продаваемым маслкаром в истории?": "Which model is considered the best-selling muscle car in history?",
+            "Какая итальянская марка использует эмблему с разъярённым золотым быком?": "Which Italian brand uses the angry golden bull emblem?",
+            "Что означает англоязычная аббревиатура RWD в характеристиках трансмиссии?": "What does the acronym RWD stand for in transmission specs?",
+            "Какая легендарная машина в кузове E46 является главным символом NFS Most Wanted (2005)?": "Which legendary car in the E46 chassis is the main symbol of NFS Most Wanted (2005)?",
+            "Кто был главным соперником (Blacklist #1), забравшим машину у игрока в NFS Most Wanted?": "Who was the main rival (Blacklist #1) who took the player's car in NFS Most Wanted?",
+            "В каком вымышленном городе разворачивается действие NFS Underground 2?": "In which fictional city is NFS Underground 2 set?",
+            "Какое нитро-ускорение активируется кнопкой в играх серии Need for Speed?": "Which nitro boost is activated by a button in Need for Speed games?",
+            "Какая знаменитая студия разработала культовую серию аркадных уличных гонок Midnight Club?": "Which famous studio developed the iconic arcade street racing series Midnight Club?",
+            "В каких двух мировых столицах происходили нелегальные уличные гонки в самой первой части Midnight Club 2000 года?": "In which two world capitals did illegal street racing take place in the original Midnight Club (2000)?",
+            "Какой тип транспорта впервые появился в серии игр Midnight Club начиная со 2-й части?": "What vehicle type first appeared in the Midnight Club series starting from installment 2?",
+            "В каких трех городах разворачивались уличные гонки в Midnight Club 2?": "In which three cities were street races set in Midnight Club 2?",
+            "Кто является бессменным руководителем разработки серии автосимуляторов Gran Turismo?": "Who is the legendary lead developer of the Gran Turismo series?",
+            "В какой стране разворачивается действие гоночного фестиваля в Forza Horizon 5?": "In which country is the racing festival set in Forza Horizon 5?",
+            "Какая гоночная франшиза является эксклюзивом PlayStation?": "Which racing franchise is exclusive to PlayStation?",
+            "Какой помощник в играх Forza рисует траекторию торможения на асфальте?": "Which assist in Forza games draws the braking line on the asphalt?",
+            "Как расшифровывается аббревиатура JDM в автомобильной культуре?": "What does the acronym JDM stand for in car culture?",
+            "Какой автомобиль водил Такуми Фудзивара в аниме «Initial D»?": "Which car was driven by Takumi Fujiwara in the anime 'Initial D'?",
+            "Кому из автогонщиков принадлежит титул «Король Дрифта»?": "Which racing driver holds the title of 'Drift King'?",
+            "Какая песня в жанре Eurobeat является главным мемом дрифта из Initial D?": "Which Eurobeat song is the main drift meme from Initial D?",
+            "Какой легендарный 3.0L Twin-Turbo мотор ставился на Toyota Supra MK4?": "Which legendary 3.0L Twin-Turbo engine was fitted in the Toyota Supra MK4?",
+            "Какая компания устанавливала роторные моторы 13B-REW на спорткар RX-7?": "Which company installed 13B-REW rotary engines in the RX-7 sports car?",
+            "Какая система Honda активирует подхват фаз ГРМ на высоких оборотах?": "Which Honda system activates variable valve timing at high RPM?",
+            "Сколько свечей зажигания обычно приходится на 1 цилиндр стандартного бензинового мотора?": "How many spark plugs are typically per 1 cylinder of a standard petrol engine?"
+        },
+        de: {
+            "Как называется спец-способность в Midnight Club 3, позволяющая расталкивать и таранить трафик силовой волной?": "Wie heißt die Spezialfähigkeit in Midnight Club 3, mit der man den Verkehr mit einer Druckwelle rammen kann?",
+            "Угадай автомобиль на фото:": "Errate das Auto auf dem Foto:",
+            "Как называется деталь, соединяющая поршень с коленвалом?": "Wie heißt das Teil, das den Kolben mit der Kurbelwelle verbindet?",
+            "Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?": "Welcher Konstrukteur hat die meiste Konstrukteurstitel in der Formel 1 gewonnen?",
+            "Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?": "Welcher Motor des Porsche 911 992 GT3 ist ein 4.0L Saugmotor?",
+            "Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?": "Welche Strecke in Tokio ist der legendäre Ort für 'Wangan'-Nachtrennen?",
+            "Какая немецкая компания выпускает культовую спорт-модель 911?": "Welcher deutsche Hersteller baut das kultige Sportmodell 911?",
+            "Какая модель считается самым продаваемым маслкаром в истории?": "Welches Modell gilt als das meistverkaufte Muscle-Car der Geschichte?",
+            "Какая итальянская марка использует эмблему с разъярённым золотым быком?": "Welche italienische Marke nutzt das Emblem mit dem wütenden goldenen Stier?",
+            "Что означает англоязычная аббревиатура RWD в характеристиках трансмиссии?": "Wofür steht die englische Abkürzung RWD bei Antriebsspezifikationen?",
+            "Какая легендарная машина в кузове E46 является главным символом NFS Most Wanted (2005)?": "Welches legendäre Auto der Baureihe E46 ist das Hauptsymbol von NFS Most Wanted (2005)?",
+            "Кто был главным соперником (Blacklist #1), забравшим машину у игрока в NFS Most Wanted?": "Wer war der Hauptrivale (Blacklist #1), der dem Spieler das Auto in NFS Most Wanted stahl?",
+            "В каком вымышленном городе разворачивается действие NFS Underground 2?": "In welcher fiktiven Stadt spielt NFS Underground 2?",
+            "Какая знаменитая студия разработала культовую серию аркадных уличных гонок Midnight Club?": "Welches berühmte Studio entwickelte die kultige Straßenrennspiel-Reihe Midnight Club?",
+            "Кто является бессменным руководителем разработки серии автосимуляторов Gran Turismo?": "Wer ist der leitende Entwickler der Rennspiel-Reihe Gran Turismo?",
+            "В какой стране разворачивается действие гоночного фестиваля в Forza Horizon 5?": "In welchem Land findet das Rennfestival in Forza Horizon 5 statt?",
+            "Как расшифровывается аббревиатура JDM в автомобильной культуре?": "Wofür steht die Abkürzung JDM in der Autokultur?",
+            "Какой легендарный 3.0L Twin-Turbo мотор ставился на Toyota Supra MK4?": "Welcher legendäre 3.0L Twin-Turbo-Motor wurde in der Toyota Supra MK4 verbaut?"
+        },
+        es: {
+            "Как называется спец-способность в Midnight Club 3, позволяющая расталкивать и таранить трафик силовой волной?": "¿Cómo se llama la habilidad especial en Midnight Club 3 que permite embestir el tráfico con una onda expansiva?",
+            "Угадай автомобиль на фото:": "Adivina el coche de la foto:",
+            "Как называется деталь, соединяющая поршень с коленвалом?": "¿Cómo se llama la pieza que conecta el pistón al cigüeñal?",
+            "Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?": "¿Qué constructor ha ganado más Campeonatos de Constructores en la Fórmula 1?",
+            "Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?": "¿Qué motor del Porsche 911 992 GT3 es atmosférico 4.0L?",
+            "Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?": "¿Qué pista en Tokio es el lugar legendario de las carreras nocturnas 'Wangan'?",
+            "Какая немецкая компания выпускает культовую спорт-модель 911?": "¿Qué empresa alemana fabrica el icónico modelo deportivo 911?",
+            "Какая модель считается самым продаваемым маслкаром в истории?": "¿Qué modelo es considerado el muscle car más vendido de la historia?",
+            "Какая итальянская марка использует эмблему с разъярённым золотым быком?": "¿Qué marca italiana utiliza el emblema del toro dorado furioso?",
+            "Что означает англоязычная аббревиатура RWD в характеристиках трансмиссии?": "¿Qué significa la sigla en inglés RWD en las especificaciones de transmisión?",
+            "Какая легендарная машина в кузове E46 является главным символом NFS Most Wanted (2005)?": "¿Qué coche legendario con carrocería E46 es el símbolo principal de NFS Most Wanted (2005)?",
+            "Кто был главным соперником (Blacklist #1), забравшим машину у игрока в NFS Most Wanted?": "¿Quién fue el rival principal (Blacklist #1) que le quitó el coche al jugador en NFS Most Wanted?",
+            "В каком вымышленном городе разворачивается действие NFS Underground 2?": "¿En qué ciudad ficticia se desarrolla NFS Underground 2?",
+            "Какая знаменитая студия разработала культовую серию аркадных уличных гонок Midnight Club?": "¿Qué famoso estudio desarrolló la icónica saga de carreras callejeras Midnight Club?",
+            "Кто является бессменным руководителем разработки серии автосимуляторов Gran Turismo?": "¿Quién es el líder de desarrollo de la serie de simuladores Gran Turismo?",
+            "В какой стране разворачивается действие гоночного фестиваля в Forza Horizon 5?": "¿En qué país se desarrolla el festival de carreras en Forza Horizon 5?",
+            "Как расшифровывается аббревиатура JDM в автомобильной культуре?": "¿Qué significan las siglas JDM en la cultura automotriz?",
+            "Какой легендарный 3.0L Twin-Turbo мотор ставился на Toyota Supra MK4?": "¿Qué legendario motor 3.0L Twin-Turbo llevaba el Toyota Supra MK4?"
+        }
+    };
+
+    if (EXACT_Q[lang] && EXACT_Q[lang][s]) {
+        return EXACT_Q[lang][s];
+    }
 
     if (lang === 'en') {
-        s = s.replace("Угадай автомобиль на фото:", "Guess the car in the photo:");
-        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "What is the name of the part connecting the piston to the crankshaft?");
-        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "Which constructor has won the most Constructors' Championships in Formula 1 history?");
-        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "Which engine of the Porsche 911 992 GT3 is naturally aspirated 4.0L?");
-        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "Which track in Tokyo is the legendary spot for 'Wangan' night racing?");
+        s = s.replace(/спец-способность/g, "special ability");
+        s = s.replace(/позволяющая расталкивать и таранить трафик силовой волной\?/g, "allowing pushing and ramming traffic with a shockwave?");
+        s = s.replace(/позволяющая/g, "allowing");
+        s = s.replace(/расталкивать и таранить/g, "push and ram");
+        s = s.replace(/силовой волной/g, "with a shockwave");
+        s = s.replace(/трафик/g, "traffic");
 
+        s = s.replace(/^Угадай (.*) на фото:/gi, "Guess the $1 in the photo:");
         s = s.replace(/Как называется/g, "What is the name of");
         s = s.replace(/Какой автоконцерн/g, "Which car manufacturer");
         s = s.replace(/Какая трасса/g, "Which track");
@@ -667,18 +801,18 @@ function translateGameText(str, lang) {
         s = s.replace(/Палец/g, "Piston Pin");
         s = s.replace(/толкатель/g, "tappet");
         s = s.replace(/Толкатель/g, "Tappet");
-        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Shuto Expressway (Wangan)");
-        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
-        s = s.replace(/Цукуба/g, "Tsukuba Circuit");
-        s = s.replace(/Эбису/g, "Ebisu Circuit");
+
+        s = s.replace(/л\.с\./gi, "hp");
+        s = s.replace(/штук|штуки|экземпляров/gi, "units");
+        s = s.replace(/году|год/gi, "year");
+        s = s.replace(/автомобиль|автомобиля|автомобиле/gi, "car");
+        s = s.replace(/суперкар/gi, "supercar");
+        s = s.replace(/гиперкар/gi, "hypercar");
 
     } else if (lang === 'de') {
-        s = s.replace("Угадай автомобиль на фото:", "Errate das Auto auf dem Foto:");
-        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "Wie heißt das Teil, das den Kolben mit der Kurbelwelle verbindet?");
-        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "Welcher Konstrukteur hat die meisten Konstrukteurstitel in der Formel 1 gewonnen?");
-        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "Welcher Motor des Porsche 911 992 GT3 ist ein 4.0L Saugmotor?");
-        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "Welche Strecke in Tokio ist der legendäre Ort für 'Wangan'-Nachtrennen?");
-
+        s = s.replace(/спец-способность/g, "Spezialfähigkeit");
+        s = s.replace(/позволяющая расталкивать и таранить трафик силовой волной\?/g, "mit der man den Verkehr rammen kann?");
+        s = s.replace(/^Угадай (.*) на фото:/gi, "Errate $1 auf dem Foto:");
         s = s.replace(/Как называется/g, "Wie heißt");
         s = s.replace(/Какой автоконцерн/g, "Welcher Automobilkonzern");
         s = s.replace(/Какая трасса/g, "Welche Strecke");
@@ -688,22 +822,14 @@ function translateGameText(str, lang) {
         s = s.replace(/В каком году/g, "In welchem Jahr");
         s = s.replace(/Кто выиграл/g, "Wer hat gewonnen");
 
-        s = s.replace(/Шатун/g, "Pleuel");
-        s = s.replace(/Клапан/g, "Ventil");
-        s = s.replace(/Палец/g, "Kolbenbolzen");
-        s = s.replace(/Толкатель/g, "Stößel");
-        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Shuto Autobahn (Wangan)");
-        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
-        s = s.replace(/Цукуба/g, "Tsukuba Circuit");
-        s = s.replace(/Эбису/g, "Ebisu Circuit");
+        s = s.replace(/л\.с\./gi, "PS");
+        s = s.replace(/штук|штуки|экземпляров/gi, "Stücк");
+        s = s.replace(/автомобиль|автомобиля|автомобиле/gi, "Auto");
 
     } else if (lang === 'es') {
-        s = s.replace("Угадай автомобиль на фото:", "Adivina el coche de la foto:");
-        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "¿Cómo se llama la pieza que conecta el pistón al cigüeñal?");
-        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "¿Qué constructor ha ganado más Campeonatos de Constructores en la Fórmula 1?");
-        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "¿Qué motor del Porsche 911 992 GT3 es atmosférico 4.0L?");
-        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "¿Qué pista en Tokio es el lugar legendario de las carreras nocturnas 'Wangan'?");
-
+        s = s.replace(/спец-способность/g, "habilidad especial");
+        s = s.replace(/позволяющая расталкивать и таранить трафик силовой волной\?/g, "que permite embestir el tráfico con una onda expansiva?");
+        s = s.replace(/^Угадай (.*) на фото:/gi, "Adivina $1 de la foto:");
         s = s.replace(/Как называется/g, "Cómo se llama");
         s = s.replace(/Какой автоконцерн/g, "Qué fabricante de coches");
         s = s.replace(/Какая трасса/g, "Qué pista");
@@ -713,14 +839,9 @@ function translateGameText(str, lang) {
         s = s.replace(/В каком году/g, "En qué año");
         s = s.replace(/Кто выиграл/g, "Quién ganó");
 
-        s = s.replace(/Шатун/g, "Biela");
-        s = s.replace(/Клапан/g, "Válvula");
-        s = s.replace(/Палец/g, "Bulón");
-        s = s.replace(/Толкатель/g, "Empujador");
-        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Autopista Shuto (Wangan)");
-        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
-        s = s.replace(/Цукуба/g, "Circuito de Tsukuba");
-        s = s.replace(/Эбису/g, "Circuito de Ebisu");
+        s = s.replace(/л\.с\./gi, "CV");
+        s = s.replace(/штук|штуки|экземпляров/gi, "unidades");
+        s = s.replace(/автомобиль|автомобиля|автомобиле/gi, "coche");
     }
 
     return s;
@@ -8658,8 +8779,14 @@ function setLang(lang) {
     if (document.getElementById('t-leaderboard-title')) document.getElementById('t-leaderboard-title').textContent = t.leaderTitle;
     if (document.getElementById('t-leaderboard-desc')) document.getElementById('t-leaderboard-desc').textContent = t.leaderDesc;
 
+    // Donate Modal
+    if (document.getElementById('t-donate-modal-title')) document.getElementById('t-donate-modal-title').textContent = t.donateModalTitle;
+    if (document.getElementById('t-donate-stars-btn')) document.getElementById('t-donate-stars-btn').textContent = t.donateStarsBtn;
+    if (document.getElementById('t-donate-ton-btn')) document.getElementById('t-donate-ton-btn').textContent = t.donateTonBtn;
+    if (document.getElementById('customDonateVal')) document.getElementById('customDonateVal').placeholder = t.donatePlaceholder;
+
     // Close links
-    ['t-close', 't-wheel-close', 't-report-close', 't-leaderboard-close', 't-shop-close', 't-revive-close'].forEach(id => {
+    ['t-close', 't-wheel-close', 't-report-close', 't-leaderboard-close', 't-shop-close', 't-revive-close', 't-donate-close'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.textContent = t.close;
     });
