@@ -344,11 +344,11 @@
 <div class="modal-overlay" id="reportModal">
     <div class="modal">
         <h2>🚨 СООБЩИТЬ ОБ ОШИБКЕ</h2>
-        <p>Заметил ошибку или несоответствие картинки? Сообщение уйдет автору @shrtrcng!</p>
+        <p>Заметил ошибку или неточность? Напиши нам, и мы всё исправим!</p>
         
         <textarea id="reportText" class="custom-input" style="height:85px;text-align:left;resize:none" placeholder="Опиши неточность..."></textarea>
 
-        <button class="donate-btn donate-ton" style="width:100%" onclick="sendReport()">📩 Отправить автору @shrtrcng</button>
+        <button class="donate-btn donate-ton" style="width:100%" onclick="sendReport()">📩 Отправить репорт</button>
         <button class="modal-close" onclick="closeReport()">Закрыть</button>
     </div>
 </div>
@@ -503,7 +503,7 @@ const I18N = {
         rOk: "Правильных", rTime: "Время", rAcc: "Точность", rStr: "Серия 🔥",
         again: "ЕЩЁ ЗАЕЗД", challengeBtn: "⚔️ Вызвать друга на дуэль", share: "Поделиться результатом", donateRes: "Поддержать проект (TON / Stars)", garage: "В Гараж",
         donateDesc: "Выбери или введи любую сумму доната для автора @shrtrcng:", close: "Закрыть",
-        reportBtn: "Сообщить об ошибке автору",
+        reportBtn: "Сообщить об ошибке",
         ctxBuyHints: "Нужны подсказки?", ctxBuyFreeze: "Добавь времени!", ctxBuyBundle: "Набор «Чемпион» поможет!",
         bonusSpin: "🎡 Бонусный спин за 10 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
@@ -521,7 +521,7 @@ const I18N = {
         rOk: "Correct", rTime: "Time", rAcc: "Accuracy", rStr: "Streak 🔥",
         again: "PLAY AGAIN", challengeBtn: "⚔️ Challenge a Friend", share: "Share Result", donateRes: "Support Author (TON / Stars)", garage: "Garage",
         donateDesc: "Choose or enter any donation amount for @shrtrcng:", close: "Close",
-        reportBtn: "Report an error to author",
+        reportBtn: "Report an error",
         ctxBuyHints: "Need hints?", ctxBuyFreeze: "Add more time!", ctxBuyBundle: "Champion Bundle will help!",
         bonusSpin: "🎡 Bonus spin for 10 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
@@ -9328,12 +9328,17 @@ function closeReport() { document.getElementById('reportModal').classList.remove
 function sendReport() {
     const text = document.getElementById('reportText').value.trim();
     if (!text) { alert("Введи описание ошибки!"); return; }
-    const msg = `🚨 РЕПОРТ ОБ ОШИБКЕ В SPEED QUIZ BY @SHRTRCNG
-
+    const msg = `🚨 РЕПОРТ ОБ ОШИБКЕ В SPEED QUIZ
+    
 ${text}`;
-    window.open(`https://t.me/shrtrcng?text=${encodeURIComponent(msg)}`, '_blank');
+    const link = `https://t.me/nitr0sharq?text=${encodeURIComponent(msg)}`;
+    if (tg?.openTelegramLink) {
+        tg.openTelegramLink(link);
+    } else {
+        window.open(link, '_blank');
+    }
     closeReport();
-    alert("Спасибо! Сообщение отправлено автору @shrtrcng 🚀");
+    alert("Спасибо! Сообщение отправлено 🚀");
 }
 
 function share() {
