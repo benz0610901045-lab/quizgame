@@ -8742,40 +8742,81 @@ function hf() {
 }
 
 // PAYMENT CONFIG
+const BOT_TOKEN = '8636193562:AAFJwd1YvjixhrDZRQxifDBJ82msE2hYJmA';
 const PAYMENT_WORKER_URL = window.PAYMENT_WORKER_URL || 'https://speed-quiz-payments.workers.dev';
 const TON_WALLET_ADDRESS = 'EQD_YOUR_TON_WALLET_ADDRESS';
 
-async function payReviveStars() {
-    const userId = tg?.initDataUnsafe?.user?.id || 'guest';
-    
-    if (tg?.openInvoice) {
-        let invoiceLink = null;
-        try {
-            const response = await fetch(`${PAYMENT_WORKER_URL}/create-revive-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId })
-            });
+async function fetchInvoiceLink(workerEndpoint, workerBody, directTitle, directDesc, directAmount, payloadObj) {
+    let invoiceLink = null;
+    try {
+        const response = await fetch(`${PAYMENT_WORKER_URL}/${workerEndpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(workerBody)
+        });
+        if (response.ok) {
             const data = await response.json();
             if (data.ok && data.invoiceLink) invoiceLink = data.invoiceLink;
-        } catch (e) { console.error('Revive invoice error:', e); }
+        }
+    } catch (e) {
+        console.warn('Worker payment unreachable, using Bot API fallback:', e);
+    }
 
-        if (invoiceLink) {
-            tg.openInvoice(invoiceLink, (status) => {
-                if (status === 'paid') {
-                    G.lv = 3;
-                    G.revived = true;
-                    document.getElementById('reviveModal').classList.remove('active');
-                    lq();
-                } else if (status === 'failed') {
-                    alert("Оплата не прошла. Попробуй ещё раз!");
-                }
+    if (!invoiceLink && BOT_TOKEN) {
+        try {
+            const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/createInvoiceLink`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: directTitle,
+                    description: directDesc,
+                    payload: JSON.stringify(payloadObj),
+                    provider_token: '',
+                    currency: 'XTR',
+                    prices: [{ label: directTitle, amount: parseInt(directAmount) }]
+                })
             });
-            return;
+            const data = await resp.json();
+            if (data.ok && data.result) {
+                invoiceLink = data.result;
+            }
+        } catch(e) {
+            console.error('Direct invoice creation failed:', e);
         }
     }
+
+    return invoiceLink;
+}
+
+async function payReviveStars() {
+    const userId = tg?.initDataUnsafe?.user?.id || 'guest';
+    const invoiceLink = await fetchInvoiceLink(
+        'create-revive-invoice',
+        { userId },
+        '🔥 Продолжить заезд — Speed Quiz',
+        'Восстановить 3 🏎️ жизни и сохранить рекорд!',
+        25,
+        { type: 'revive', userId }
+    );
     
-    // Fallback if testing outside Telegram or offline
+    if (invoiceLink && tg?.openInvoice) {
+        tg.openInvoice(invoiceLink, (status) => {
+            if (status === 'paid') {
+                G.lv = 3;
+                G.revived = true;
+                document.getElementById('reviveModal').classList.remove('active');
+                lq();
+            } else if (status === 'failed') {
+                alert("Оплата не прошла. Попробуй ещё раз!");
+            }
+        });
+        return;
+    } else if (invoiceLink) {
+        tg?.openTelegramLink?.(invoiceLink) || window.open(invoiceLink, '_blank');
+        return;
+    }
+    
+    // Fallback if testing outside Telegram
     alert("Заезд продолжен! Восстановлено 3 🏎️ жизни!");
     G.lv = 3;
     G.revived = true;
@@ -8985,31 +9026,35 @@ function closeShopModal() { document.getElementById('shopModal').classList.remov
 
 async function buyHintPack(packType) {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
-    let invoiceLink = null;
+    let title = '✂️ 5x 50/50';
+    let amount = 10;
+    if (packType === 'skip') { title = '⏭️ 5x Пропусков'; amount = 15; }
+    else if (packType === 'freeze') { title = '⏱️ 5x Заморозка времени'; amount = 12; }
+    else if (packType === 'bundle') { title = '⚡ Набор «Чемпион»'; amount = 35; }
 
-    if (tg?.openInvoice) {
-        try {
-            const response = await fetch(`${PAYMENT_WORKER_URL}/create-hints-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ packType, userId })
-            });
-            const data = await response.json();
-            if (data.ok && data.invoiceLink) invoiceLink = data.invoiceLink;
-        } catch (e) { console.error('Hints invoice error:', e); }
+    const invoiceLink = await fetchInvoiceLink(
+        'create-hints-invoice',
+        { packType, userId },
+        title,
+        'Покупка подсказок в Speed Quiz',
+        amount,
+        { type: 'hints', packType, userId }
+    );
 
-        if (invoiceLink) {
-            tg.openInvoice(invoiceLink, (status) => {
-                if (status === 'paid') {
-                    applyHintPackReward(packType);
-                    closeShopModal();
-                    closePromo();
-                } else if (status === 'failed') {
-                    alert("Оплата не прошла. Попробуй ещё раз!");
-                }
-            });
-            return;
-        }
+    if (invoiceLink && tg?.openInvoice) {
+        tg.openInvoice(invoiceLink, (status) => {
+            if (status === 'paid') {
+                applyHintPackReward(packType);
+                closeShopModal();
+                closePromo();
+            } else if (status === 'failed') {
+                alert("Оплата не прошла. Попробуй ещё раз!");
+            }
+        });
+        return;
+    } else if (invoiceLink) {
+        tg?.openTelegramLink?.(invoiceLink) || window.open(invoiceLink, '_blank');
+        return;
     }
 
     // Demo fallback (outside Telegram)
@@ -9066,29 +9111,34 @@ function renderVipSection() {
 
 async function buyVip() {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
-    if (tg?.openInvoice) {
-        try {
-            const response = await fetch(`${PAYMENT_WORKER_URL}/create-vip-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId })
-            });
-            const data = await response.json();
-            if (data.ok && data.invoiceLink) {
-                tg.openInvoice(data.invoiceLink, (status) => {
-                    if (status === 'paid') {
-                        isVip = true;
-                        localStorage.setItem('sr_vip', 'true');
-                        renderVipSection();
-                        closeShopModal();
-                        alert("🏅 VIP Gold Racer активирован! Наслаждайся бонусами!");
-                    }
-                });
-                return;
+    const invoiceLink = await fetchInvoiceLink(
+        'create-vip-invoice',
+        { userId },
+        '🏅 VIP Gold Racer — Speed Quiz',
+        'Навсегда: бейдж 🏅, +3с таймер, 2 спина/день, +1 50/50',
+        75,
+        { type: 'vip', userId }
+    );
+
+    if (invoiceLink && tg?.openInvoice) {
+        tg.openInvoice(invoiceLink, (status) => {
+            if (status === 'paid') {
+                isVip = true;
+                localStorage.setItem('sr_vip', 'true');
+                renderVipSection();
+                closeShopModal();
+                alert("🏅 VIP Gold Racer активирован! Наслаждайся бонусами!");
+            } else if (status === 'failed') {
+                alert("Оплата не прошла. Попробуй ещё раз!");
             }
-        } catch (e) { console.error('VIP invoice error:', e); }
+        });
+        return;
+    } else if (invoiceLink) {
+        tg?.openTelegramLink?.(invoiceLink) || window.open(invoiceLink, '_blank');
+        return;
     }
-    // Demo fallback
+
+    // Demo fallback (outside Telegram)
     isVip = true;
     localStorage.setItem('sr_vip', 'true');
     renderVipSection();
@@ -9103,25 +9153,30 @@ function showPromo() { document.getElementById('promoModal').classList.add('acti
 // BONUS WHEEL SPIN
 async function buyBonusSpin() {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
-    if (tg?.openInvoice) {
-        try {
-            const response = await fetch(`${PAYMENT_WORKER_URL}/create-bonus-spin-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId })
-            });
-            const data = await response.json();
-            if (data.ok && data.invoiceLink) {
-                tg.openInvoice(data.invoiceLink, (status) => {
-                    if (status === 'paid') {
-                        executeBonusSpin();
-                    }
-                });
-                return;
+    const invoiceLink = await fetchInvoiceLink(
+        'create-bonus-spin-invoice',
+        { userId },
+        '🎡 Бонусный спин рулетки',
+        'Дополнительный спин с улучшенными призами!',
+        5,
+        { type: 'bonus_spin', userId }
+    );
+
+    if (invoiceLink && tg?.openInvoice) {
+        tg.openInvoice(invoiceLink, (status) => {
+            if (status === 'paid') {
+                executeBonusSpin();
+            } else if (status === 'failed') {
+                alert("Оплата не прошла. Попробуй ещё раз!");
             }
-        } catch (e) { console.error('Bonus spin invoice error:', e); }
+        });
+        return;
+    } else if (invoiceLink) {
+        tg?.openTelegramLink?.(invoiceLink) || window.open(invoiceLink, '_blank');
+        return;
     }
-    // Demo fallback
+
+    // Demo fallback (outside Telegram)
     executeBonusSpin();
 }
 
@@ -9208,29 +9263,28 @@ async function payCustomStars() {
     const val = parseInt(document.getElementById('customDonateVal').value) || 100;
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
 
-    if (tg?.openInvoice) {
-        let invoiceLink = null;
-        try {
-            const response = await fetch(`${PAYMENT_WORKER_URL}/create-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: val, userId })
-            });
-            const data = await response.json();
-            if (data.ok && data.invoiceLink) invoiceLink = data.invoiceLink;
-        } catch (e) { console.error('Donate invoice error:', e); }
+    const invoiceLink = await fetchInvoiceLink(
+        'create-invoice',
+        { amount: val, userId },
+        '⭐ Поддержка Speed Quiz',
+        `Донат ${val} ⭐ Stars автору @shrtrcng`,
+        val,
+        { type: 'donate', amount: val, userId }
+    );
 
-        if (invoiceLink) {
-            tg.openInvoice(invoiceLink, (status) => {
-                if (status === 'paid') {
-                    alert(`Спасибо за поддержку ${val} ⭐ Stars! 🚀`);
-                    closeDonate();
-                } else if (status === 'failed') {
-                    alert("Оплата не прошла. Попробуй ещё раз!");
-                }
-            });
-            return;
-        }
+    if (invoiceLink && tg?.openInvoice) {
+        tg.openInvoice(invoiceLink, (status) => {
+            if (status === 'paid') {
+                alert(`Спасибо за поддержку ${val} ⭐ Stars! 🚀`);
+                closeDonate();
+            } else if (status === 'failed') {
+                alert("Оплата не прошла. Попробуй ещё раз!");
+            }
+        });
+        return;
+    } else if (invoiceLink) {
+        tg?.openTelegramLink?.(invoiceLink) || window.open(invoiceLink, '_blank');
+        return;
     }
 
     alert(`Поддержка ${val} ⭐ Stars! Запусти игру внутри Telegram бота для реальной оплаты.`);
