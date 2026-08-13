@@ -381,22 +381,44 @@
 
 <!-- DAILY WHEEL MODAL -->
 <div class="modal-overlay" id="dailyWheelModal">
-    <div class="modal" style="max-width:420px;">
+    <div class="modal" style="max-width:420px;text-align:center;">
         <h2 id="t-wheel-title">🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА</h2>
         <p id="dailyWheelStatus">Крути рулетку раз в 24 часа и выигрывай бонусы!</p>
         
-        <div style="position:relative;width:240px;height:240px;margin:16px auto;display:flex;align-items:center;justify-content:center;">
-            <div id="wheelCircle" style="width:100%;height:100%;border-radius:50%;border:6px solid var(--gold);background:radial-gradient(circle,#161624,#080812);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(255,215,0,0.4);transition:transform 3.5s cubic-bezier(0.15, 0.9, 0.2, 1);overflow:hidden;position:relative;">
-                <div style="position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:16px;box-sizing:border-box;font-size:12px;font-weight:900;color:var(--gold);">
-                    <div style="text-align:center;" id="t-w-h2">✂️ +2 Подсказки</div>
-                    <div style="display:flex;justify-content:space-between;width:100%;">
-                        <span id="t-w-l1">🏎️ +1 Жизнь</span>
-                        <span id="t-w-s2">⏭️ +2 Пропуска</span>
-                    </div>
-                    <div style="text-align:center;" id="t-w-h3">🔥 +3 Подсказки</div>
+        <div style="position:relative;width:260px;height:260px;margin:20px auto;display:flex;align-items:center;justify-content:center;">
+            <!-- Pointer Arrow at 12 o'clock -->
+            <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:28px;z-index:25;filter:drop-shadow(0 4px 12px rgba(255,51,68,0.95));color:#ff3344;line-height:1;pointer-events:none;">▼</div>
+            
+            <!-- Wheel Outer Ring & Canvas/Div Circle -->
+            <div id="wheelCircle" style="width:100%;height:100%;border-radius:50%;border:6px solid var(--gold);background:conic-gradient(from 0deg, rgba(255,215,0,0.3) 0deg 89.5deg, rgba(255,215,0,0.9) 89.5deg 90.5deg, rgba(255,51,68,0.35) 90.5deg 179.5deg, rgba(255,215,0,0.9) 179.5deg 180.5deg, rgba(0,240,255,0.35) 180.5deg 269.5deg, rgba(255,215,0,0.9) 269.5deg 270.5deg, rgba(0,230,118,0.35) 270.5deg 359.5deg, rgba(255,215,0,0.9) 359.5deg 360deg);box-shadow:0 0 35px rgba(255,215,0,0.4), inset 0 0 20px rgba(0,0,0,0.6);transition:transform 3.8s cubic-bezier(0.15, 0.9, 0.2, 1);overflow:hidden;position:relative;">
+                
+                <!-- 4 Distinct Colorful Sector Background Slices -->
+                <div style="position:absolute;width:100%;height:100%;top:0;left:0;border-radius:50%;overflow:hidden;pointer-events:none;">
+                    <!-- Sector 0: Gold/Amber (0-90 deg) -->
+                    <div style="position:absolute;top:0;right:0;width:50%;height:50%;background:linear-gradient(135deg, rgba(255,215,0,0.45), rgba(255,140,0,0.35));border-bottom:1px solid rgba(255,215,0,0.6);border-left:1px solid rgba(255,215,0,0.6);"></div>
+                    <!-- Sector 1: Red/Crimson (90-180 deg) -->
+                    <div style="position:absolute;bottom:0;right:0;width:50%;height:50%;background:linear-gradient(135deg, rgba(255,51,68,0.45), rgba(200,0,50,0.35));border-top:1px solid rgba(255,215,0,0.6);border-left:1px solid rgba(255,215,0,0.6);"></div>
+                    <!-- Sector 2: Cyan/Blue (180-270 deg) -->
+                    <div style="position:absolute;bottom:0;left:0;width:50%;height:50%;background:linear-gradient(135deg, rgba(0,240,255,0.45), rgba(0,100,255,0.35));border-top:1px solid rgba(255,215,0,0.6);border-right:1px solid rgba(255,215,0,0.6);"></div>
+                    <!-- Sector 3: Green/Emerald (270-360 deg) -->
+                    <div style="position:absolute;top:0;left:0;width:50%;height:50%;background:linear-gradient(135deg, rgba(0,230,118,0.45), rgba(0,150,80,0.35));border-bottom:1px solid rgba(255,215,0,0.6);border-right:1px solid rgba(255,215,0,0.6);"></div>
                 </div>
+
+                <!-- Sector Labels Centered in Each Quadrant -->
+                <div style="position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:3;">
+                    <!-- Sector 0: 45° -->
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(45deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-h2">✂️ +2 50/50</div>
+                    <!-- Sector 1: 135° -->
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(135deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-s2">⏭️ +2 Skips</div>
+                    <!-- Sector 2: 225° -->
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(225deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-h3">🔥 +3 50/50</div>
+                    <!-- Sector 3: 315° -->
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(315deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-l1">🏎️ +1 Life</div>
+                </div>
+
+                <!-- Center Hub Pin -->
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:radial-gradient(circle,#2c2c3e,#12121c);border:3px solid var(--gold);box-shadow:0 0 15px rgba(255,215,0,0.6);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:10;">🎯</div>
             </div>
-            <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:24px;z-index:10;filter:drop-shadow(0 4px 10px rgba(255,51,68,0.8));">👇</div>
         </div>
 
         <button class="donate-btn donate-stars" id="spinWheelBtn" style="width:100%;font-size:15px;" onclick="spinDailyWheel()">🎡 <span id="t-spin-btn-text">КРУТИТЬ РУЛЕТКУ</span></button>
@@ -411,48 +433,48 @@
         <h2 id="t-shop-title">🛒 МАГАЗИН</h2>
         <p id="t-shop-desc">Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!</p>
         
-        <div class="shop-section">📦 Подсказки</div>
+        <div class="shop-section" id="t-shop-sec-hints">📦 Подсказки</div>
         <div style="display:flex;flex-direction:column;gap:10px;">
             <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
                 <div style="text-align:left;">
-                    <div style="font-weight:800;color:#fff;">✂️ 5x Подсказать 50/50</div>
-                    <div style="font-size:11px;color:var(--txt2);">Убирает 2 неверных ответа</div>
+                    <div style="font-weight:800;color:#fff;" id="t-shop-item-50">✂️ 5x Подсказать 50/50</div>
+                    <div style="font-size:11px;color:var(--txt2);" id="t-shop-desc-50">Убирает 2 неверных ответа</div>
                 </div>
                 <button class="preset-btn" onclick="buyHintPack('h50')">15 ⭐</button>
             </div>
 
             <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
                 <div style="text-align:left;">
-                    <div style="font-weight:800;color:#fff;">⏭️ 5x Пропусков вопросов</div>
-                    <div style="font-size:11px;color:var(--txt2);">Пропуск без потери жизни</div>
+                    <div style="font-weight:800;color:#fff;" id="t-shop-item-skip">⏭️ 5x Пропусков вопросов</div>
+                    <div style="font-size:11px;color:var(--txt2);" id="t-shop-desc-skip">Пропуск без потери жизни</div>
                 </div>
                 <button class="preset-btn" onclick="buyHintPack('skip')">25 ⭐</button>
             </div>
 
             <div style="background:var(--bg2);border:1px solid rgba(255,215,0,0.3);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
                 <div style="text-align:left;">
-                    <div style="font-weight:800;color:#fff;">⏱️ 5x Заморозка времени</div>
-                    <div style="font-size:11px;color:var(--txt2);">+10 секунд к таймеру</div>
+                    <div style="font-weight:800;color:#fff;" id="t-shop-item-freeze">⏱️ 5x Заморозка времени</div>
+                    <div style="font-size:11px;color:var(--txt2);" id="t-shop-desc-freeze">+10 секунд к таймеру</div>
                 </div>
                 <button class="preset-btn" onclick="buyHintPack('freeze')">20 ⭐</button>
             </div>
         </div>
 
-        <div class="shop-section">⚡ Наборы</div>
+        <div class="shop-section" id="t-shop-sec-bundles">⚡ Наборы</div>
         <div style="display:flex;flex-direction:column;gap:10px;">
             <div style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,136,0,0.15));border:1px solid var(--gold);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
                 <div style="text-align:left;">
-                    <div style="font-weight:900;color:var(--gold);">⚡ Набор «Чемпион»</div>
-                    <div style="font-size:11px;color:var(--txt2);">5x 50/50 + 5x Skip + 3x ⏱️ + 2 Жизни</div>
+                    <div style="font-weight:900;color:var(--gold);" id="t-shop-item-bundle">⚡ Набор «Чемпион»</div>
+                    <div style="font-size:11px;color:var(--txt2);" id="t-shop-desc-bundle">5x 50/50 + 5x Skip + 3x ⏱️ + 2 Жизни</div>
                 </div>
                 <button class="donate-btn donate-stars" style="padding:6px 12px;font-size:12px;" onclick="buyHintPack('bundle')">50 ⭐</button>
             </div>
         </div>
 
-        <div class="shop-section">🏅 VIP Статус</div>
+        <div class="shop-section" id="t-shop-sec-vip">🏅 VIP Статус</div>
         <div id="vipShopSection"></div>
 
-        <button class="modal-close" onclick="closeShopModal()">Закрыть</button>
+        <button class="modal-close" id="t-shop-close" onclick="closeShopModal()">Закрыть</button>
     </div>
 </div>
 
@@ -497,6 +519,11 @@ const I18N = {
         donateBtn: "Поддержать", leaderBtn: "Лидеры", wheelBtn: "Рулетка", exit: "Выйти",
         shopBtn: "Магазин", shopDesc: "Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!",
         shopTitle: "🛒 МАГАЗИН",
+        shopSecHints: "📦 Подсказки", shopItem50: "✂️ 5x Подсказать 50/50", shopDesc50: "Убирает 2 неверных ответа",
+        shopItemSkip: "⏭️ 5x Пропусков вопросов", shopDescSkip: "Пропуск без потери жизни",
+        shopItemFreeze: "⏱️ 5x Заморозка времени", shopDescFreeze: "+10 секунд к таймеру",
+        shopSecBundles: "⚡ Наборы", shopItemBundle: "⚡ Набор «Чемпион»", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Жизни",
+        shopSecVip: "🏅 VIP Статус",
         stG: "Заездов", stB: "Рекорд", stC: "Верных",
         secDiff: "Сложность", secCat: "Категория / Режим",
         dEasy: "Новичок", dMed: "Гонщик", dHard: "Легенда",
@@ -510,8 +537,13 @@ const I18N = {
         qReportBtn: "Ошибка в вопросе?",
         wheelTitle: "🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА",
         wheelDefaultStatus: "Крути рулетку раз в 24 часа и выигрывай бонусы!",
+        wheelLimitStatus: "⏳ Использовано попыток: {used}/{max}. Следующая попытка завтра!",
+        wheelVipStatus: "🏅 VIP Статус: у тебя 2 бесплатных спина в день! (Осталось: {rem})",
         wheelSpinBtnText: "КРУТИТЬ РУЛЕТКУ",
         wH2: "✂️ +2 Подсказки", wL1: "🏎️ +1 Жизнь", wS2: "⏭️ +2 Пропуска", wH3: "🔥 +3 Подсказки",
+        bonusPrizeH5: "✂️ +5 Подсказок 50/50", bonusPrizeL3: "🏎️ +3 Дополнительных жизни", bonusPrizeS4: "⏭️ +4 Пропуска вопросов", bonusPrizeF5: "⏱️ +5 Заморозок времени",
+        wheelWinAlert: "🎉 ВЫИГРЫШ: {prize}! Бонус начислен!",
+        wheelLimitAlert: "Достигнут лимит прокруток на сегодня ({max} из {max})! Возвращайся завтра ⏳",
         reportModalTitle: "🚨 СООБЩИТЬ ОБ ОШИБКЕ",
         reportModalDesc: "Заметил ошибку или неточность? Напиши нам, и мы всё исправим!",
         reportPrefixQ: "Вопрос", reportPrefixDesc: "Описание ошибки", reportTextPlaceholder: "Опиши неточность...",
@@ -522,6 +554,7 @@ const I18N = {
         ctxBuyHints: "Нужны подсказки?", ctxBuyFreeze: "Добавь времени!", ctxBuyBundle: "Набор «Чемпион» поможет!",
         bonusSpin: "🎡 Бонусный спин за 10 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
+        vipPerkBadge: "🏅 Золотой бейдж в лидерборде", vipPerkTimer: "⏱️ +3 секунды к таймеру навсегда", vipPerkWheel: "🎡 2 бесплатных спина рулетки/день", vipPerkHint: "✂️ +1 бесплатная 50/50 каждый заезд",
         cats: { endless: "♾️ Бесконечный режим (Survival)", mix: "🏁 Всё подряд", f1: "🏎️ Формула 1 & Ле-Ман", cars: "🚗 Суперкары & Гиперкары", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Стритрейсинг & JDM", engines: "🔧 Двигатели & Тюнинг", photo: "🖼️ Авто-Угадайка" },
         ranks: { 90: '🏆 Легенда Автоспорта', 70: '🥇 Профи-гонщик', 50: '🥈 Опытный пилот', 30: '🥉 Любитель', 0: '🏁 Новичок' }
     },
@@ -530,6 +563,11 @@ const I18N = {
         donateBtn: "Support", leaderBtn: "Leaders", wheelBtn: "Lucky Wheel", exit: "Quit",
         shopBtn: "Shop", shopDesc: "Buy hints with ⭐ Telegram Stars and dominate the race!",
         shopTitle: "🛒 SHOP",
+        shopSecHints: "📦 Hints", shopItem50: "✂️ 5x 50/50 Hint", shopDesc50: "Removes 2 wrong answers",
+        shopItemSkip: "⏭️ 5x Question Skips", shopDescSkip: "Skip without losing a life",
+        shopItemFreeze: "⏱️ 5x Time Freeze", shopDescFreeze: "+10 seconds added to timer",
+        shopSecBundles: "⚡ Bundles", shopItemBundle: "⚡ Champion Bundle", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Lives",
+        shopSecVip: "🏅 VIP Status",
         stG: "Races", stB: "Best Score", stC: "Correct",
         secDiff: "Difficulty", secCat: "Category / Mode",
         dEasy: "Rookie", dMed: "Racer", dHard: "Legend",
@@ -543,8 +581,13 @@ const I18N = {
         qReportBtn: "Report question?",
         wheelTitle: "🎁 DAILY LUCKY WHEEL",
         wheelDefaultStatus: "Spin the wheel every 24 hours to win bonuses!",
+        wheelLimitStatus: "⏳ Spins used today: {used}/{max}. Come back tomorrow!",
+        wheelVipStatus: "🏅 VIP Status: you get 2 free spins daily! (Remaining: {rem})",
         wheelSpinBtnText: "SPIN THE WHEEL",
         wH2: "✂️ +2 Hints", wL1: "🏎️ +1 Life", wS2: "⏭️ +2 Skips", wH3: "🔥 +3 Hints",
+        bonusPrizeH5: "✂️ +5 50/50 Hints", bonusPrizeL3: "🏎️ +3 Extra Lives", bonusPrizeS4: "⏭️ +4 Question Skips", bonusPrizeF5: "⏱️ +5 Time Freezes",
+        wheelWinAlert: "🎉 WINNER: {prize}! Bonus claimed!",
+        wheelLimitAlert: "Daily spin limit reached ({max} of {max})! Come back tomorrow ⏳",
         reportModalTitle: "🚨 REPORT AN ISSUE",
         reportModalDesc: "Spotted a mistake or issue? Let us know and we'll fix it!",
         reportPrefixQ: "Question", reportPrefixDesc: "Issue description", reportTextPlaceholder: "Describe the issue...",
@@ -555,6 +598,7 @@ const I18N = {
         ctxBuyHints: "Need hints?", ctxBuyFreeze: "Add more time!", ctxBuyBundle: "Champion Bundle will help!",
         bonusSpin: "🎡 Bonus spin for 10 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
+        vipPerkBadge: "🏅 Gold badge in leaderboard", vipPerkTimer: "⏱️ +3 seconds timer bonus forever", vipPerkWheel: "🎡 2 free wheel spins per day", vipPerkHint: "✂️ +1 free 50/50 hint per race",
         cats: { endless: "♾️ Endless Survival Mode", mix: "🏁 All Mixed", f1: "🏎️ Formula 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Street Racing & JDM", engines: "🔧 Engines & Tuning", photo: "🖼️ Guess by Photo" },
         ranks: { 90: '🏆 Racing Legend', 70: '🥇 Pro Driver', 50: '🥈 Experienced Racer', 30: '🥉 Amateur Driver', 0: '🏁 Novice' }
     },
@@ -563,6 +607,11 @@ const I18N = {
         donateBtn: "Unterstützen", leaderBtn: "Bestenliste", wheelBtn: "Glücksrad", exit: "Beenden",
         shopBtn: "Shop", shopDesc: "Kaufe Hinweise mit ⭐ Telegram Stars und gewinne Rennen!",
         shopTitle: "🛒 SHOP",
+        shopSecHints: "📦 Hinweise", shopItem50: "✂️ 5x 50/50 Hinweis", shopDesc50: "Entfernt 2 falsche Antworten",
+        shopItemSkip: "⏭️ 5x Fragen überspringen", shopDescSkip: "Überspringen ohne Lebenverlust",
+        shopItemFreeze: "⏱️ 5x Zeit-Einfrieren", shopDescFreeze: "+10 Sekunden zum Timer",
+        shopSecBundles: "⚡ Pakete", shopItemBundle: "⚡ Champion-Paket", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Leben",
+        shopSecVip: "🏅 VIP-Status",
         stG: "Rennen", stB: "Rekord", stC: "Richtig",
         secDiff: "Schwierigkeit", secCat: "Kategorie / Modus",
         dEasy: "Anfänger", dMed: "Rennfahrer", dHard: "Legende",
@@ -576,8 +625,13 @@ const I18N = {
         qReportBtn: "Fehler melden?",
         wheelTitle: "🎁 TÄGLICHES GLÜCKSRAD",
         wheelDefaultStatus: "Drehe das Rad alle 24 Stunden, um Boni zu gewinnen!",
+        wheelLimitStatus: "⏳ Versuche heute verbraucht: {used}/{max}. Komm morgen wieder!",
+        wheelVipStatus: "🏅 VIP-Status: du hast 2 gratis Drehs täglich! (Verbleibend: {rem})",
         wheelSpinBtnText: "GLÜCKSRAD DREHEN",
         wH2: "✂️ +2 Hinweise", wL1: "🏎️ +1 Leben", wS2: "⏭️ +2 Sprünge", wH3: "🔥 +3 Hinweise",
+        bonusPrizeH5: "✂️ +5 50/50 Hinweise", bonusPrizeL3: "🏎️ +3 Extra-Leben", bonusPrizeS4: "⏭️ +4 Fragen-Sprünge", bonusPrizeF5: "⏱️ +5 Zeit-Einfrieren",
+        wheelWinAlert: "🎉 GEWINN: {prize}! Bonus gutgeschrieben!",
+        wheelLimitAlert: "Tägliches Limit erreicht ({max} von {max})! Komm morgen wieder ⏳",
         reportModalTitle: "🚨 FEHLER MELDEN",
         reportModalDesc: "Fehler entdeckt? Sag es uns und wir beheben ihn!",
         reportPrefixQ: "Frage", reportPrefixDesc: "Fehlerbeschreibung", reportTextPlaceholder: "Beschreibe den Fehler...",
@@ -588,6 +642,7 @@ const I18N = {
         ctxBuyHints: "Hinweise nötig?", ctxBuyFreeze: "Mehr Zeit!", ctxBuyBundle: "Champion-Paket hilft!",
         bonusSpin: "🎡 Bonusdreh für 10 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Für immer: 🏅 Abzeichen, +3s Timer, 2 Drehs/Tag, +1 gratis 50/50", vipBuy: "VIP für 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Aktiv!",
+        vipPerkBadge: "🏅 Gold-Abzeichen in der Bestenliste", vipPerkTimer: "⏱️ +3 Sekunden Timer-Bonus für immer", vipPerkWheel: "🎡 2 gratis Glücksrad-Drehs/Tag", vipPerkHint: "✂️ +1 gratis 50/50 Hinweis pro Rennen",
         cats: { endless: "♾️ Endlos Survival-Modus", mix: "🏁 Gemischt", f1: "🏎️ Formel 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Straßenrennen & JDM", engines: "🔧 Motoren & Tuning", photo: "🖼️ Auto-Rätsel" },
         ranks: { 90: '🏆 Rennlegende', 70: '🥇 Profi-Fahrer', 50: '🥈 Erfahrener Pilot', 30: '🥉 Amateur', 0: '🏁 Anfänger' }
     },
@@ -596,6 +651,11 @@ const I18N = {
         donateBtn: "Apoyar", leaderBtn: "Líderes", wheelBtn: "Ruleta", exit: "Salir",
         shopBtn: "Tienda", shopDesc: "¡Compra pistas con ⭐ Telegram Stars y gana carreras!",
         shopTitle: "🛒 TIENDA",
+        shopSecHints: "📦 Pistas", shopItem50: "✂️ 5x Pista 50/50", shopDesc50: "Elimina 2 respuestas incorrectas",
+        shopItemSkip: "⏭️ 5x Saltar pregunta", shopDescSkip: "Saltar sin perder vida",
+        shopItemFreeze: "⏱️ 5x Congelar tiempo", shopDescFreeze: "+10 segundos al temporizador",
+        shopSecBundles: "⚡ Paquetes", shopItemBundle: "⚡ Paquete Campeón", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Vidas",
+        shopSecVip: "🏅 Estado VIP",
         stG: "Carreras", stB: "Récord", stC: "Correctas",
         secDiff: "Dificultad", secCat: "Categoría / Modo",
         dEasy: "Novato", dMed: "Piloto", dHard: "Leyenda",
@@ -609,8 +669,13 @@ const I18N = {
         qReportBtn: "¿Reportar pregunta?",
         wheelTitle: "🎁 RULETA DIARIA",
         wheelDefaultStatus: "¡Gira la ruleta cada 24 horas y gana bonos!",
+        wheelLimitStatus: "⏳ Giros usados hoy: {used}/{max}. ¡Vuelve mañana!",
+        wheelVipStatus: "🏅 Estado VIP: ¡tienes 2 giros gratis al día! (Restantes: {rem})",
         wheelSpinBtnText: "GIRAR RULETA",
         wH2: "✂️ +2 Pistas", wL1: "🏎️ +1 Vida", wS2: "⏭️ +2 Saltos", wH3: "🔥 +3 Pistas",
+        bonusPrizeH5: "✂️ +5 Pistas 50/50", bonusPrizeL3: "🏎️ +3 Vidas Extra", bonusPrizeS4: "⏭️ +4 Saltos de Pregunta", bonusPrizeF5: "⏱️ +5 Congelar Tiempo",
+        wheelWinAlert: "🎉 ¡GANASTE: {prize}! ¡Bono acreditado!",
+        wheelLimitAlert: "¡Límite de giros alcanzado ({max} de {max})! Vuelve mañana ⏳",
         reportModalTitle: "🚨 REPORTAR UN PROBLEMA",
         reportModalDesc: "¿Viste un error? ¡Dinos y lo corregiremos!",
         reportPrefixQ: "Pregunta", reportPrefixDesc: "Descripción del problema", reportTextPlaceholder: "Describe el problema...",
@@ -621,6 +686,7 @@ const I18N = {
         ctxBuyHints: "¿Necesitas pistas?", ctxBuyFreeze: "¡Añade tiempo!", ctxBuyBundle: "¡El Pack Campeón ayuda!",
         bonusSpin: "🎡 Giro bonus por 10 ⭐", promoTitle: "🔥 ¡POTENCIA TU CARRERA!", promoDesc: "Las pistas te ayudarán a batir el récord:", promoSkip: "Omitir",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Para siempre: 🏅 insignia, +3s cronómetro, 2 giros/día, +1 gratis 50/50", vipBuy: "Ser VIP por 150 ⭐", vipOwned: "🏅 VIP Gold Racer — ¡Activo!",
+        vipPerkBadge: "🏅 Insignia de oro en clasificación", vipPerkTimer: "⏱️ +3 segundos al temporizador para siempre", vipPerkWheel: "🎡 2 giros de ruleta gratis al día", vipPerkHint: "✂️ +1 pista 50/50 gratis por carrera",
         cats: { endless: "♾️ Modo Supervivencia Infinito", mix: "🏁 Todo Mezclado", f1: "🏎️ Fórmula 1 & Le Mans", cars: "🚗 Superdeportivos & Hiperdeportivos", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Carreras Callejeras & JDM", engines: "🔧 Motores & Tuning", photo: "🖼️ Adivina por Foto" },
         ranks: { 90: '🏆 Leyenda de las Pistas', 70: '🥇 Piloto Pro', 50: '🥈 Piloto Experimentado', 30: '🥉 Amateur', 0: '🏁 Novato' }
     }
@@ -8755,9 +8821,26 @@ function setLang(lang) {
     if (document.getElementById('t-pts-unit')) document.getElementById('t-pts-unit').textContent = t.ptsUnit;
     if (document.getElementById('t-qreport-btn')) document.getElementById('t-qreport-btn').textContent = t.qReportBtn;
 
+    // Shop Modal
+    if (document.getElementById('t-shop-title')) document.getElementById('t-shop-title').textContent = t.shopTitle;
+    if (document.getElementById('t-shop-desc')) document.getElementById('t-shop-desc').textContent = t.shopDesc;
+    if (document.getElementById('t-shop-sec-hints')) document.getElementById('t-shop-sec-hints').textContent = t.shopSecHints;
+    if (document.getElementById('t-shop-item-50')) document.getElementById('t-shop-item-50').textContent = t.shopItem50;
+    if (document.getElementById('t-shop-desc-50')) document.getElementById('t-shop-desc-50').textContent = t.shopDesc50;
+    if (document.getElementById('t-shop-item-skip')) document.getElementById('t-shop-item-skip').textContent = t.shopItemSkip;
+    if (document.getElementById('t-shop-desc-skip')) document.getElementById('t-shop-desc-skip').textContent = t.shopDescSkip;
+    if (document.getElementById('t-shop-item-freeze')) document.getElementById('t-shop-item-freeze').textContent = t.shopItemFreeze;
+    if (document.getElementById('t-shop-desc-freeze')) document.getElementById('t-shop-desc-freeze').textContent = t.shopDescFreeze;
+    if (document.getElementById('t-shop-sec-bundles')) document.getElementById('t-shop-sec-bundles').textContent = t.shopSecBundles;
+    if (document.getElementById('t-shop-item-bundle')) document.getElementById('t-shop-item-bundle').textContent = t.shopItemBundle;
+    if (document.getElementById('t-shop-desc-bundle')) document.getElementById('t-shop-desc-bundle').textContent = t.shopDescBundle;
+    if (document.getElementById('t-shop-sec-vip')) document.getElementById('t-shop-sec-vip').textContent = t.shopSecVip;
+
     // Daily Wheel Modal
     if (document.getElementById('t-wheel-title')) document.getElementById('t-wheel-title').textContent = t.wheelTitle;
     if (document.getElementById('t-spin-btn-text')) document.getElementById('t-spin-btn-text').textContent = t.wheelSpinBtnText;
+    if (document.getElementById('t-bonus-spin-text')) document.getElementById('t-bonus-spin-text').textContent = t.bonusSpin;
+    if (document.getElementById('dailyWheelStatus')) document.getElementById('dailyWheelStatus').textContent = t.wheelDefaultStatus;
     if (document.getElementById('t-w-h2')) document.getElementById('t-w-h2').textContent = t.wH2;
     if (document.getElementById('t-w-l1')) document.getElementById('t-w-l1').textContent = t.wL1;
     if (document.getElementById('t-w-s2')) document.getElementById('t-w-s2').textContent = t.wS2;
@@ -9252,6 +9335,7 @@ function getDailySpinCount() {
 function openDailyWheel() {
     const maxSpins = isVip ? 2 : 1;
     const spinsUsed = getDailySpinCount();
+    const t = I18N[currentLang] || I18N.ru;
     
     const spinBtn = document.getElementById('spinWheelBtn');
     const statusText = document.getElementById('dailyWheelStatus');
@@ -9259,13 +9343,13 @@ function openDailyWheel() {
     if (spinsUsed >= maxSpins) {
         spinBtn.disabled = true;
         spinBtn.style.opacity = '0.5';
-        statusText.textContent = `⏳ Использовано попыток: ${spinsUsed}/${maxSpins}. Следующая попытка завтра!`;
+        statusText.textContent = t.wheelLimitStatus.replace('{used}', spinsUsed).replace('{max}', maxSpins);
     } else {
         spinBtn.disabled = false;
         spinBtn.style.opacity = '1';
         statusText.textContent = isVip 
-            ? `🏅 VIP Статус: у тебя 2 бесплатных спина в день! (Осталось: ${maxSpins - spinsUsed})`
-            : 'Крути рулетку раз в 24 часа и выигрывай бонусы!';
+            ? t.wheelVipStatus.replace('{rem}', maxSpins - spinsUsed)
+            : t.wheelDefaultStatus;
     }
     
     document.getElementById('dailyWheelModal').classList.add('active');
@@ -9279,9 +9363,10 @@ function spinDailyWheel() {
     const maxSpins = isVip ? 2 : 1;
     const spinsUsed = getDailySpinCount();
     const todayUTC = new Date().toISOString().slice(0, 10);
+    const t = I18N[currentLang] || I18N.ru;
 
     if (spinsUsed >= maxSpins) {
-        alert(`Достигнут лимит прокруток на сегодня (${maxSpins} из ${maxSpins})! Возвращайся завтра ⏳`);
+        alert(t.wheelLimitAlert.replace(/{max}/g, maxSpins));
         return;
     }
 
@@ -9289,22 +9374,25 @@ function spinDailyWheel() {
     const btn = document.getElementById('spinWheelBtn');
     btn.disabled = true;
     
+    // Ordered to match sector angles: Sector 0 (45°), Sector 1 (135°), Sector 2 (225°), Sector 3 (315°)
     const prizes = [
-        { name: "✂️ +2 Подсказки 50/50", apply: () => { G.h5c = (G.h5c || 2) + 2; } },
-        { name: "🏎️ +1 Дополнительная жизнь", apply: () => { G.lv = (G.lv || 3) + 1; } },
-        { name: "⏭️ +2 Пропуска вопросов", apply: () => { G.hsc = (G.hsc || 1) + 2; } },
-        { name: "🔥 +3 Подсказки 50/50", apply: () => { G.h5c = (G.h5c || 2) + 3; } },
+        { name: t.wH2, apply: () => { G.h50 = (G.h50 || 0) + 2; } }, // Sector 0 (0-90 deg)
+        { name: t.wS2, apply: () => { G.hsk = (G.hsk || 0) + 2; } }, // Sector 1 (90-180 deg)
+        { name: t.wH3, apply: () => { G.h50 = (G.h50 || 0) + 3; } }, // Sector 2 (180-270 deg)
+        { name: t.wL1, apply: () => { G.lv = (G.lv || 3) + 1; } },  // Sector 3 (270-360 deg)
     ];
     
-    const randomRotations = 5 + Math.floor(Math.random() * 4);
-    const randomDegrees = Math.floor(Math.random() * 360);
-    const totalDeg = randomRotations * 360 + randomDegrees;
+    const prizeIndex = Math.floor(Math.random() * prizes.length);
+    const prize = prizes[prizeIndex];
+
+    const centers = [45, 135, 225, 315];
+    const targetSectorDeg = (360 - centers[prizeIndex]) % 360;
+    const randomOffset = (Math.random() * 30) - 15; // Random offset inside 30-deg safety cone
+    const totalDeg = (5 * 360) + targetSectorDeg + randomOffset;
     
     wheel.style.transform = `rotate(${totalDeg}deg)`;
 
     setTimeout(() => {
-        const prizeIndex = Math.floor(Math.random() * prizes.length);
-        const prize = prizes[prizeIndex];
         prize.apply();
 
         const newSpinCount = spinsUsed + 1;
@@ -9313,12 +9401,11 @@ function spinDailyWheel() {
         localStorage.setItem('sr_stats', JSON.stringify(stats));
         updateStatsUI();
 
-        alert(`🎉 ВЫИГРЫШ: ${prize.name}! Бонус начислен!`);
-        // Show bonus spin button
+        alert(t.wheelWinAlert.replace('{prize}', prize.name));
         document.getElementById('bonusSpinBtn').style.display = 'flex';
         document.getElementById('spinWheelBtn').disabled = true;
         document.getElementById('spinWheelBtn').style.opacity = '0.5';
-    }, 3600);
+    }, 3800);
 }
 
 // SHOP & HINT PURCHASES
@@ -9330,17 +9417,18 @@ function closeShopModal() { document.getElementById('shopModal').classList.remov
 
 async function buyHintPack(packType) {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
-    let title = '✂️ 5x 50/50';
+    const t = I18N[currentLang] || I18N.ru;
+    let title = t.shopItem50;
     let amount = 15;
-    if (packType === 'skip') { title = '⏭️ 5x Пропусков'; amount = 25; }
-    else if (packType === 'freeze') { title = '⏱️ 5x Заморозка времени'; amount = 20; }
-    else if (packType === 'bundle') { title = '⚡ Набор «Чемпион»'; amount = 50; }
+    if (packType === 'skip') { title = t.shopItemSkip; amount = 25; }
+    else if (packType === 'freeze') { title = t.shopItemFreeze; amount = 20; }
+    else if (packType === 'bundle') { title = t.shopItemBundle; amount = 50; }
 
     const invoiceLink = await fetchInvoiceLink(
         'create-hints-invoice',
-        { packType, userId },
+        { packType, userId, title, description: t.shopDesc },
         title,
-        'Покупка подсказок в Speed Quiz',
+        t.shopDesc,
         amount,
         { type: 'hints', packType, userId }
     );
@@ -9352,7 +9440,7 @@ async function buyHintPack(packType) {
                 closeShopModal();
                 closePromo();
             } else if (status === 'failed') {
-                alert("Оплата не прошла. Попробуй ещё раз!");
+                alert(currentLang === 'ru' ? "Оплата не прошла. Попробуй ещё раз!" : "Payment failed. Please try again!");
             }
         });
         return;
@@ -9402,10 +9490,10 @@ function renderVipSection() {
                 <div class="vip-inner">
                     <h3>${t.vipTitle}</h3>
                     <div class="vip-perks">
-                        <span>🏅</span> Золотой бейдж в лидерборде<br>
-                        <span>⏱️</span> +3 секунды к таймеру навсегда<br>
-                        <span>🎡</span> 2 бесплатных спина рулетки/день<br>
-                        <span>✂️</span> +1 бесплатная 50/50 каждый заезд
+                        <span>${t.vipPerkBadge}</span><br>
+                        <span>${t.vipPerkTimer}</span><br>
+                        <span>${t.vipPerkWheel}</span><br>
+                        <span>${t.vipPerkHint}</span>
                     </div>
                     <button class="donate-btn donate-stars" style="width:100%;" onclick="buyVip()">${t.vipBuy}</button>
                 </div>
@@ -9415,11 +9503,12 @@ function renderVipSection() {
 
 async function buyVip() {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
+    const t = I18N[currentLang] || I18N.ru;
     const invoiceLink = await fetchInvoiceLink(
         'create-vip-invoice',
-        { userId },
-        '🏅 VIP Gold Racer — Speed Quiz',
-        'Навсегда: бейдж 🏅, +3с таймер, 2 спина/день, +1 50/50',
+        { userId, title: t.vipTitle + ' — Speed Quiz', description: t.vipDesc },
+        t.vipTitle + ' — Speed Quiz',
+        t.vipDesc,
         150,
         { type: 'vip', userId }
     );
@@ -9431,9 +9520,8 @@ async function buyVip() {
                 localStorage.setItem('sr_vip', 'true');
                 renderVipSection();
                 closeShopModal();
-                alert("🏅 VIP Gold Racer активирован! Наслаждайся бонусами!");
             } else if (status === 'failed') {
-                alert("Оплата не прошла. Попробуй ещё раз!");
+                alert(currentLang === 'ru' ? "Оплата не прошла. Попробуй ещё раз!" : "Payment failed. Please try again!");
             }
         });
         return;
@@ -9447,7 +9535,6 @@ async function buyVip() {
     localStorage.setItem('sr_vip', 'true');
     renderVipSection();
     closeShopModal();
-    alert("🏅 VIP Gold Racer активирован!");
 }
 
 // PROMO MODAL
@@ -9457,11 +9544,12 @@ function showPromo() { document.getElementById('promoModal').classList.add('acti
 // BONUS WHEEL SPIN
 async function buyBonusSpin() {
     const userId = tg?.initDataUnsafe?.user?.id || 'guest';
+    const t = I18N[currentLang] || I18N.ru;
     const invoiceLink = await fetchInvoiceLink(
         'create-bonus-spin-invoice',
-        { userId },
-        '🎡 Бонусный спин рулетки',
-        'Дополнительный спин с улучшенными призами!',
+        { userId, title: t.bonusSpin + ' — Speed Quiz', description: t.wheelDefaultStatus },
+        t.bonusSpin + ' — Speed Quiz',
+        t.wheelDefaultStatus,
         10,
         { type: 'bonus_spin', userId }
     );
@@ -9471,7 +9559,7 @@ async function buyBonusSpin() {
             if (status === 'paid') {
                 executeBonusSpin();
             } else if (status === 'failed') {
-                alert("Оплата не прошла. Попробуй ещё раз!");
+                alert(currentLang === 'ru' ? "Оплата не прошла. Попробуй ещё раз!" : "Payment failed. Please try again!");
             }
         });
         return;
@@ -9486,24 +9574,33 @@ async function buyBonusSpin() {
 
 function executeBonusSpin() {
     const wheel = document.getElementById('wheelCircle');
+    const t = I18N[currentLang] || I18N.ru;
+    
+    // Ordered to match sector angles: Sector 0 (45°), Sector 1 (135°), Sector 2 (225°), Sector 3 (315°)
     const bonusPrizes = [
-        { name: "✂️ +5 Подсказок 50/50", apply: () => { G.h50 = (G.h50 || 0) + 5; } },
-        { name: "🏎️ +3 Дополнительных жизни", apply: () => { G.lv = (G.lv || 3) + 3; } },
-        { name: "⏭️ +4 Пропуска вопросов", apply: () => { G.hsk = (G.hsk || 0) + 4; } },
-        { name: "⏱️ +5 Заморозок времени", apply: () => { G.hfr = (G.hfr || 0) + 5; } },
+        { name: t.bonusPrizeH5, apply: () => { G.h50 = (G.h50 || 0) + 5; } }, // Sector 0 (0-90 deg)
+        { name: t.bonusPrizeS4, apply: () => { G.hsk = (G.hsk || 0) + 4; } }, // Sector 1 (90-180 deg)
+        { name: t.bonusPrizeF5, apply: () => { G.hfr = (G.hfr || 0) + 5; } }, // Sector 2 (180-270 deg)
+        { name: t.bonusPrizeL3, apply: () => { G.lv = (G.lv || 3) + 3; } },  // Sector 3 (270-360 deg)
     ];
-    const randomRotations = 5 + Math.floor(Math.random() * 4);
-    const randomDegrees = Math.floor(Math.random() * 360);
-    const totalDeg = randomRotations * 360 + randomDegrees;
+
+    const prizeIndex = Math.floor(Math.random() * bonusPrizes.length);
+    const prize = bonusPrizes[prizeIndex];
+
+    const centers = [45, 135, 225, 315];
+    const targetSectorDeg = (360 - centers[prizeIndex]) % 360;
+    const randomOffset = (Math.random() * 30) - 15;
+    const totalDeg = (5 * 360) + targetSectorDeg + randomOffset;
+
     wheel.style.transform = `rotate(${totalDeg}deg)`;
     setTimeout(() => {
-        const prizeIndex = Math.floor(Math.random() * bonusPrizes.length);
-        const prize = bonusPrizes[prizeIndex];
         prize.apply();
-        alert(`🎉 БОНУС-ВЫИГРЫШ: ${prize.name}!`);
+        localStorage.setItem('sr_stats', JSON.stringify(stats));
+        updateStatsUI();
+        alert(t.wheelWinAlert.replace('{prize}', prize.name));
         document.getElementById('bonusSpinBtn').style.display = 'none';
         closeDailyWheel();
-    }, 3600);
+    }, 3800);
 }
 
 // TELEGRAM CHALLENGE DUAL
