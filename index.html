@@ -551,6 +551,7 @@ const I18N = {
         reviveTitle: "🔥 СОХРАНИТЬ РЕКОРД!", reviveDesc: "Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 35 ⭐ Stars!",
         reviveBtnText: "Продолжить за 35 Stars", reviveEndText: "Завершить заезд",
         leaderTitle: "🏆 ТАБЛИЦА ЛИДЕРОВ (ТОП-1000)", leaderDesc: "Лучшие пилоты в режиме Survival:",
+        leaderLoading: "⏳ Загрузка топ-1000 лидеров...", leaderEmptyTitle: "Таблица лидеров сброшена!", leaderEmptyDesc: "Соверши заезд прямо сейчас и займи 1-е место! 🏎️💨", leaderYourRecord: "(Твой рекорд)",
         ctxBuyHints: "Нужны подсказки?", ctxBuyFreeze: "Добавь времени!", ctxBuyBundle: "Набор «Чемпион» поможет!",
         bonusSpin: "🎡 Бонусный спин за 10 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
@@ -595,6 +596,7 @@ const I18N = {
         reviveTitle: "🔥 SAVE YOUR SCORE!", reviveDesc: "Out of lives! Restore 3 🏎️ and save streak for 35 ⭐ Stars!",
         reviveBtnText: "Continue for 35 Stars", reviveEndText: "Finish race",
         leaderTitle: "🏆 LEADERBOARD (TOP-1000)", leaderDesc: "Top pilots in Survival mode:",
+        leaderLoading: "⏳ Loading Top-1000 Leaders...", leaderEmptyTitle: "Leaderboard Has Been Reset!", leaderEmptyDesc: "Make a race right now and claim 1st place! 🏎️💨", leaderYourRecord: "(Your Record)",
         ctxBuyHints: "Need hints?", ctxBuyFreeze: "Add more time!", ctxBuyBundle: "Champion Bundle will help!",
         bonusSpin: "🎡 Bonus spin for 10 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
@@ -639,6 +641,7 @@ const I18N = {
         reviveTitle: "🔥 REKORD RETTEN!", reviveDesc: "Keine Leben mehr! Stell 3 🏎️ wieder her für 35 ⭐ Stars!",
         reviveBtnText: "Weiter für 35 Stars", reviveEndText: "Rennen beenden",
         leaderTitle: "🏆 BESTENLISTE (TOP-1000)", leaderDesc: "Die besten Piloten im Survival-Modus:",
+        leaderLoading: "⏳ Lade Top-1000 Bestenliste...", leaderEmptyTitle: "Bestenliste wurde zurückgesetzt!", leaderEmptyDesc: "Starte jetzt ein Rennen und hol dir Platz 1! 🏎️💨", leaderYourRecord: "(Dein Rekord)",
         ctxBuyHints: "Hinweise nötig?", ctxBuyFreeze: "Mehr Zeit!", ctxBuyBundle: "Champion-Paket hilft!",
         bonusSpin: "🎡 Bonusdreh für 10 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Für immer: 🏅 Abzeichen, +3s Timer, 2 Drehs/Tag, +1 gratis 50/50", vipBuy: "VIP für 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Aktiv!",
@@ -654,6 +657,41 @@ const I18N = {
         shopSecHints: "📦 Pistas", shopItem50: "✂️ 5x Pista 50/50", shopDesc50: "Elimina 2 respuestas incorrectas",
         shopItemSkip: "⏭️ 5x Saltar pregunta", shopDescSkip: "Saltar sin perder vida",
         shopItemFreeze: "⏱️ 5x Congelar tiempo", shopDescFreeze: "+10 segundos al temporizador",
+        shopSecBundles: "⚡ Paquetes", shopItemBundle: "⚡ Paquete Campeón", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Vidas",
+        shopSecVip: "🏅 Estado VIP",
+        stG: "Carreras", stB: "Récord", stC: "Correctas",
+        secDiff: "Dificultad", secCat: "Categoría / Modo",
+        dEasy: "Novato", dMed: "Piloto", dHard: "Leyenda",
+        start: "INICIAR", skip: "Omitir",
+        rOk: "Correctas", rTime: "Tiempo", rAcc: "Precisión", rStr: "Racha 🔥",
+        again: "OTRA CARRERA", challengeBtn: "⚔️ Desafiar a un Amigo", share: "Compartir Resultado", donateRes: "Apoyar (TON / Stars)", garage: "Al Garaje",
+        donateDesc: "¡Apoya el desarrollo del juego!", close: "Cerrar",
+        donateModalTitle: "⚡ APOYAR EL PROYECTO", donateStarsBtn: "⭐ Apoyar con Telegram Stars", donateTonBtn: "💎 Apoyar con TON Crypto", donatePlaceholder: "Introduce la cantidad...",
+        reportBtn: "Reportar error",
+        ptsUnit: "Puntos", secUnit: "s",
+        qReportBtn: "¿Reportar pregunta?",
+        wheelTitle: "🎁 RULETA DIARIA",
+        wheelDefaultStatus: "¡Gira la ruleta cada 24 horas y gana bonos!",
+        wheelLimitStatus: "⏳ Giros usados hoy: {used}/{max}. ¡Vuelve mañana!",
+        wheelVipStatus: "🏅 Estado VIP: ¡tienes 2 giros gratis al día! (Restantes: {rem})",
+        wheelSpinBtnText: "GIRAR RULETA",
+        wH2: "✂️ +2 Pistas", wL1: "🏎️ +1 Vida", wS2: "⏭️ +2 Saltos", wH3: "🔥 +3 Pistas",
+        bonusPrizeH5: "✂️ +5 Pistas 50/50", bonusPrizeL3: "🏎️ +3 Vidas Extra", bonusPrizeS4: "⏭️ +4 Saltos de Pregunta", bonusPrizeF5: "⏱️ +5 Congelar Tiempo",
+        wheelWinAlert: "🎉 ¡GANASTE: {prize}! ¡Bono acreditado!",
+        wheelLimitAlert: "¡Límite de giros alcanzado ({max} de {max})! Vuelve mañana ⏳",
+        reportModalTitle: "🚨 REPORTAR UN PROBLEMA",
+        reportModalDesc: "¿Viste un error? ¡Dinos y lo corregiremos!",
+        reportPrefixQ: "Pregunta", reportPrefixDesc: "Descripción del problema", reportTextPlaceholder: "Describe el problema...",
+        reportSubmitBtnText: "Enviar Reporte",
+        reviveTitle: "🔥 ¡GUARDA TU RÉCORD!", reviveDesc: "¡Sin vidas! ¡Restaura 3 🏎️ y guarda tu racha por 35 ⭐ Stars!",
+        reviveBtnText: "Continuar por 35 Stars", reviveEndText: "Terminar carrera",
+        leaderTitle: "🏆 TABLA DE LÍDERES (TOP-1000)", leaderDesc: "Los mejores pilotos en modo Supervivencia:",
+        leaderLoading: "⏳ Cargando Top-1000 Líderes...", leaderEmptyTitle: "¡Tabla de líderes reiniciada!", leaderEmptyDesc: "¡Haz una carrera ahora mismo y ocupa el 1.er lugar! 🏎️💨", leaderYourRecord: "(Tu Récord)",
+        ctxBuyHints: "¿Necesitas pistas?", ctxBuyFreeze: "¡Añade tiempo!", ctxBuyBundle: "¡El Pack Campeón ayuda!",
+        bonusSpin: "🎡 Giro bonus por 10 ⭐", promoTitle: "🔥 ¡POTENCIA TU CARRERA!", promoDesc: "Las pistas te ayudarán a batir el récord:", promoSkip: "Omitir",
+        vipTitle: "🏅 GOLD RACER", vipDesc: "Para siempre: 🏅 insignia, +3s cronómetro, 2 giros/día, +1 gratis 50/50", vipBuy: "Ser VIP por 150 ⭐", vipOwned: "🏅 VIP Gold Racer — ¡Activo!",
+        vipPerkBadge: "🏅 Insignia de oro en clasificación", vipPerkTimer: "⏱️ +3 segundos al temporizador para siempre", vipPerkWheel: "🎡 2 giros de ruleta gratis al día", vipPerkHint: "✂️ +1 pista 50/50 gratis por carrera",
+        cats: { endless: "♾️ Modo Supervivencia Infinito", mix: "🏁 Todo Mezclado", f1: "🏎️ Fórmula 1 & Le Mans", cars: "🚗 Superdeportivos & Hiperdeportivos", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Carreras Callejeras & JDM", engines: "🔧 Motores & Tuning", photo: "🖼️ Adivina por Foto" },eeze: "+10 segundos al temporizador",
         shopSecBundles: "⚡ Paquetes", shopItemBundle: "⚡ Paquete Campeón", shopDescBundle: "5x 50/50 + 5x Skip + 3x ⏱️ + 2 Vidas",
         shopSecVip: "🏅 Estado VIP",
         stG: "Carreras", stB: "Récord", stC: "Correctas",
@@ -9257,8 +9295,9 @@ async function submitScoreToBackend(score) {
 }
 
 async function openLeaderboard() {
+    const t = I18N[currentLang] || I18N.ru;
     const list = document.getElementById('leaderboardList');
-    list.innerHTML = '<div style="padding:16px;color:var(--txt2);font-size:13px">⏳ Загрузка топ-1000 лидеров...</div>';
+    list.innerHTML = `<div style="padding:16px;color:var(--txt2);font-size:13px">${t.leaderLoading}</div>`;
     document.getElementById('leaderboardModal').classList.add('active');
 
     let leaders = [];
@@ -9278,8 +9317,8 @@ async function openLeaderboard() {
         list.innerHTML = `
             <div style="padding:28px 16px;text-align:center;color:var(--txt2);">
                 <div style="font-size:42px;margin-bottom:8px;">🏆</div>
-                <div style="font-weight:800;color:#fff;font-size:15px;margin-bottom:4px;">Таблица лидеров сброшена!</div>
-                <div style="font-size:12px;line-height:1.4;">Соверши заезд прямо сейчас и займи 1-е место! 🏎️💨</div>
+                <div style="font-weight:800;color:#fff;font-size:15px;margin-bottom:4px;">${t.leaderEmptyTitle}</div>
+                <div style="font-size:12px;line-height:1.4;">${t.leaderEmptyDesc}</div>
             </div>
         `;
         return;
@@ -9301,7 +9340,7 @@ async function openLeaderboard() {
                     <span>${medal} ${item.name} ${hasVip ? '<span class="vip-badge" title="VIP Gold Racer">🏅</span>' : ''}</span>
                     <span style="font-size:10px;color:var(--txt2);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:8px;font-weight:600;">🏎️ ${raceCount}</span>
                 </span>
-                <span style="color:var(${index < 3 ? '--gold' : '--accent'});font-weight:900">${item.score.toLocaleString()} PTS</span>
+                <span style="color:var(${index < 3 ? '--gold' : '--accent'});font-weight:900">${item.score.toLocaleString()} ${t.ptsUnit}</span>
             </div>
         `;
     });
@@ -9310,10 +9349,10 @@ async function openLeaderboard() {
         html += `
             <div class="leader-item you" style="position:sticky;bottom:0;box-shadow:0 -4px 15px rgba(0,0,0,0.8);">
                 <span style="display:flex;align-items:center;gap:6px;">
-                    <span>⭐ ${player.name} ${isVip ? '<span class="vip-badge" title="VIP Gold Racer">🏅</span>' : ''} (Твой рекорд)</span>
+                    <span>⭐ ${player.name} ${isVip ? '<span class="vip-badge" title="VIP Gold Racer">🏅</span>' : ''} ${t.leaderYourRecord}</span>
                     <span style="font-size:10px;color:var(--gold);background:rgba(255,215,0,0.15);padding:2px 6px;border-radius:8px;font-weight:700;">🏎️ ${stats.g}</span>
                 </span>
-                <span style="color:var(--gold);font-weight:900">${stats.b.toLocaleString()} PTS</span>
+                <span style="color:var(--gold);font-weight:900">${stats.b.toLocaleString()} ${t.ptsUnit}</span>
             </div>
         `;
     }
