@@ -270,7 +270,7 @@
 <div id="S2" class="screen">
     <div class="gh">
         <button class="hbtn" onclick="quitGame()" style="margin:0;padding:6px 10px;background:rgba(255,51,68,0.15);border-color:var(--accent);color:#fff;">🚪 <span id="t-exit">Выйти</span></button>
-        <div class="gi">⭐ <span id="sc">0</span> Очков</div>
+        <div class="gi">⭐ <span id="sc">0</span> <span id="t-pts-unit">Очков</span></div>
         <div class="gi timer" id="tm">⏱ 15с</div>
         <div class="gi">🏎️ <span id="lv">3</span></div>
     </div>
@@ -278,7 +278,7 @@
     <div class="qcard">
         <div class="qcard-head">
             <div class="qcat" id="qcat">Категория</div>
-            <button class="qreport-btn" onclick="openReport()">🚨 Ошибка в вопросе?</button>
+            <button class="qreport-btn" onclick="openReport()">🚨 <span id="t-qreport-btn">Ошибка в вопросе?</span></button>
         </div>
         <div class="qtxt" id="qt">...</div>
         <div id="mediaBox"></div>
@@ -343,72 +343,72 @@
 <!-- REPORT BUG MODAL -->
 <div class="modal-overlay" id="reportModal">
     <div class="modal">
-        <h2>🚨 СООБЩИТЬ ОБ ОШИБКЕ</h2>
-        <p>Заметил ошибку или неточность? Напиши нам, и мы всё исправим!</p>
+        <h2 id="t-report-modal-title">🚨 СООБЩИТЬ ОБ ОШИБКЕ</h2>
+        <p id="t-report-modal-desc">Заметил ошибку или неточность? Напиши нам, и мы всё исправим!</p>
         
         <textarea id="reportText" class="custom-input" style="height:85px;text-align:left;resize:none" placeholder="Опиши неточность..."></textarea>
 
-        <button class="donate-btn donate-ton" style="width:100%" onclick="sendReport()">📩 Отправить репорт</button>
-        <button class="modal-close" onclick="closeReport()">Закрыть</button>
+        <button class="donate-btn donate-ton" style="width:100%" onclick="sendReport()">📩 <span id="t-send-report-btn-text">Отправить репорт</span></button>
+        <button class="modal-close" onclick="closeReport()"><span id="t-report-close">Закрыть</span></button>
     </div>
 </div>
 
 <!-- REVIVE MODAL (ENDLESS SURVIVAL) -->
 <div class="modal-overlay" id="reviveModal">
     <div class="modal">
-        <h2>🔥 СОХРАНИТЬ РЕКОРД!</h2>
-        <p>Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 35 ⭐ Stars!</p>
+        <h2 id="t-revive-title">🔥 СОХРАНИТЬ РЕКОРД!</h2>
+        <p id="t-revive-desc">Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 35 ⭐ Stars!</p>
         
         <div class="donate-options">
-            <button class="donate-btn donate-stars" onclick="payReviveStars()">⭐ Продолжить за 35 Stars</button>
-            <button class="btn-s" style="margin-top:4px;" onclick="closeReviveAndEnd()">🏁 Завершить заезд</button>
+            <button class="donate-btn donate-stars" onclick="payReviveStars()">⭐ <span id="t-revive-btn">Продолжить за 35 Stars</span></button>
+            <button class="btn-s" style="margin-top:4px;" onclick="closeReviveAndEnd()">🏁 <span id="t-revive-end">Завершить заезд</span></button>
         </div>
-        <button class="modal-close" onclick="closeReviveAndEnd()">Закрыть</button>
+        <button class="modal-close" onclick="closeReviveAndEnd()"><span id="t-revive-close">Закрыть</span></button>
     </div>
 </div>
 
 <!-- SURVIVAL LEADERBOARD MODAL -->
 <div class="modal-overlay" id="leaderboardModal">
     <div class="modal" style="max-width:420px;">
-        <h2>🏆 ТАБЛИЦА ЛИДЕРОВ (ТОП-1000)</h2>
-        <p>Лучшие пилоты в режиме Survival:</p>
+        <h2 id="t-leaderboard-title">🏆 ТАБЛИЦА ЛИДЕРОВ (ТОП-1000)</h2>
+        <p id="t-leaderboard-desc">Лучшие пилоты в режиме Survival:</p>
         
         <div id="leaderboardList" style="margin-bottom:12px;max-height:360px;overflow-y:auto;padding-right:4px;"></div>
 
-        <button class="modal-close" onclick="closeLeaderboard()">Закрыть</button>
+        <button class="modal-close" onclick="closeLeaderboard()"><span id="t-leaderboard-close">Закрыть</span></button>
     </div>
 </div>
 
 <!-- DAILY WHEEL MODAL -->
 <div class="modal-overlay" id="dailyWheelModal">
     <div class="modal" style="max-width:420px;">
-        <h2>🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА</h2>
+        <h2 id="t-wheel-title">🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА</h2>
         <p id="dailyWheelStatus">Крути рулетку раз в 24 часа и выигрывай бонусы!</p>
         
         <div style="position:relative;width:240px;height:240px;margin:16px auto;display:flex;align-items:center;justify-content:center;">
             <div id="wheelCircle" style="width:100%;height:100%;border-radius:50%;border:6px solid var(--gold);background:radial-gradient(circle,#161624,#080812);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(255,215,0,0.4);transition:transform 3.5s cubic-bezier(0.15, 0.9, 0.2, 1);overflow:hidden;position:relative;">
                 <div style="position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:16px;box-sizing:border-box;font-size:12px;font-weight:900;color:var(--gold);">
-                    <div style="text-align:center;">✂️ +2 Подсказки</div>
+                    <div style="text-align:center;" id="t-w-h2">✂️ +2 Подсказки</div>
                     <div style="display:flex;justify-content:space-between;width:100%;">
-                        <span>🏎️ +1 Жизнь</span>
-                        <span>⏭️ +2 Пропуска</span>
+                        <span id="t-w-l1">🏎️ +1 Жизнь</span>
+                        <span id="t-w-s2">⏭️ +2 Пропуска</span>
                     </div>
-                    <div style="text-align:center;">🔥 +3 Подсказки</div>
+                    <div style="text-align:center;" id="t-w-h3">🔥 +3 Подсказки</div>
                 </div>
             </div>
             <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:24px;z-index:10;filter:drop-shadow(0 4px 10px rgba(255,51,68,0.8));">👇</div>
         </div>
 
-        <button class="donate-btn donate-stars" id="spinWheelBtn" style="width:100%;font-size:15px;" onclick="spinDailyWheel()">🎡 КРУТИТЬ РУЛЕТКУ</button>
-        <button class="donate-btn donate-ton" id="bonusSpinBtn" style="width:100%;font-size:13px;margin-top:6px;display:none;" onclick="buyBonusSpin()">🎡 Бонусный спин за 10 ⭐ Stars</button>
-        <button class="modal-close" onclick="closeDailyWheel()">Закрыть</button>
+        <button class="donate-btn donate-stars" id="spinWheelBtn" style="width:100%;font-size:15px;" onclick="spinDailyWheel()">🎡 <span id="t-spin-btn-text">КРУТИТЬ РУЛЕТКУ</span></button>
+        <button class="donate-btn donate-ton" id="bonusSpinBtn" style="width:100%;font-size:13px;margin-top:6px;display:none;" onclick="buyBonusSpin()">🎡 <span id="t-bonus-spin-text">Бонусный спин за 10 ⭐ Stars</span></button>
+        <button class="modal-close" onclick="closeDailyWheel()"><span id="t-wheel-close">Закрыть</span></button>
     </div>
 </div>
 
 <!-- SHOP & HINTS MODAL -->
 <div class="modal-overlay" id="shopModal">
     <div class="modal" style="max-width:420px;max-height:90vh;overflow-y:auto;">
-        <h2>🛒 МАГАЗИН</h2>
+        <h2 id="t-shop-title">🛒 МАГАЗИН</h2>
         <p id="t-shop-desc">Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!</p>
         
         <div class="shop-section">📦 Подсказки</div>
@@ -465,22 +465,22 @@
             <div class="promo-item" onclick="buyHintPack('h50');closePromo()">
                 <div class="promo-emoji">✂️</div>
                 <div class="promo-name">5x 50/50</div>
-                <div class="promo-price">10 ⭐</div>
+                <div class="promo-price">15 ⭐</div>
             </div>
             <div class="promo-item" onclick="buyHintPack('skip');closePromo()">
                 <div class="promo-emoji">⏭️</div>
                 <div class="promo-name">5x Пропуск</div>
-                <div class="promo-price">15 ⭐</div>
+                <div class="promo-price">25 ⭐</div>
             </div>
             <div class="promo-item" onclick="buyHintPack('freeze');closePromo()">
                 <div class="promo-emoji">⏱️</div>
                 <div class="promo-name">5x Заморозка</div>
-                <div class="promo-price">12 ⭐</div>
+                <div class="promo-price">20 ⭐</div>
             </div>
             <div class="promo-item" onclick="buyHintPack('bundle');closePromo()">
                 <div class="promo-emoji">⚡</div>
                 <div class="promo-name">Набор Чемпион</div>
-                <div class="promo-price">35 ⭐</div>
+                <div class="promo-price">50 ⭐</div>
             </div>
         </div>
         <button class="modal-close" onclick="closePromo()">Пропустить</button>
@@ -496,6 +496,7 @@ const I18N = {
         subtitle: "Проверь свои знания и стань легендой!",
         donateBtn: "Поддержать", leaderBtn: "Лидеры", wheelBtn: "Рулетка", exit: "Выйти",
         shopBtn: "Магазин", shopDesc: "Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!",
+        shopTitle: "🛒 МАГАЗИН",
         stG: "Заездов", stB: "Рекорд", stC: "Верных",
         secDiff: "Сложность", secCat: "Категория / Режим",
         dEasy: "Новичок", dMed: "Гонщик", dHard: "Легенда",
@@ -504,6 +505,19 @@ const I18N = {
         again: "ЕЩЁ ЗАЕЗД", challengeBtn: "⚔️ Вызвать друга на дуэль", share: "Поделиться результатом", donateRes: "Поддержать проект (TON / Stars)", garage: "В Гараж",
         donateDesc: "Выбери или введи любую сумму доната для автора @shrtrcng:", close: "Закрыть",
         reportBtn: "Сообщить об ошибке",
+        ptsUnit: "Очков", secUnit: "с",
+        qReportBtn: "Ошибка в вопросе?",
+        wheelTitle: "🎁 ЕЖЕДНЕВНАЯ РУЛЕТКА",
+        wheelDefaultStatus: "Крути рулетку раз в 24 часа и выигрывай бонусы!",
+        wheelSpinBtnText: "КРУТИТЬ РУЛЕТКУ",
+        wH2: "✂️ +2 Подсказки", wL1: "🏎️ +1 Жизнь", wS2: "⏭️ +2 Пропуска", wH3: "🔥 +3 Подсказки",
+        reportModalTitle: "🚨 СООБЩИТЬ ОБ ОШИБКЕ",
+        reportModalDesc: "Заметил ошибку или неточность? Напиши нам, и мы всё исправим!",
+        reportPrefixQ: "Вопрос", reportPrefixDesc: "Описание ошибки", reportTextPlaceholder: "Опиши неточность...",
+        reportSubmitBtnText: "Отправить репорт",
+        reviveTitle: "🔥 СОХРАНИТЬ РЕКОРД!", reviveDesc: "Твои жизни закончились! Восстанови 3 🏎️ и сохрани серию за 35 ⭐ Stars!",
+        reviveBtnText: "Продолжить за 35 Stars", reviveEndText: "Завершить заезд",
+        leaderTitle: "🏆 ТАБЛИЦА ЛИДЕРОВ (ТОП-1000)", leaderDesc: "Лучшие пилоты в режиме Survival:",
         ctxBuyHints: "Нужны подсказки?", ctxBuyFreeze: "Добавь времени!", ctxBuyBundle: "Набор «Чемпион» поможет!",
         bonusSpin: "🎡 Бонусный спин за 10 ⭐", promoTitle: "🔥 УСИЛЬ СВОЙ ЗАЕЗД!", promoDesc: "Подсказки помогут побить рекорд:", promoSkip: "Пропустить",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Навсегда: бейдж 🏅, +3с к таймеру, 2 спина/день, +1 бесплатная 50/50", vipBuy: "Стать VIP за 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Активен!",
@@ -514,6 +528,7 @@ const I18N = {
         subtitle: "Test your skills and become a legend!",
         donateBtn: "Support", leaderBtn: "Leaders", wheelBtn: "Lucky Wheel", exit: "Quit",
         shopBtn: "Shop", shopDesc: "Buy hints with ⭐ Telegram Stars and dominate the race!",
+        shopTitle: "🛒 SHOP",
         stG: "Races", stB: "Best Score", stC: "Correct",
         secDiff: "Difficulty", secCat: "Category / Mode",
         dEasy: "Rookie", dMed: "Racer", dHard: "Legend",
@@ -522,6 +537,19 @@ const I18N = {
         again: "PLAY AGAIN", challengeBtn: "⚔️ Challenge a Friend", share: "Share Result", donateRes: "Support Author (TON / Stars)", garage: "Garage",
         donateDesc: "Choose or enter any donation amount for @shrtrcng:", close: "Close",
         reportBtn: "Report an error",
+        ptsUnit: "PTS", secUnit: "s",
+        qReportBtn: "Report question?",
+        wheelTitle: "🎁 DAILY LUCKY WHEEL",
+        wheelDefaultStatus: "Spin the wheel every 24 hours to win bonuses!",
+        wheelSpinBtnText: "SPIN THE WHEEL",
+        wH2: "✂️ +2 Hints", wL1: "🏎️ +1 Life", wS2: "⏭️ +2 Skips", wH3: "🔥 +3 Hints",
+        reportModalTitle: "🚨 REPORT AN ISSUE",
+        reportModalDesc: "Spotted a mistake or issue? Let us know and we'll fix it!",
+        reportPrefixQ: "Question", reportPrefixDesc: "Issue description", reportTextPlaceholder: "Describe the issue...",
+        reportSubmitBtnText: "Send Report",
+        reviveTitle: "🔥 SAVE YOUR SCORE!", reviveDesc: "Out of lives! Restore 3 🏎️ and save streak for 35 ⭐ Stars!",
+        reviveBtnText: "Continue for 35 Stars", reviveEndText: "Finish race",
+        leaderTitle: "🏆 LEADERBOARD (TOP-1000)", leaderDesc: "Top pilots in Survival mode:",
         ctxBuyHints: "Need hints?", ctxBuyFreeze: "Add more time!", ctxBuyBundle: "Champion Bundle will help!",
         bonusSpin: "🎡 Bonus spin for 10 ⭐", promoTitle: "🔥 POWER UP YOUR RACE!", promoDesc: "Hints will help beat your record:", promoSkip: "Skip",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Forever: 🏅 badge, +3s timer, 2 spins/day, +1 free 50/50", vipBuy: "Get VIP for 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Active!",
@@ -532,6 +560,7 @@ const I18N = {
         subtitle: "Teste dein Wissen und werde zur Legende!",
         donateBtn: "Unterstützen", leaderBtn: "Bestenliste", wheelBtn: "Glücksrad", exit: "Beenden",
         shopBtn: "Shop", shopDesc: "Kaufe Hinweise mit ⭐ Telegram Stars und gewinne Rennen!",
+        shopTitle: "🛒 SHOP",
         stG: "Rennen", stB: "Rekord", stC: "Richtig",
         secDiff: "Schwierigkeit", secCat: "Kategorie / Modus",
         dEasy: "Anfänger", dMed: "Rennfahrer", dHard: "Legende",
@@ -540,8 +569,21 @@ const I18N = {
         again: "NOCHMAL", challengeBtn: "⚔️ Freund herausfordern", share: "Ergebnis Teilen", donateRes: "Unterstützen (TON / Stars)", garage: "Garage",
         donateDesc: "Unterstütze die Entwicklung des Spiels!", close: "Schließen",
         reportBtn: "Fehler melden",
+        ptsUnit: "Punkte", secUnit: "s",
+        qReportBtn: "Fehler melden?",
+        wheelTitle: "🎁 TÄGLICHES GLÜCKSRAD",
+        wheelDefaultStatus: "Drehe das Rad alle 24 Stunden, um Boni zu gewinnen!",
+        wheelSpinBtnText: "GLÜCKSRAD DREHEN",
+        wH2: "✂️ +2 Hinweise", wL1: "🏎️ +1 Leben", wS2: "⏭️ +2 Sprünge", wH3: "🔥 +3 Hinweise",
+        reportModalTitle: "🚨 FEHLER MELDEN",
+        reportModalDesc: "Fehler entdeckt? Sag es uns und wir beheben ihn!",
+        reportPrefixQ: "Frage", reportPrefixDesc: "Fehlerbeschreibung", reportTextPlaceholder: "Beschreibe den Fehler...",
+        reportSubmitBtnText: "Bericht Senden",
+        reviveTitle: "🔥 REKORD RETTEN!", reviveDesc: "Keine Leben mehr! Stell 3 🏎️ wieder her für 35 ⭐ Stars!",
+        reviveBtnText: "Weiter für 35 Stars", reviveEndText: "Rennen beenden",
+        leaderTitle: "🏆 BESTENLISTE (TOP-1000)", leaderDesc: "Die besten Piloten im Survival-Modus:",
         ctxBuyHints: "Hinweise nötig?", ctxBuyFreeze: "Mehr Zeit!", ctxBuyBundle: "Champion-Paket hilft!",
-        bonusSpin: "🎡 Bonusdreh für 20 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
+        bonusSpin: "🎡 Bonusdreh für 10 ⭐", promoTitle: "🔥 VERSTÄRKE DEIN RENNEN!", promoDesc: "Hinweise helfen den Rekord zu brechen:", promoSkip: "Überspringen",
         vipTitle: "🏅 GOLD RACER", vipDesc: "Für immer: 🏅 Abzeichen, +3s Timer, 2 Drehs/Tag, +1 gratis 50/50", vipBuy: "VIP für 150 ⭐", vipOwned: "🏅 VIP Gold Racer — Aktiv!",
         cats: { endless: "♾️ Endlos Survival-Modus", mix: "🏁 Gemischt", f1: "🏎️ Formel 1 & Le Mans", cars: "🚗 Supercars & Hypercars", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Straßenrennen & JDM", engines: "🔧 Motoren & Tuning", photo: "🖼️ Auto-Rätsel" },
         ranks: { 90: '🏆 Rennlegende', 70: '🥇 Profi-Fahrer', 50: '🥈 Erfahrener Pilot', 30: '🥉 Amateur', 0: '🏁 Anfänger' }
@@ -550,6 +592,7 @@ const I18N = {
         subtitle: "¡Pon a prueba tus conocimientos y sé una leyenda!",
         donateBtn: "Apoyar", leaderBtn: "Líderes", wheelBtn: "Ruleta", exit: "Salir",
         shopBtn: "Tienda", shopDesc: "¡Compra pistas con ⭐ Telegram Stars y gana carreras!",
+        shopTitle: "🛒 TIENDA",
         stG: "Carreras", stB: "Récord", stC: "Correctas",
         secDiff: "Dificultad", secCat: "Categoría / Modo",
         dEasy: "Novato", dMed: "Piloto", dHard: "Leyenda",
@@ -558,37 +601,128 @@ const I18N = {
         again: "OTRA CARRERA", challengeBtn: "⚔️ Desafiar a un Amigo", share: "Compartir Resultado", donateRes: "Apoyar (TON / Stars)", garage: "Al Garaje",
         donateDesc: "¡Apoya el desarrollo del juego!", close: "Cerrar",
         reportBtn: "Reportar error",
+        ptsUnit: "Puntos", secUnit: "s",
+        qReportBtn: "¿Reportar pregunta?",
+        wheelTitle: "🎁 RULETA DIARIA",
+        wheelDefaultStatus: "¡Gira la ruleta cada 24 horas y gana bonos!",
+        wheelSpinBtnText: "GIRAR RULETA",
+        wH2: "✂️ +2 Pistas", wL1: "🏎️ +1 Vida", wS2: "⏭️ +2 Saltos", wH3: "🔥 +3 Pistas",
+        reportModalTitle: "🚨 REPORTAR UN PROBLEMA",
+        reportModalDesc: "¿Viste un error? ¡Dinos y lo corregiremos!",
+        reportPrefixQ: "Pregunta", reportPrefixDesc: "Descripción del problema", reportTextPlaceholder: "Describe el problema...",
+        reportSubmitBtnText: "Enviar Reporte",
+        reviveTitle: "🔥 ¡GUARDA TU RÉCORD!", reviveDesc: "¡Sin vidas! ¡Restaura 3 🏎️ y guarda tu racha por 35 ⭐ Stars!",
+        reviveBtnText: "Continuar por 35 Stars", reviveEndText: "Terminar carrera",
+        leaderTitle: "🏆 TABLA DE LÍDERES (TOP-1000)", leaderDesc: "Los mejores pilotos en modo Supervivencia:",
         ctxBuyHints: "¿Necesitas pistas?", ctxBuyFreeze: "¡Añade tiempo!", ctxBuyBundle: "¡El Pack Campeón ayuda!",
-        bonusSpin: "🎡 Giro bonus por 5 ⭐", promoTitle: "🔥 ¡POTENCIA TU CARRERA!", promoDesc: "Las pistas te ayudarán a batir el récord:", promoSkip: "Omitir",
-        vipTitle: "🏅 GOLD RACER", vipDesc: "Para siempre: 🏅 insignia, +3s cronómetro, 2 giros/día, +1 gratis 50/50", vipBuy: "Ser VIP por 75 ⭐", vipOwned: "🏅 VIP Gold Racer — ¡Activo!",
+        bonusSpin: "🎡 Giro bonus por 10 ⭐", promoTitle: "🔥 ¡POTENCIA TU CARRERA!", promoDesc: "Las pistas te ayudarán a batir el récord:", promoSkip: "Omitir",
+        vipTitle: "🏅 GOLD RACER", vipDesc: "Para siempre: 🏅 insignia, +3s cronómetro, 2 giros/día, +1 gratis 50/50", vipBuy: "Ser VIP por 150 ⭐", vipOwned: "🏅 VIP Gold Racer — ¡Activo!",
         cats: { endless: "♾️ Modo Supervivencia Infinito", mix: "🏁 Todo Mezclado", f1: "🏎️ Fórmula 1 & Le Mans", cars: "🚗 Superdeportivos & Hiperdeportivos", nfs: "🎮 Need for Speed", mnc: "🌃 Midnight Club", gt_forza: "🏆 Gran Turismo & Forza", street: "🔥 Carreras Callejeras & JDM", engines: "🔧 Motores & Tuning", photo: "🖼️ Adivina por Foto" },
         ranks: { 90: '🏆 Leyenda de las Pistas', 70: '🥇 Piloto Pro', 50: '🥈 Piloto Experimentado', 30: '🥉 Amateur', 0: '🏁 Novato' }
     }
 };
 
-function translateToEN(str) {
-    if (!str) return str;
+function translateGameText(str, lang) {
+    if (!str || typeof str !== 'string' || lang === 'ru') return str;
     let s = str;
-    s = s.replace("Угадай автомобиль на фото:", "Guess the car in the photo:");
-    s = s.replace("Какой", "Which").replace("Какая", "Which").replace("Какое", "Which").replace("Каковы", "Which");
-    s = s.replace("мотор", "engine").replace("автомобиль", "car").replace("суперкар", "supercar");
-    s = s.replace("гонке", "race").replace("трасса", "track").replace("команда", "team");
-    return s;
-}
-function translateToDE(str) {
-    if (!str) return str;
-    let s = str;
-    s = s.replace("Угадай автомобиль на фото:", "Errate das Auto auf dem Foto:");
-    s = s.replace("Какой", "Welcher").replace("Какая", "Welche").replace("Какое", "Welches");
-    s = s.replace("мотор", "Motor").replace("автомобиль", "Wagen").replace("суперкар", "Supercar");
-    return s;
-}
-function translateToES(str) {
-    if (!str) return str;
-    let s = str;
-    s = s.replace("Угадай автомобиль на фото:", "Adivina el coche de la foto:");
-    s = s.replace("Какой", "Cuál").replace("Какая", "Cuál").replace("Какое", "Cuál");
-    s = s.replace("мотор", "motor").replace("автомобиль", "coche").replace("суперкар", "superdeportivo");
+
+    if (lang === 'en') {
+        s = s.replace("Угадай автомобиль на фото:", "Guess the car in the photo:");
+        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "What is the name of the part connecting the piston to the crankshaft?");
+        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "Which constructor has won the most Constructors' Championships in Formula 1 history?");
+        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "Which engine of the Porsche 911 992 GT3 is naturally aspirated 4.0L?");
+        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "Which track in Tokyo is the legendary spot for 'Wangan' night racing?");
+
+        s = s.replace(/Как называется/g, "What is the name of");
+        s = s.replace(/Какой автоконцерн/g, "Which car manufacturer");
+        s = s.replace(/Какая трасса/g, "Which track");
+        s = s.replace(/Какой мотор/g, "Which engine");
+        s = s.replace(/Какой двигатель/g, "Which engine");
+        s = s.replace(/Какая команда/g, "Which team");
+        s = s.replace(/Какой пилот/g, "Which driver");
+        s = s.replace(/Какой гонщик/g, "Which driver");
+        s = s.replace(/В каком году/g, "In which year");
+        s = s.replace(/Сколько/g, "How many");
+        s = s.replace(/Кто выиграл/g, "Who won");
+        s = s.replace(/Кто победил/g, "Who won");
+
+        s = s.replace(/деталь, соединяющая поршень с коленвалом/g, "part connecting piston to crankshaft");
+        s = s.replace(/соединяющая поршень с коленвалом/g, "connecting piston to crankshaft");
+        s = s.replace(/Кубков Конструкторов/g, "Constructors' Championships");
+        s = s.replace(/Формулы 1/g, "Formula 1");
+        s = s.replace(/в истории/g, "in history");
+        s = s.replace(/ночных гонок/g, "night racing");
+        s = s.replace(/атмосферным/g, "naturally aspirated");
+        s = s.replace(/атмосферный/g, "naturally aspirated");
+        s = s.replace(/турбированным/g, "turbocharged");
+        s = s.replace(/турбированный/g, "turbocharged");
+        s = s.replace(/поршень/g, "piston");
+        s = s.replace(/коленвалом/g, "crankshaft");
+        s = s.replace(/коленвал/g, "crankshaft");
+        s = s.replace(/шатун/g, "connecting rod");
+        s = s.replace(/Шатун/g, "Connecting Rod");
+        s = s.replace(/клапан/g, "valve");
+        s = s.replace(/Клапан/g, "Valve");
+        s = s.replace(/палец/g, "piston pin");
+        s = s.replace(/Палец/g, "Piston Pin");
+        s = s.replace(/толкатель/g, "tappet");
+        s = s.replace(/Толкатель/g, "Tappet");
+        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Shuto Expressway (Wangan)");
+        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
+        s = s.replace(/Цукуба/g, "Tsukuba Circuit");
+        s = s.replace(/Эбису/g, "Ebisu Circuit");
+
+    } else if (lang === 'de') {
+        s = s.replace("Угадай автомобиль на фото:", "Errate das Auto auf dem Foto:");
+        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "Wie heißt das Teil, das den Kolben mit der Kurbelwelle verbindet?");
+        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "Welcher Konstrukteur hat die meisten Konstrukteurstitel in der Formel 1 gewonnen?");
+        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "Welcher Motor des Porsche 911 992 GT3 ist ein 4.0L Saugmotor?");
+        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "Welche Strecke in Tokio ist der legendäre Ort für 'Wangan'-Nachtrennen?");
+
+        s = s.replace(/Как называется/g, "Wie heißt");
+        s = s.replace(/Какой автоконцерн/g, "Welcher Automobilkonzern");
+        s = s.replace(/Какая трасса/g, "Welche Strecke");
+        s = s.replace(/Какой мотор/g, "Welcher Motor");
+        s = s.replace(/Какая команда/g, "Welches Team");
+        s = s.replace(/Какой пилот/g, "Welcher Fahrer");
+        s = s.replace(/В каком году/g, "In welchem Jahr");
+        s = s.replace(/Кто выиграл/g, "Wer hat gewonnen");
+
+        s = s.replace(/Шатун/g, "Pleuel");
+        s = s.replace(/Клапан/g, "Ventil");
+        s = s.replace(/Палец/g, "Kolbenbolzen");
+        s = s.replace(/Толкатель/g, "Stößel");
+        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Shuto Autobahn (Wangan)");
+        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
+        s = s.replace(/Цукуба/g, "Tsukuba Circuit");
+        s = s.replace(/Эбису/g, "Ebisu Circuit");
+
+    } else if (lang === 'es') {
+        s = s.replace("Угадай автомобиль на фото:", "Adivina el coche de la foto:");
+        s = s.replace("Как называется деталь, соединяющая поршень с коленвалом?", "¿Cómo se llama la pieza que conecta el pistón al cigüeñal?");
+        s = s.replace("Какой автоконцерн выиграл больше всего Кубков Конструкторов в истории Формулы 1?", "¿Qué constructor ha ganado más Campeonatos de Constructores en la Fórmula 1?");
+        s = s.replace("Какой мотор Porsche 911 992 GT3 является атмосферным 4.0L?", "¿Qué motor del Porsche 911 992 GT3 es atmosférico 4.0L?");
+        s = s.replace("Какая трасса в Токио является легендарным местом ночных гонок «Ванган»?", "¿Qué pista en Tokio es el lugar legendario de las carreras nocturnas 'Wangan'?");
+
+        s = s.replace(/Как называется/g, "Cómo se llama");
+        s = s.replace(/Какой автоконцерн/g, "Qué fabricante de coches");
+        s = s.replace(/Какая трасса/g, "Qué pista");
+        s = s.replace(/Какой мотор/g, "Qué motor");
+        s = s.replace(/Какая команда/g, "Qué equipo");
+        s = s.replace(/Какой пилот/g, "Qué piloto");
+        s = s.replace(/В каком году/g, "En qué año");
+        s = s.replace(/Кто выиграл/g, "Quién ganó");
+
+        s = s.replace(/Шатун/g, "Biela");
+        s = s.replace(/Клапан/g, "Válvula");
+        s = s.replace(/Палец/g, "Bulón");
+        s = s.replace(/Толкатель/g, "Empujador");
+        s = s.replace(/Шуто — скоростная магистраль Ванаган/g, "Autopista Shuto (Wangan)");
+        s = s.replace(/Фудзи Спидвей/g, "Fuji Speedway");
+        s = s.replace(/Цукуба/g, "Circuito de Tsukuba");
+        s = s.replace(/Эбису/g, "Circuito de Ebisu");
+    }
+
     return s;
 }
 
@@ -8473,6 +8607,7 @@ function setLang(lang) {
     if (document.getElementById('t-wheel-btn')) document.getElementById('t-wheel-btn').textContent = t.wheelBtn;
     if (document.getElementById('t-shop-btn')) document.getElementById('t-shop-btn').textContent = t.shopBtn;
     if (document.getElementById('t-shop-desc')) document.getElementById('t-shop-desc').textContent = t.shopDesc;
+    if (document.getElementById('t-shop-title')) document.getElementById('t-shop-title').textContent = t.shopTitle;
     document.getElementById('t-exit').textContent = t.exit;
     document.getElementById('t-st-g').textContent = t.stG;
     document.getElementById('t-st-b').textContent = t.stB;
@@ -8494,7 +8629,40 @@ function setLang(lang) {
     if (document.getElementById('t-report-btn')) document.getElementById('t-report-btn').textContent = t.reportBtn;
     document.getElementById('t-garage').textContent = t.garage;
     document.getElementById('t-donate-desc').textContent = t.donateDesc;
-    document.getElementById('t-close').textContent = t.close;
+    
+    // Topbar & Game Screen
+    if (document.getElementById('t-pts-unit')) document.getElementById('t-pts-unit').textContent = t.ptsUnit;
+    if (document.getElementById('t-qreport-btn')) document.getElementById('t-qreport-btn').textContent = t.qReportBtn;
+
+    // Daily Wheel Modal
+    if (document.getElementById('t-wheel-title')) document.getElementById('t-wheel-title').textContent = t.wheelTitle;
+    if (document.getElementById('t-spin-btn-text')) document.getElementById('t-spin-btn-text').textContent = t.wheelSpinBtnText;
+    if (document.getElementById('t-w-h2')) document.getElementById('t-w-h2').textContent = t.wH2;
+    if (document.getElementById('t-w-l1')) document.getElementById('t-w-l1').textContent = t.wL1;
+    if (document.getElementById('t-w-s2')) document.getElementById('t-w-s2').textContent = t.wS2;
+    if (document.getElementById('t-w-h3')) document.getElementById('t-w-h3').textContent = t.wH3;
+
+    // Report Modal
+    if (document.getElementById('t-report-modal-title')) document.getElementById('t-report-modal-title').textContent = t.reportModalTitle;
+    if (document.getElementById('t-report-modal-desc')) document.getElementById('t-report-modal-desc').textContent = t.reportModalDesc;
+    if (document.getElementById('t-send-report-btn-text')) document.getElementById('t-send-report-btn-text').textContent = t.reportSubmitBtnText;
+    if (document.getElementById('reportText')) document.getElementById('reportText').placeholder = t.reportTextPlaceholder;
+
+    // Revive Modal
+    if (document.getElementById('t-revive-title')) document.getElementById('t-revive-title').textContent = t.reviveTitle;
+    if (document.getElementById('t-revive-desc')) document.getElementById('t-revive-desc').textContent = t.reviveDesc;
+    if (document.getElementById('t-revive-btn')) document.getElementById('t-revive-btn').textContent = t.reviveBtnText;
+    if (document.getElementById('t-revive-end')) document.getElementById('t-revive-end').textContent = t.reviveEndText;
+
+    // Leaderboard Modal
+    if (document.getElementById('t-leaderboard-title')) document.getElementById('t-leaderboard-title').textContent = t.leaderTitle;
+    if (document.getElementById('t-leaderboard-desc')) document.getElementById('t-leaderboard-desc').textContent = t.leaderDesc;
+
+    // Close links
+    ['t-close', 't-wheel-close', 't-report-close', 't-leaderboard-close', 't-shop-close', 't-revive-close'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = t.close;
+    });
 
     renderCategories();
     renderVipSection();
@@ -8602,9 +8770,7 @@ function lq() {
     document.getElementById('qcat').textContent = G.cat === 'endless' ? `♾️ SURVIVAL • ${diffLabel}` : `${catName} • ${diffLabel}`;
     
     let qText = q.q;
-    if (currentLang === 'en') qText = translateToEN(q.q);
-    else if (currentLang === 'de') qText = translateToDE(q.q);
-    else if (currentLang === 'es') qText = translateToES(q.q);
+    qText = translateGameText(qText, currentLang);
     document.getElementById('qt').textContent = qText;
 
     document.getElementById('sc').textContent = G.sc;
@@ -8641,7 +8807,8 @@ function lq() {
     ai.forEach(oi => {
         const btn = document.createElement('button');
         btn.className = 'abtn';
-        btn.textContent = q.a[oi] || 'Option';
+        const rawAns = q.a[oi] || 'Option';
+        btn.textContent = translateGameText(rawAns, currentLang);
         btn.dataset.ok = oi === q.c ? '1' : '0';
         btn.onclick = () => ck(btn);
         container.appendChild(btn);
@@ -8699,13 +8866,14 @@ function showCtxOffer() {
 function sT() {
     G.tl = G.baseTime;
     const t = document.getElementById('tm');
-    t.textContent = `⏱ ${G.tl}с`;
+    const unit = (I18N[currentLang] || I18N.ru).secUnit || 'с';
+    t.textContent = `⏱ ${G.tl}${unit}`;
     t.classList.remove('dng');
 
     clearInterval(G.ti);
     G.ti = setInterval(() => {
         G.tl--;
-        t.textContent = `⏱ ${G.tl}с`;
+        t.textContent = `⏱ ${G.tl}${unit}`;
         if (G.tl <= 5) t.classList.add('dng'); else t.classList.remove('dng');
         if (G.tl <= 0) {
             clearInterval(G.ti);
@@ -9318,9 +9486,10 @@ function payCustomTON() {
 
 // REPORT BUG
 function openReport() {
-    const curQ = G.qq[G.cq - 1]?.q || G.qq[G.cq]?.q || "Текст вопроса";
-    document.getElementById('reportText').value = `Вопрос: "${curQ}"
-Описание ошибки: `;
+    const t = I18N[currentLang] || I18N.ru;
+    const curQ = G.qq[G.cq - 1]?.q || G.qq[G.cq]?.q || "...";
+    const translatedQ = translateGameText(curQ, currentLang);
+    document.getElementById('reportText').value = `${t.reportPrefixQ || 'Вопрос'}: "${translatedQ}"\n${t.reportPrefixDesc || 'Описание ошибки'}: `;
     document.getElementById('reportModal').classList.add('active');
 }
 function closeReport() { document.getElementById('reportModal').classList.remove('active'); }
