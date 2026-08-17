@@ -23588,7 +23588,9 @@ const RAW_QUESTIONS = {
 };
 
 let G = { sc: 0, lv: 3, cq: 0, tq: 10, ok: 0, str: 0, bstr: 0, tl: 15, ti: null, cat: 'mix', diff: 'easy', qq: [], h50: 2, hsk: 1, hfr: 0, st: 0, ans: 0, baseTime: 15, revived: false };
-let stats = JSON.parse(localStorage.getItem('sr_stats') || '{"g":0,"b":0,"c":0}');
+let stats = JSON.parse(localStorage.getItem('sr_stats') || '{"g":0,"b":0,"c":0,"h50":3,"hsk":2}');
+if (stats.h50 === undefined) stats.h50 = 3;
+if (stats.hsk === undefined) stats.hsk = 2;
 let isVip = localStorage.getItem('sr_vip') === 'true';
 
 function toggleLangDropdown(e) {
@@ -23763,7 +23765,7 @@ function go() {
     G = {
         sc: 0, lv: G.diff === 'hard' ? 2 : 3, cq: 0, tq: isEndless ? 9999 : (G.diff === 'hard' ? 12 : 10),
         ok: 0, str: 0, bstr: 0, tl: initTime, ti: null, cat: G.cat, diff: G.diff,
-        qq: [], h50: (isVip ? 3 : 2) + (stats.bonus50 || 0), hsk: 1 + (stats.bonusSk || 0), hfr: 0 + (stats.bonusFr || 0), st: Date.now(), ans: 0, baseTime: initTime, revived: false
+        qq: [], h50: stats.h50 || 0, hsk: stats.hsk || 0, hfr: 0, st: Date.now(), ans: 0, spent: 0, baseTime: initTime, revived: false
     };
     document.getElementById('ctxOfferContainer').innerHTML = '';
 
@@ -23868,6 +23870,10 @@ function ck(btn) {
     clearInterval(G.ti);
     document.querySelectorAll('.abtn').forEach(x => x.classList.add('dis'));
     G.ans++;
+    
+    // Track pure thinking time (baseTime - remainingTime)
+    const timeSpent = Math.max(0, G.baseTime - G.tl);
+    G.spent = (G.spent || 0) + timeSpent;
 
     if (btn.dataset.ok === '1') {
         btn.classList.add('ok');
@@ -23884,31 +23890,17 @@ function ck(btn) {
         document.querySelectorAll('.abtn').forEach(x => { if (x.dataset.ok === '1') x.classList.add('ok'); });
         G.lv--; G.str = 0;
         tg?.HapticFeedback?.impactOccurred('heavy');
-        showCtxOffer();
     }
 
     G.cq++;
-    setTimeout(lq, 1100);
+    if (G.lv <= 0) {
+        setTimeout(end, 900);
+    } else {
+        setTimeout(lq, 900);
+    }
 }
 
-function showCtxOffer() {
-    const t = I18N[currentLang] || I18N.ru;
-    const container = document.getElementById('ctxOfferContainer');
-    let text = t.ctxBuyHints;
-    let pack = 'h50';
-    let price = '15 ⭐';
-    if (G.h50 <= 0 && G.hfr <= 0) {
-        text = t.ctxBuyBundle; pack = 'bundle'; price = '50 ⭐';
-    } else if (G.hfr <= 0) {
-        text = t.ctxBuyFreeze; pack = 'freeze'; price = '20 ⭐';
-    }
-    container.innerHTML = `
-        <div class="ctx-offer">
-            <span class="ctx-text">${text}</span>
-            <button class="ctx-btn" onclick="buyHintPack('${pack}')">${price}</button>
-        </div>`;
-    setTimeout(() => { container.innerHTML = ''; }, 4000);
-}
+function showCtxOffer() { /* disabled per user rule */ }
 
 function sT() {
     G.tl = G.baseTime;
@@ -23925,32 +23917,42 @@ function sT() {
         if (G.tl <= 0) {
             clearInterval(G.ti);
             G.lv--; G.str = 0; G.cq++; G.ans++;
+            G.spent = (G.spent || 0) + G.baseTime;
             document.querySelectorAll('.abtn').forEach(x => {
                 x.classList.add('dis');
                 if (x.dataset.ok === '1') x.classList.add('ok');
             });
             tg?.HapticFeedback?.impactOccurred('heavy');
-            setTimeout(lq, 1100);
+            if (G.lv <= 0) {
+                setTimeout(end, 900);
+            } else {
+                setTimeout(lq, 900);
+            }
         }
     }, 1000);
 }
 
 function h5() {
-    if (G.h50 <= 0) return;
-    G.h50--;
-    document.getElementById('h5c').textContent = G.h50;
-    document.getElementById('h50').disabled = G.h50 <= 0;
+    if ((stats.h50 || 0) <= 0) return;
+    stats.h50 = Math.max(0, (stats.h50 || 0) - 1);
+    G.h50 = stats.h50;
+    localStorage.setItem('sr_stats', JSON.stringify(stats));
+    if (document.getElementById('h5c')) document.getElementById('h5c').textContent = stats.h50;
+    if (document.getElementById('h50')) document.getElementById('h50').disabled = stats.h50 <= 0;
     const btns = [...document.querySelectorAll('.abtn')];
     const wrong = btns.filter(b => b.dataset.ok === '0' && !b.classList.contains('dis'));
     shuffle(wrong);
     wrong.slice(0, 2).forEach(b => { b.classList.add('dis'); b.style.opacity = '.15'; });
+    tg?.HapticFeedback?.impactOccurred('light');
 }
 
 function hs() {
-    if (G.hsk <= 0) return;
-    G.hsk--;
-    document.getElementById('hsc').textContent = G.hsk;
-    document.getElementById('hsk').disabled = G.hsk <= 0;
+    if ((stats.hsk || 0) <= 0) return;
+    stats.hsk = Math.max(0, (stats.hsk || 0) - 1);
+    G.hsk = stats.hsk;
+    localStorage.setItem('sr_stats', JSON.stringify(stats));
+    if (document.getElementById('hsc')) document.getElementById('hsc').textContent = stats.hsk;
+    if (document.getElementById('hsk')) document.getElementById('hsk').disabled = stats.hsk <= 0;
     clearInterval(G.ti);
     G.cq++;
     G.ans++;
@@ -24342,13 +24344,12 @@ function spinDailyWheel() {
     
     // Ordered to match sector angles: Sector 0 (45°), Sector 1 (135°), Sector 2 (225°), Sector 3 (315°)
     const prizes = [
-        { name: t.wH2, apply: () => { G.h50 = (G.h50 || 0) + 2; stats.bonus50 = (stats.bonus50 || 0) + 2; } }, // Sector 0 (0-90 deg)
-        { name: t.wS2, apply: () => { G.hsk = (G.hsk || 0) + 2; stats.bonusSk = (stats.bonusSk || 0) + 2; } }, // Sector 1 (90-180 deg)
-        { name: t.wF2, apply: () => { G.hfr = (G.hfr || 0) + 2; stats.bonusFr = (stats.bonusFr || 0) + 2; } }, // Sector 2 (180-270 deg)
+        { name: t.wH2, apply: () => { stats.h50 = (stats.h50 || 0) + 2; G.h50 = stats.h50; } }, // Sector 0 (0-90 deg)
+        { name: t.wS2, apply: () => { stats.hsk = (stats.hsk || 0) + 2; G.hsk = stats.hsk; } }, // Sector 1 (90-180 deg)
+        { name: t.wH3 || t.wH2, apply: () => { stats.h50 = (stats.h50 || 0) + 3; G.h50 = stats.h50; } }, // Sector 2 (180-270 deg)
         { name: t.wCombo, apply: () => { 
-            G.h50 = (G.h50 || 0) + 1; stats.bonus50 = (stats.bonus50 || 0) + 1;
-            G.hsk = (G.hsk || 0) + 1; stats.bonusSk = (stats.bonusSk || 0) + 1;
-            G.hfr = (G.hfr || 0) + 1; stats.bonusFr = (stats.bonusFr || 0) + 1;
+            stats.h50 = (stats.h50 || 0) + 2; stats.hsk = (stats.hsk || 0) + 2;
+            G.h50 = stats.h50; G.hsk = stats.hsk;
         } }, // Sector 3 (270-360 deg)
     ];
     
@@ -24543,13 +24544,12 @@ function executeBonusSpin() {
     
     // Ordered to match sector angles: Sector 0 (45°), Sector 1 (135°), Sector 2 (225°), Sector 3 (315°)
     const bonusPrizes = [
-        { name: t.bonusPrizeH5, apply: () => { G.h50 = (G.h50 || 0) + 5; stats.bonus50 = (stats.bonus50 || 0) + 5; } }, // Sector 0 (0-90 deg)
-        { name: t.bonusPrizeS4, apply: () => { G.hsk = (G.hsk || 0) + 4; stats.bonusSk = (stats.bonusSk || 0) + 4; } }, // Sector 1 (90-180 deg)
-        { name: t.bonusPrizeF5, apply: () => { G.hfr = (G.hfr || 0) + 5; stats.bonusFr = (stats.bonusFr || 0) + 5; } }, // Sector 2 (180-270 deg)
+        { name: t.bonusPrizeH5, apply: () => { stats.h50 = (stats.h50 || 0) + 5; G.h50 = stats.h50; } }, // Sector 0 (0-90 deg)
+        { name: t.bonusPrizeS4, apply: () => { stats.hsk = (stats.hsk || 0) + 4; G.hsk = stats.hsk; } }, // Sector 1 (90-180 deg)
+        { name: t.bonusPrizeH6 || t.bonusPrizeH5, apply: () => { stats.h50 = (stats.h50 || 0) + 6; G.h50 = stats.h50; } }, // Sector 2 (180-270 deg)
         { name: t.bonusPrizeCombo, apply: () => { 
-            G.h50 = (G.h50 || 0) + 3; stats.bonus50 = (stats.bonus50 || 0) + 3;
-            G.hsk = (G.hsk || 0) + 3; stats.bonusSk = (stats.bonusSk || 0) + 3;
-            G.hfr = (G.hfr || 0) + 3; stats.bonusFr = (stats.bonusFr || 0) + 3;
+            stats.h50 = (stats.h50 || 0) + 4; stats.hsk = (stats.hsk || 0) + 3;
+            G.h50 = stats.h50; G.hsk = stats.hsk;
         } }, // Sector 3 (270-360 deg)
     ];
 
@@ -24576,12 +24576,12 @@ function executeBonusSpin() {
 function challengeFriend() {
     const player = getPlayerInfo();
     const score = G.sc > 0 ? G.sc : stats.b;
-    const t = I18N[currentLang] || I18N.ru;
+    const botUrl = `https://t.me/SHRTRCNGQuizBot?start=duel_${player.id}_${score}`;
     const text = currentLang === 'ru'
-        ? `⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ ${player.name} бросает тебе вызов!\n⭐ Рекорд: ${score.toLocaleString()} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆`
-        : `⚔️ SPEED QUIZ DUEL!\n\n🏎️ ${player.name} challenges you!\n⭐ Score: ${score.toLocaleString()} PTS\n\nCan you beat this record? 🏁🏆`;
+        ? `⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ ${player.name} бросает тебе вызов!\n⭐ Рекорд: ${score.toLocaleString()} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆\n👉 Играть: ${botUrl}`
+        : `⚔️ SPEED QUIZ DUEL!\n\n🏎️ ${player.name} challenges you!\n⭐ Score: ${score.toLocaleString()} PTS\n\nCan you beat this record? 🏁🏆\n👉 Play: ${botUrl}`;
 
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/shrtrcng')}&text=${encodeURIComponent(text)}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(botUrl)}&text=${encodeURIComponent(text)}`;
     if (tg?.openTelegramLink) {
         tg.openTelegramLink(shareUrl);
     } else {
@@ -24593,7 +24593,7 @@ function challengeFriend() {
 function end() {
     clearInterval(G.ti);
 
-    const totalTime = Math.round((Date.now() - G.st) / 1000);
+    const totalTime = G.spent || Math.round((Date.now() - G.st) / 1000);
     const acc = G.ans > 0 ? Math.round((G.ok / G.ans) * 100) : 0;
 
     stats.g++;
@@ -24749,9 +24749,11 @@ async function sendReport() {
 }
 
 function share() {
+    const player = getPlayerInfo();
     const acc = G.ans > 0 ? Math.round((G.ok / G.ans) * 100) : 0;
-    const text = `🏎️ SPEED QUIZ\n\n⭐ Score: ${G.sc} PTS\n✅ Correct: ${G.ok}/${G.ans} (${acc}%)\n🔥 Streak: ${G.bstr}\n\nCan you beat my record? 🏁\n📸 @shrtrcng`;
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/shrtrcng')}&text=${encodeURIComponent(text)}`;
+    const botUrl = `https://t.me/SHRTRCNGQuizBot?start=ref_${player.id}`;
+    const text = `🏎️ SPEED QUIZ\n\n⭐ Score: ${G.sc} PTS\n✅ Correct: ${G.ok}/${G.ans} (${acc}%)\n🔥 Streak: ${G.bstr}\n\nCan you beat my record? 🏁\n👉 Play: ${botUrl}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(botUrl)}&text=${encodeURIComponent(text)}`;
     
     if (tg?.openTelegramLink) {
         tg.openTelegramLink(shareUrl);
