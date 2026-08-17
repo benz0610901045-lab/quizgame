@@ -560,8 +560,19 @@ const I18N = {
         refEarned: "Бонусов",
         refLinkLabel: "Твоя персональная ссылка:",
         refShareBtn: "Пригласить в Telegram",
+        refClose: "Закрыть",
         refCopiedToast: "✅ Реферальная ссылка скопирована!",
         refShareText: "🏎️ Гоняй со мной в Speed Quiz! Проверь авто-знания, крути рулетку и забирай кубок 🏆🏁\n\n🎁 Заходи по моей ссылке и забирай стартовый комбо-пак бонусов:",
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         donateBtn: "Поддержать", leaderBtn: "Лидеры", wheelBtn: "Рулетка", exit: "Выйти",
         shopBtn: "Магазин", shopDesc: "Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!",
         shopTitle: "🛒 МАГАЗИН",
@@ -607,6 +618,17 @@ const I18N = {
     },
     en: {
         subtitle: "Test your skills and become a legend!",
+        refBtn: "Friends",
+        refTitle: "Invite Friends",
+        refHead: "Reward per each friend:",
+        refPerks: "🎡 <b>+1 Spin</b> on Wheel of Fortune<br>✂️ <b>+2 50/50 Hints</b><br>⏭️ <b>+2 Question Skips</b>",
+        refInvited: "Invited",
+        refEarned: "Bonuses",
+        refLinkLabel: "Your personal invite link:",
+        refShareBtn: "Invite in Telegram",
+        refClose: "Close",
+        refCopiedToast: "✅ Invite link copied to clipboard!",
+        refShareText: "🏎️ Race with me in Speed Quiz! Test your car knowledge, spin the wheel & win trophies 🏆🏁\n\n🎁 Join via my link and claim starter booster pack:",
         donateBtn: "Support", leaderBtn: "Leaders", wheelBtn: "Lucky Wheel", exit: "Quit",
         shopBtn: "Shop", shopDesc: "Buy hints with ⭐ Telegram Stars and dominate the race!",
         shopTitle: "🛒 SHOP",
@@ -652,6 +674,17 @@ const I18N = {
     },
     de: {
         subtitle: "Teste dein Wissen und werde zur Legende!",
+        refBtn: "Freunde",
+        refTitle: "Freunde einladen",
+        refHead: "Belohnung pro Freund:",
+        refPerks: "🎡 <b>+1 Drehung</b> am Glücksrad<br>✂️ <b>+2 50/50 Joker</b><br>⏭️ <b>+2 Überspringen</b>",
+        refInvited: "Eingeladen",
+        refEarned: "Boni",
+        refLinkLabel: "Dein persönlicher Einladungslink:",
+        refShareBtn: "In Telegram einladen",
+        refClose: "Schließen",
+        refCopiedToast: "✅ Einladungslink in die Zwischenablage kopiert!",
+        refShareText: "🏎️ Fahre mit mir in Speed Quiz! Teste dein Autowissen, drehe das Glücksrad und gewinne Pokale 🏆🏁\n\n🎁 Nutze meinen Link für ein Starter-Bonuspaket:",
         donateBtn: "Unterstützen", leaderBtn: "Bestenliste", wheelBtn: "Glücksrad", exit: "Beenden",
         shopBtn: "Shop", shopDesc: "Kaufe Hinweise mit ⭐ Telegram Stars und gewinne Rennen!",
         shopTitle: "🛒 SHOP",
@@ -697,6 +730,17 @@ const I18N = {
     },
     es: {
         subtitle: "¡Pon a prueba tus conocimientos y sé una leyenda!",
+        refBtn: "Amigos",
+        refTitle: "Invitar amigos",
+        refHead: "Recompensa por cada amigo:",
+        refPerks: "🎡 <b>+1 Giro</b> en la Ruleta de la Suerte<br>✂️ <b>+2 Comodines</b> 50/50<br>⏭️ <b>+2 Saltos</b> de preguntas",
+        refInvited: "Invitados",
+        refEarned: "Bonificaciones",
+        refLinkLabel: "Tu enlace de invitación:",
+        refShareBtn: "Invitar en Telegram",
+        refClose: "Cerrar",
+        refCopiedToast: "✅ ¡Enlace de invitación copiado al portapapeles!",
+        refShareText: "🏎️ ¡Compite conmigo en Speed Quiz! Pon a prueba tus conocimientos sobre coches, gira la ruleta y gana el trofeo 🏆🏁\n\n🎁 Únete con mi enlace para recibir un pack de bienvenida:",
         donateBtn: "Apoyar", leaderBtn: "Líderes", wheelBtn: "Ruleta", exit: "Salir",
         shopBtn: "Tienda", shopDesc: "¡Compra pistas con ⭐ Telegram Stars y gana carreras!",
         shopTitle: "🛒 TIENDA",
@@ -23574,7 +23618,16 @@ function setLang(lang) {
     document.getElementById('t-subtitle').textContent = t.subtitle;
     document.getElementById('t-donate-btn').textContent = t.donateBtn;
     if (document.getElementById('t-leader-btn')) document.getElementById('t-leader-btn').textContent = t.leaderBtn;
+    // Referral / Friends Modal
     if (document.getElementById('t-ref-btn')) document.getElementById('t-ref-btn').textContent = t.refBtn || 'Друзья';
+    if (document.getElementById('t-ref-title')) document.getElementById('t-ref-title').textContent = t.refTitle || 'Приглашай друзей';
+    if (document.getElementById('t-ref-head')) document.getElementById('t-ref-head').textContent = t.refHead || 'Награда за каждого друга:';
+    if (document.getElementById('t-ref-perks')) document.getElementById('t-ref-perks').innerHTML = t.refPerks || '';
+    if (document.getElementById('t-ref-invited')) document.getElementById('t-ref-invited').textContent = t.refInvited || 'Приглашено';
+    if (document.getElementById('t-ref-earned')) document.getElementById('t-ref-earned').textContent = t.refEarned || 'Бонусов';
+    if (document.getElementById('t-ref-link-label')) document.getElementById('t-ref-link-label').textContent = t.refLinkLabel || 'Твоя персональная ссылка:';
+    if (document.getElementById('t-ref-share-btn')) document.getElementById('t-ref-share-btn').textContent = t.refShareBtn || 'Пригласить в Telegram';
+    if (document.getElementById('t-ref-close')) document.getElementById('t-ref-close').textContent = t.refClose || t.close || 'Закрыть';
     if (document.getElementById('t-wheel-btn')) document.getElementById('t-wheel-btn').textContent = t.wheelBtn;
     if (document.getElementById('t-shop-btn')) document.getElementById('t-shop-btn').textContent = t.shopBtn;
     if (document.getElementById('t-shop-desc')) document.getElementById('t-shop-desc').textContent = t.shopDesc;
@@ -23775,12 +23828,10 @@ function lq() {
         document.getElementById('pf').style.width = `${(G.cq / G.tq) * 100}%`;
     }
 
-    document.getElementById('h5c').textContent = G.h50;
-    document.getElementById('hsc').textContent = G.hsk;
-    document.getElementById('hfc').textContent = G.hfr;
-    document.getElementById('h50').disabled = G.h50 <= 0;
-    document.getElementById('hsk').disabled = G.hsk <= 0;
-    document.getElementById('hfr').disabled = G.hfr <= 0;
+    if (document.getElementById('h5c')) document.getElementById('h5c').textContent = G.h50;
+    if (document.getElementById('hsc')) document.getElementById('hsc').textContent = G.hsk;
+    if (document.getElementById('h50')) document.getElementById('h50').disabled = G.h50 <= 0;
+    if (document.getElementById('hsk')) document.getElementById('hsk').disabled = G.hsk <= 0;
 
     const mediaBox = document.getElementById('mediaBox');
     mediaBox.innerHTML = '';
@@ -23910,8 +23961,8 @@ function hf() {
     G.tl += 10;
     document.getElementById('tm').textContent = `⏱ ${G.tl}с`;
     document.getElementById('tm').classList.remove('dng');
-    document.getElementById('hfc').textContent = G.hfr;
-    document.getElementById('hfr').disabled = G.hfr <= 0;
+    
+    
     tg?.HapticFeedback?.impactOccurred('light');
 }
 
@@ -24134,13 +24185,14 @@ function openReferralModal() {
     const modal = document.getElementById('refModal');
     if (!modal) return;
     
-    document.getElementById('t-ref-title').textContent = t.refTitle || 'Приглашай друзей';
-    document.getElementById('t-ref-head').textContent = t.refHead || 'Награда за каждого друга:';
-    document.getElementById('t-ref-perks').innerHTML = t.refPerks || '';
-    document.getElementById('t-ref-invited').textContent = t.refInvited || 'Приглашено';
-    document.getElementById('t-ref-earned').textContent = t.refEarned || 'Бонусов';
-    document.getElementById('t-ref-link-label').textContent = t.refLinkLabel || 'Твоя персональная ссылка:';
-    document.getElementById('t-ref-share-btn').textContent = t.refShareBtn || 'Пригласить в Telegram';
+    if (document.getElementById('t-ref-title')) document.getElementById('t-ref-title').textContent = t.refTitle || 'Приглашай друзей';
+    if (document.getElementById('t-ref-head')) document.getElementById('t-ref-head').textContent = t.refHead || 'Награда за каждого друга:';
+    if (document.getElementById('t-ref-perks')) document.getElementById('t-ref-perks').innerHTML = t.refPerks || '';
+    if (document.getElementById('t-ref-invited')) document.getElementById('t-ref-invited').textContent = t.refInvited || 'Приглашено';
+    if (document.getElementById('t-ref-earned')) document.getElementById('t-ref-earned').textContent = t.refEarned || 'Бонусов';
+    if (document.getElementById('t-ref-link-label')) document.getElementById('t-ref-link-label').textContent = t.refLinkLabel || 'Твоя персональная ссылка:';
+    if (document.getElementById('t-ref-share-btn')) document.getElementById('t-ref-share-btn').textContent = t.refShareBtn || 'Пригласить в Telegram';
+    if (document.getElementById('t-ref-close')) document.getElementById('t-ref-close').textContent = t.refClose || t.close || 'Закрыть';
 
     const count = stats.refCount || 0;
     const rewards = stats.refRewards || 0;
@@ -24378,19 +24430,14 @@ function applyHintPackReward(packType) {
     } else if (packType === 'skip') {
         G.hsk = (G.hsk || 0) + 5;
         alert("🎉 +5 Пропусков вопросов успешно добавлены!");
-    } else if (packType === 'freeze') {
-        G.hfr = (G.hfr || 0) + 5;
-        alert("🎉 +5 Заморозок времени (+10с) добавлены!");
     } else if (packType === 'bundle') {
         G.h50 = (G.h50 || 0) + 5;
         G.hsk = (G.hsk || 0) + 5;
-        G.hfr = (G.hfr || 0) + 3;
         G.lv = (G.lv || 3) + 2;
-        alert("🎉 Набор «Чемпион» активирован! +5 50/50, +5 Пропусков, +3 ⏱️ и +2 Жизни!");
+        alert("🎉 Набор «Чемпион» активирован! +5 50/50, +5 Пропусков и +2 Жизни!");
     }
     if (document.getElementById('h5c')) document.getElementById('h5c').textContent = G.h50;
     if (document.getElementById('hsc')) document.getElementById('hsc').textContent = G.hsk;
-    if (document.getElementById('hfc')) document.getElementById('hfc').textContent = G.hfr;
 }
 
 // VIP GOLD RACER
