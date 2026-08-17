@@ -141,7 +141,7 @@
         .abtn.dis{pointer-events:none;opacity:.45}
         @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-        .hbar{width:100%;max-width:420px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:14px}
+        .hbar{width:100%;max-width:420px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
         .hbtn{display:flex;align-items:center;justify-content:center;gap:4px;padding:9px 4px;background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.28);border-radius:14px;color:var(--gold);font-size:11px;font-weight:800;cursor:pointer;transition:all .2s ease;white-space:nowrap;width:100%;box-shadow:0 4px 15px rgba(0,0,0,0.35);-webkit-tap-highlight-color:transparent;}
         .hbtn .hcount{background:rgba(255,215,0,0.18);border:1px solid rgba(255,215,0,0.35);color:var(--gold);padding:1px 6px;border-radius:8px;font-size:10px;font-weight:900;}
         @media (hover: hover) {
@@ -24179,8 +24179,7 @@ function getDailySpinCount() {
 function getReferralLink() {
     const player = getPlayerInfo();
     const userId = player.id || 'usr_' + (stats.b || 1);
-    const botUrl = 'https://t.me/shrtrcng';
-    return `https://t.me/shrtrcng?start=ref_${userId}`;
+    return `https://t.me/SHRTRCNGQuizBot?start=ref_${userId}`;
 }
 
 function openReferralModal() {
