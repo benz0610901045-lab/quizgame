@@ -213,6 +213,56 @@ export default {
                 globalThis.MEMORY_LEADERBOARD = [];
             }
 
+            
+            // Route: Record new referral
+            if (url.pathname === '/referral/record' && request.method === 'POST') {
+                const body = await request.json();
+                const { referrerId, newUserId, newUserName } = body;
+
+                if (!referrerId || !newUserId) {
+                    return jsonResponse({ error: 'Missing parameters' }, 400, corsHeaders);
+                }
+
+                if (!globalThis.REFERRAL_STORE) {
+                    globalThis.REFERRAL_STORE = {};
+                }
+
+                if (!globalThis.REFERRAL_STORE[referrerId]) {
+                    globalThis.REFERRAL_STORE[referrerId] = { count: 0, rewards: 0, friends: [] };
+                }
+
+                if (!globalThis.REFERRAL_STORE[referrerId].friends.includes(newUserId)) {
+                    globalThis.REFERRAL_STORE[referrerId].friends.push(newUserId);
+                    globalThis.REFERRAL_STORE[referrerId].count++;
+                    globalThis.REFERRAL_STORE[referrerId].rewards++;
+
+                    // Send Telegram notification to referrer if botToken exists
+                    if (botToken && referrerId && !isNaN(referrerId)) {
+                        const refMsg = `🎉 <b>У ВАС НОВЫЙ РЕФЕРАЛ В SPEED QUIZ!</b>\n\n🏎️ Игрок <b>${newUserName || 'Гонщик'}</b> присоединился по вашей ссылке!\n\n🎁 <b>Вам начислены бонусы:</b>\n🎡 +1 Спин в Колесе Фортуны\n⚡ +2 Заморозки\n✂️ +2 50/50\n⏭️ +1 Пропуск`;
+                        try {
+                            await sendMessage(botToken, referrerId, refMsg);
+                        } catch (err) {
+                            console.error('Failed to notify referrer:', err);
+                        }
+                    }
+                }
+
+                return jsonResponse({ ok: true, stats: globalThis.REFERRAL_STORE[referrerId] }, 200, corsHeaders);
+            }
+
+            // Route: Get referral stats
+            if (url.pathname === '/referral/stats' && request.method === 'GET') {
+                const userId = url.searchParams.get('userId');
+                if (!userId) return jsonResponse({ error: 'Missing userId' }, 400, corsHeaders);
+
+                if (!globalThis.REFERRAL_STORE) {
+                    globalThis.REFERRAL_STORE = {};
+                }
+
+                const userStats = globalThis.REFERRAL_STORE[userId] || { count: 0, rewards: 0 };
+                return jsonResponse({ ok: true, refCount: userStats.count, refRewards: userStats.rewards }, 200, corsHeaders);
+            }
+
             // Route: Submit Bug Report
             if (url.pathname === '/submit-report' && request.method === 'POST') {
                 const body = await request.json();

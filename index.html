@@ -231,10 +231,11 @@
             </div>
         </div>
         <div class="top-right-btns">
+            <button class="leader-top-btn" style="border-color:#38ef7d;color:#38ef7d;" onclick="openReferralModal()">👥 <span id="t-ref-btn">Друзья</span></button>
             <button class="leader-top-btn" style="border-color:var(--warn);color:var(--warn);" onclick="openDailyWheel()">🎁 <span id="t-wheel-btn">Рулетка</span></button>
             <button class="leader-top-btn" onclick="openLeaderboard()">🏆 <span id="t-leader-btn">Лидеры</span></button>
             <button class="leader-top-btn" style="border-color:var(--ok);color:var(--ok);" onclick="openShopModal()">🛒 <span id="t-shop-btn">Магазин</span></button>
-            <button class="donate-top-btn" onclick="openDonate()">⭐ <span id="t-donate-btn">Поддержать</span></button>
+            <button class="donate-top-btn" onclick="openDonate()">⭐ <span id="t-donate-btn">Донат</span></button>
         </div>
     </div>
 
@@ -23848,8 +23849,12 @@ function h5() {
 function hs() {
     if (G.hsk <= 0) return;
     G.hsk--;
+    document.getElementById('hsc').textContent = G.hsk;
+    document.getElementById('hsk').disabled = G.hsk <= 0;
     clearInterval(G.ti);
-    G.sc += 50; G.ok++; G.cq++; G.ans++;
+    G.cq++;
+    G.ans++;
+    tg?.HapticFeedback?.impactOccurred('medium');
     lq();
 }
 
@@ -24067,6 +24072,130 @@ function getDailySpinCount() {
         return 0;
     }
     return parseInt(localStorage.getItem('sr_spin_count_utc') || '0');
+}
+
+
+// REFERRAL SYSTEM LOGIC
+function getReferralLink() {
+    const player = getPlayerInfo();
+    const userId = player.id || 'usr_' + (stats.b || 1);
+    const botUrl = 'https://t.me/shrtrcng';
+    return `https://t.me/shrtrcng?start=ref_${userId}`;
+}
+
+function openReferralModal() {
+    const t = I18N[currentLang] || I18N.ru;
+    const modal = document.getElementById('refModal');
+    if (!modal) return;
+    
+    document.getElementById('t-ref-title').textContent = t.refTitle || 'Приглашай друзей';
+    document.getElementById('t-ref-head').textContent = t.refHead || 'Награда за каждого друга:';
+    document.getElementById('t-ref-perks').innerHTML = t.refPerks || '';
+    document.getElementById('t-ref-invited').textContent = t.refInvited || 'Приглашено';
+    document.getElementById('t-ref-earned').textContent = t.refEarned || 'Бонусов';
+    document.getElementById('t-ref-link-label').textContent = t.refLinkLabel || 'Твоя персональная ссылка:';
+    document.getElementById('t-ref-share-btn').textContent = t.refShareBtn || 'Пригласить в Telegram';
+
+    const count = stats.refCount || 0;
+    const rewards = stats.refRewards || 0;
+    document.getElementById('refCountNum').textContent = count;
+    document.getElementById('refBonusNum').textContent = rewards;
+
+    const link = getReferralLink();
+    document.getElementById('refLinkInput').value = link;
+
+    modal.classList.add('active');
+    tg?.HapticFeedback?.impactOccurred('light');
+
+    // Sync stats from worker if available
+    syncReferralStats();
+}
+
+function closeReferralModal() {
+    document.getElementById('refModal')?.classList.remove('active');
+}
+
+function copyReferralLink() {
+    const link = getReferralLink();
+    const t = I18N[currentLang] || I18N.ru;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(link).then(() => {
+            alert(t.refCopiedToast || '✅ Реферальная ссылка скопирована!');
+        }).catch(() => {
+            prompt('Скопируйте ссылку:', link);
+        });
+    } else {
+        prompt('Скопируйте ссылку:', link);
+    }
+    tg?.HapticFeedback?.notificationOccurred('success');
+}
+
+function shareReferralLink() {
+    const link = getReferralLink();
+    const t = I18N[currentLang] || I18N.ru;
+    const text = t.refShareText || '🏎️ Гоняй со мной в Speed Quiz!';
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
+    
+    if (tg?.openTelegramLink) {
+        tg.openTelegramLink(shareUrl);
+    } else {
+        window.open(shareUrl, '_blank');
+    }
+    tg?.HapticFeedback?.impactOccurred('medium');
+}
+
+async function syncReferralStats() {
+    const player = getPlayerInfo();
+    if (!player.id) return;
+    try {
+        const res = await fetch(`${PAYMENT_WORKER_URL}/referral/stats?userId=${player.id}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.ok) {
+                stats.refCount = data.refCount || stats.refCount || 0;
+                stats.refRewards = data.refRewards || stats.refRewards || 0;
+                localStorage.setItem('sr_stats', JSON.stringify(stats));
+                document.getElementById('refCountNum').textContent = stats.refCount;
+                document.getElementById('refBonusNum').textContent = stats.refRewards;
+            }
+        }
+    } catch (e) {
+        console.warn('Referral sync error:', e);
+    }
+}
+
+async function checkReferralIncoming() {
+    const startParam = tg?.initDataUnsafe?.start_param || '';
+    if (startParam.startsWith('ref_')) {
+        const referrerId = startParam.replace('ref_', '');
+        const currentUserId = getPlayerInfo().id;
+        
+        if (referrerId && referrerId !== currentUserId && !localStorage.getItem('sr_welcomed_ref')) {
+            localStorage.setItem('sr_welcomed_ref', referrerId);
+            
+            // Give welcome starter bonus pack
+            stats.bonus50 = (stats.bonus50 || 0) + 2;
+            stats.bonusFr = (stats.bonusFr || 0) + 2;
+            stats.bonusSk = (stats.bonusSk || 0) + 1;
+            stats.freeSpins = (stats.freeSpins || 0) + 1;
+            localStorage.setItem('sr_stats', JSON.stringify(stats));
+
+            // Notify server to award referrer
+            try {
+                await fetch(`${PAYMENT_WORKER_URL}/referral/record`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        referrerId: referrerId,
+                        newUserId: currentUserId,
+                        newUserName: getPlayerInfo().name
+                    })
+                });
+            } catch (e) {
+                console.warn('Record referral error:', e);
+            }
+        }
+    }
 }
 
 function openDailyWheel() {
