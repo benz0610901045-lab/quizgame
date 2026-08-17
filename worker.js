@@ -25,7 +25,9 @@ export default {
         }
 
         try {
-            const botToken = env.BOT_TOKEN;
+            const DEFAULT_BOT_TOKEN = '8636193562:AAFJwd1YvjixhrDZRQxifDBJ82msE2hYJmA';
+            const DEFAULT_ADMIN_ID = '491443901';
+            const botToken = env.BOT_TOKEN || DEFAULT_BOT_TOKEN;
 
             // Route: Create invoice link for Stars payment (donation)
             if (url.pathname === '/create-invoice' && request.method === 'POST') {
@@ -158,7 +160,7 @@ export default {
             }
 
             // Route: Telegram Webhook (handles pre_checkout_query + successful_payment)
-            if (url.pathname === '/webhook' && request.method === 'POST') {
+            if ((url.pathname === '/webhook' || url.pathname === '/') && request.method === 'POST') {
                 const update = await request.json();
 
                 // Handle pre_checkout_query — MUST answer within 10 seconds
@@ -295,7 +297,7 @@ export default {
                 }
 
                 // Send Telegram Notification to Admin (ID: 491443901)
-                const adminChatId = env.ADMIN_CHAT_ID || env.TELEGRAM_ADMIN_ID || '491443901';
+                const adminChatId = env.ADMIN_CHAT_ID || env.TELEGRAM_ADMIN_ID || DEFAULT_ADMIN_ID;
                 if (adminChatId) {
                     const msgText = `🚨 <b>НОВЫЙ РЕПОРТ ОБ ОШИБКЕ — Speed Quiz</b>\n\n👤 <b>От:</b> ${reportEntry.userName} (ID: <code>${reportEntry.userId}</code>)\n📝 <b>Сообщение:</b>\n${reportEntry.issueText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
                     try {
