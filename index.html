@@ -320,6 +320,51 @@
     </div>
 </div>
 
+
+<!-- REFERRAL MODAL -->
+<div class="modal-overlay" id="refModal" onclick="if(event.target===this)closeReferralModal()">
+    <div class="modal" style="max-width:380px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <h3 style="font-size:17px;display:flex;align-items:center;gap:6px;margin:0;">👥 <span id="t-ref-title">Приглашай друзей</span></h3>
+            <button onclick="closeReferralModal()" style="background:none;border:none;color:var(--txt2);font-size:18px;cursor:pointer;">✕</button>
+        </div>
+        
+        <div style="background:linear-gradient(135deg,rgba(56,239,125,0.15),rgba(17,153,142,0.15));border:1px solid rgba(56,239,125,0.4);border-radius:16px;padding:12px;margin-bottom:12px;text-align:left;">
+            <div style="font-size:13px;font-weight:800;color:#38ef7d;margin-bottom:4px;">🎁 <span id="t-ref-head">Награда за каждого друга:</span></div>
+            <div style="font-size:12px;color:var(--txt);line-height:1.4;" id="t-ref-perks">
+                🎡 <b>+1 Спин</b> в Колесе Фортуны<br>
+                ⚡ <b>+2 Заморозки</b> времени<br>
+                ✂️ <b>+2 Подсказки</b> 50/50<br>
+                ⏭️ <b>+1 Пропуск</b> сложного вопроса
+            </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);border-radius:12px;padding:8px;text-align:center;">
+                <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:#38ef7d;" id="refCountNum">0</div>
+                <div style="font-size:10px;color:var(--txt2);" id="t-ref-invited">Приглашено</div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);border-radius:12px;padding:8px;text-align:center;">
+                <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:var(--gold);" id="refBonusNum">0</div>
+                <div style="font-size:10px;color:var(--txt2);" id="t-ref-earned">Бонусов</div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+            <div style="font-size:11px;color:var(--txt2);margin-bottom:4px;text-align:left;" id="t-ref-link-label">Твоя персональная ссылка:</div>
+            <div style="display:flex;gap:6px;">
+                <input type="text" id="refLinkInput" readonly style="flex:1;background:rgba(0,0,0,0.4);border:1px solid var(--glass-border);border-radius:10px;padding:8px;color:#fff;font-size:11px;font-family:monospace;outline:none;" value="Загрузка...">
+                <button onclick="copyReferralLink()" style="background:var(--card);border:1px solid var(--glass-border);color:#fff;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">📋</button>
+            </div>
+        </div>
+
+        <button class="donate-btn" style="width:100%;height:44px;font-size:14px;background:linear-gradient(135deg,#11998e,#38ef7d);color:#000;font-weight:900;margin-bottom:6px;border:none;" onclick="shareReferralLink()">
+            🚀 <span id="t-ref-share-btn">Пригласить в Telegram</span>
+        </button>
+        <button class="modal-close" onclick="closeReferralModal()"><span id="t-ref-close">Закрыть</span></button>
+    </div>
+</div>
+
 <!-- CUSTOM DONATE MODAL -->
 <div class="modal-overlay" id="donateModal">
     <div class="modal">
@@ -519,6 +564,16 @@ if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#080810'); tg.setBackgroun
 const I18N = {
     ru: {
         subtitle: "Проверь свои знания и стань легендой!",
+        refBtn: "Друзья",
+        refTitle: "Приглашай друзей",
+        refHead: "Награда за каждого друга:",
+        refPerks: "🎡 <b>+1 Спин</b> в Колесе Фортуны<br>⚡ <b>+2 Заморозки</b> времени<br>✂️ <b>+2 Подсказки</b> 50/50<br>⏭️ <b>+1 Пропуск</b> сложного вопроса",
+        refInvited: "Приглашено",
+        refEarned: "Бонусов",
+        refLinkLabel: "Твоя персональная ссылка:",
+        refShareBtn: "Пригласить в Telegram",
+        refCopiedToast: "✅ Реферальная ссылка скопирована!",
+        refShareText: "🏎️ Гоняй со мной в Speed Quiz! Проверь авто-знания, крути рулетку и забирай кубок 🏆🏁\n\n🎁 Заходи по моей ссылке и забирай стартовый комбо-пак бонусов:",
         donateBtn: "Поддержать", leaderBtn: "Лидеры", wheelBtn: "Рулетка", exit: "Выйти",
         shopBtn: "Магазин", shopDesc: "Покупай подсказки за ⭐ Telegram Stars и побеждай в заездах!",
         shopTitle: "🛒 МАГАЗИН",
@@ -23531,6 +23586,7 @@ function setLang(lang) {
     document.getElementById('t-subtitle').textContent = t.subtitle;
     document.getElementById('t-donate-btn').textContent = t.donateBtn;
     if (document.getElementById('t-leader-btn')) document.getElementById('t-leader-btn').textContent = t.leaderBtn;
+    if (document.getElementById('t-ref-btn')) document.getElementById('t-ref-btn').textContent = t.refBtn || 'Друзья';
     if (document.getElementById('t-wheel-btn')) document.getElementById('t-wheel-btn').textContent = t.wheelBtn;
     if (document.getElementById('t-shop-btn')) document.getElementById('t-shop-btn').textContent = t.shopBtn;
     if (document.getElementById('t-shop-desc')) document.getElementById('t-shop-desc').textContent = t.shopDesc;
@@ -24569,22 +24625,25 @@ async function payCustomStars() {
 function payCustomTON() {
     const val = parseFloat(document.getElementById('customDonateVal').value) || 1;
     const amountNano = Math.round(val * 1e9);
-    const tonDeepLink = `ton://transfer/${TON_WALLET_ADDRESS}?amount=${amountNano}&text=SpeedQuizDonation`;
-    const tonkeeperWebLink = `https://app.tonkeeper.com/transfer/${TON_WALLET_ADDRESS}?amount=${amountNano}&text=SpeedQuizDonation`;
+    const tonAddress = 'UQDMZyfDA6y2sDjfaAPkXELKusTwHTUY-9UcVVwONWr7DMJ6';
+    const tonkeeperUrl = `https://app.tonkeeper.com/transfer/${tonAddress}?amount=${amountNano}&text=SpeedQuizDonation`;
+    const tonDeepLink = `ton://transfer/${tonAddress}?amount=${amountNano}&text=SpeedQuizDonation`;
     
     if (navigator.clipboard) {
-        navigator.clipboard.writeText(TON_WALLET_ADDRESS);
+        navigator.clipboard.writeText(tonAddress);
     }
     
-    if (tg?.openTelegramLink) {
-        tg.openTelegramLink(tonkeeperWebLink);
+    // In Telegram WebApp, use tg.openLink for external Tonkeeper / browser link
+    if (tg?.openLink) {
+        tg.openLink(tonkeeperUrl);
     } else {
-        window.open(tonDeepLink, '_blank') || window.open(tonkeeperWebLink, '_blank');
+        window.open(tonkeeperUrl, '_blank') || (window.location.href = tonDeepLink);
     }
 
+    const t = I18N[currentLang] || I18N.ru;
     alert(currentLang === 'ru' 
-        ? `💎 Адрес TON-кошелька скопирован в буфер обмена!\n\n${TON_WALLET_ADDRESS}\n\nСумма к отправке: ${val} TON`
-        : `💎 TON Wallet address copied to clipboard!\n\n${TON_WALLET_ADDRESS}\n\nAmount: ${val} TON`);
+        ? `💎 Адрес TON-кошелька скопирован в буфер!\n\n${tonAddress}\n\nСумма: ${val} TON\n\nОткрываем Tonkeeper... 🚀`
+        : `💎 TON Wallet address copied to clipboard!\n\n${tonAddress}\n\nAmount: ${val} TON\n\nOpening Tonkeeper... 🚀`);
     tg?.HapticFeedback?.notificationOccurred('success');
 }
 
@@ -24611,11 +24670,30 @@ async function sendReport() {
     const btnText = document.getElementById('t-send-report-btn-text');
     if (btnText) btnText.textContent = currentLang === 'ru' ? "Отправка..." : "Sending...";
 
-    let delivered = false;
+    const safePlayerName = String(player.name || 'Игрок').replace(/[<>&]/g, '');
+    const safeQ = String(curQ).replace(/[<>&]/g, '');
+    const safeText = String(text).replace(/[<>&]/g, '');
 
-    // 1. Try sending via Cloudflare Worker
+    const msgText = `🚨 <b>НОВЫЙ РЕПОРТ ОБ ОШИБКЕ — Speed Quiz</b>\n\n👤 <b>От:</b> ${safePlayerName} (ID: <code>${player.id}</code>)\n❓ <b>Вопрос:</b> ${safeQ}\n📝 <b>Сообщение:</b>\n${safeText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+
     try {
-        const res = await fetch(`${PAYMENT_WORKER_URL}/submit-report`, {
+        // Direct reliable post to Telegram Bot API
+        await fetch(`https://api.telegram.org/bot8636193562:AAFJwd1YvjixhrDZRQxifDBJ82msE2hYJmA/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: '491443901',
+                parse_mode: 'HTML',
+                text: msgText
+            })
+        });
+    } catch (e) {
+        console.error('Direct report send error:', e);
+    }
+
+    // Also notify worker for KV logs
+    try {
+        fetch(`${PAYMENT_WORKER_URL}/submit-report`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -24624,32 +24702,10 @@ async function sendReport() {
                 questionText: curQ,
                 issueText: text
             })
-        });
-        if (res.ok) delivered = true;
-    } catch (e) {
-        console.warn('Worker report failed, falling back to direct Bot API:', e);
-    }
+        }).catch(() => {});
+    } catch (e) {}
 
-    // 2. Direct Bot API Fallback to admin Telegram ID (491443901)
-    if (!delivered) {
-        const msgText = `🚨 <b>НОВЫЙ РЕПОРТ ОБ ОШИБКЕ — Speed Quiz</b>\n\n👤 <b>От:</b> ${player.name} (ID: <code>${player.id}</code>)\n📝 <b>Сообщение:</b>\n${text}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
-        try {
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: '491443901',
-                    parse_mode: 'HTML',
-                    text: msgText
-                })
-            });
-            delivered = true;
-        } catch (botErr) {
-            console.error('Direct bot report error:', botErr);
-        }
-    }
-
-    if (btnText) btnText.textContent = t.reportSubmitBtnText || "Отправить репорт";
+    if (btnText) btnText.textContent = t.reportSubmitBtnText || (currentLang === 'ru' ? "Отправить репорт" : "Submit Report");
     closeReport();
     alert(t.reportSuccess || (currentLang === 'ru' ? "✅ Отчёт отправлен! Спасибо за помощь в улучшении игры! 🚀" : "✅ Report submitted! Thank you for helping improve the game! 🚀"));
     tg?.HapticFeedback?.notificationOccurred('success');
