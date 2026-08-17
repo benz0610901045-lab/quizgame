@@ -26,12 +26,10 @@ export default {
 
         try {
             const botToken = env.BOT_TOKEN;
-            if (!botToken) {
-                return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
-            }
 
             // Route: Create invoice link for Stars payment (donation)
             if (url.pathname === '/create-invoice' && request.method === 'POST') {
+                if (!botToken) return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
                 const body = await request.json();
                 const { amount, title, description, userId } = body;
 
@@ -55,6 +53,7 @@ export default {
 
             // Route: Create revive invoice (35 Stars for extra lives)
             if (url.pathname === '/create-revive-invoice' && request.method === 'POST') {
+                if (!botToken) return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
                 const body = await request.json();
                 const { userId, title, description } = body;
 
@@ -71,6 +70,7 @@ export default {
 
             // Route: Create hint pack invoice for Stars
             if (url.pathname === '/create-hints-invoice' && request.method === 'POST') {
+                if (!botToken) return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
                 const body = await request.json();
                 const { packType, userId, title, description } = body;
 
@@ -100,6 +100,7 @@ export default {
 
             // Route: Create VIP Gold Racer invoice (150 Stars)
             if (url.pathname === '/create-vip-invoice' && request.method === 'POST') {
+                if (!botToken) return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
                 const body = await request.json();
                 const { userId, title, description } = body;
 
@@ -116,6 +117,7 @@ export default {
 
             // Route: Create bonus spin invoice (10 Stars)
             if (url.pathname === '/create-bonus-spin-invoice' && request.method === 'POST') {
+                if (!botToken) return jsonResponse({ error: 'BOT_TOKEN not configured' }, 500, corsHeaders);
                 const body = await request.json();
                 const { userId, title, description } = body;
 
@@ -208,13 +210,7 @@ export default {
 
             // Global in-memory fallback leaderboard if KV is not bound
             if (!globalThis.MEMORY_LEADERBOARD) {
-                globalThis.MEMORY_LEADERBOARD = [
-                    { userId: 'bot1', name: '🏎️ Apex Racer', score: 2850, gamesPlayed: 42, isVip: true },
-                    { userId: 'bot2', name: '🔥 Turbo Drift', score: 2420, gamesPlayed: 35, isVip: false },
-                    { userId: 'bot3', name: '⚡ Wangan Legend', score: 1980, gamesPlayed: 28, isVip: true },
-                    { userId: 'bot4', name: '🏁 Nitro King', score: 1650, gamesPlayed: 19, isVip: false },
-                    { userId: 'bot5', name: '🏆 Shift Master', score: 1420, gamesPlayed: 15, isVip: false }
-                ];
+                globalThis.MEMORY_LEADERBOARD = [];
             }
 
             // Route: Submit Bug Report
@@ -248,8 +244,8 @@ export default {
                     }
                 }
 
-                // Send Telegram Notification to Admin if ADMIN_CHAT_ID or BOT_TOKEN is present
-                const adminChatId = env.ADMIN_CHAT_ID || env.TELEGRAM_ADMIN_ID;
+                // Send Telegram Notification to Admin (ID: 491443901)
+                const adminChatId = env.ADMIN_CHAT_ID || env.TELEGRAM_ADMIN_ID || '491443901';
                 if (adminChatId) {
                     const msgText = `🚨 <b>НОВЫЙ РЕПОРТ ОБ ОШИБКЕ — Speed Quiz</b>\n\n👤 <b>От:</b> ${reportEntry.userName} (ID: <code>${reportEntry.userId}</code>)\n📝 <b>Сообщение:</b>\n${reportEntry.issueText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
                     try {
