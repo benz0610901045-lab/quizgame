@@ -23733,18 +23733,55 @@ async function openLeaderboard() {
     list.innerHTML = `<div style="padding:16px;color:var(--txt2);font-size:13px">${t.leaderLoading}</div>`;
     document.getElementById('leaderboardModal').classList.add('active');
 
+    const player = getPlayerInfo();
+
+    // Eagerly publish local survival record to global server
+    if (stats.b > 0) {
+        submitScoreToBackend(stats.b);
+    }
+
     let leaders = [];
     try {
         const resp = await fetch(`${PAYMENT_WORKER_URL}/leaderboard?limit=1000`);
         const data = await resp.json();
-        if (data.ok && data.leaders) {
+        if (data.ok && Array.isArray(data.leaders)) {
             leaders = data.leaders;
         }
-    } catch (e) {}
-
-    if (!leaders || leaders.length === 0) {
-        leaders = [...localLeaders];
+    } catch (e) {
+        console.warn('Leaderboard fetch error:', e);
     }
+
+    // Merge with local records
+    if (stats.b > 0) {
+        let existing = leaders.find(l => (player.id && l.userId === player.id) || l.name === player.name);
+        if (existing) {
+            if (stats.b > existing.score) existing.score = stats.b;
+            existing.gamesPlayed = Math.max(existing.gamesPlayed || 0, stats.g || 1);
+            existing.isVip = isVip || existing.isVip;
+        } else {
+            leaders.push({
+                userId: player.id,
+                name: player.name,
+                score: stats.b,
+                gamesPlayed: stats.g || 1,
+                isVip: isVip,
+                ts: Date.now()
+            });
+        }
+    }
+
+    // Merge with any cached localLeaders
+    if (Array.isArray(localLeaders)) {
+        localLeaders.forEach(ll => {
+            if (!leaders.some(l => l.name === ll.name)) {
+                leaders.push(ll);
+            }
+        });
+    }
+
+    leaders.sort((a, b) => b.score - a.score);
+    leaders = leaders.slice(0, 1000);
+    localStorage.setItem('sr_leaderboard', JSON.stringify(leaders));
 
     if (!leaders || leaders.length === 0) {
         list.innerHTML = `
@@ -23757,13 +23794,11 @@ async function openLeaderboard() {
         return;
     }
 
-    const player = getPlayerInfo();
     let html = '';
-    
-    leaders.slice(0, 1000).forEach((item, index) => {
+    leaders.forEach((item, index) => {
         const medals = ['🥇', '🥈', '🥉'];
         const medal = index < 3 ? medals[index] : `${index + 1}.`;
-        const isYou = item.name.includes(player.name) || item.name === player.name;
+        const isYou = (player.id && item.userId === player.id) || item.name === player.name;
         const raceCount = item.gamesPlayed || 1;
         const hasVip = item.isVip || (isYou && isVip);
         
@@ -23773,22 +23808,10 @@ async function openLeaderboard() {
                     <span>${medal} ${item.name} ${hasVip ? '<span class="vip-badge" title="VIP Gold Racer">🏅</span>' : ''}</span>
                     <span style="font-size:10px;color:var(--txt2);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:8px;font-weight:600;">🏎️ ${raceCount}</span>
                 </span>
-                <span style="color:var(${index < 3 ? '--gold' : '--accent'});font-weight:900">${item.score.toLocaleString()} ${t.ptsUnit}</span>
+                <span style="color:var(${index < 3 ? '--gold' : '--accent'});font-weight:900">${item.score.toLocaleString()} ${t.ptsUnit || 'PTS'}</span>
             </div>
         `;
     });
-
-    if (stats.b > 0 && !leaders.some(l => l.name.includes(player.name))) {
-        html += `
-            <div class="leader-item you" style="position:sticky;bottom:0;box-shadow:0 -4px 15px rgba(0,0,0,0.8);">
-                <span style="display:flex;align-items:center;gap:6px;">
-                    <span>⭐ ${player.name} ${isVip ? '<span class="vip-badge" title="VIP Gold Racer">🏅</span>' : ''} ${t.leaderYourRecord}</span>
-                    <span style="font-size:10px;color:var(--gold);background:rgba(255,215,0,0.15);padding:2px 6px;border-radius:8px;font-weight:700;">🏎️ ${stats.g}</span>
-                </span>
-                <span style="color:var(--gold);font-weight:900">${stats.b.toLocaleString()} ${t.ptsUnit}</span>
-            </div>
-        `;
-    }
 
     list.innerHTML = html;
 }
