@@ -313,7 +313,7 @@
 
     <div class="bgrp">
         <button class="btn-go" onclick="go()">🔄 <span id="t-again">ЕЩЁ ЗАЕЗД</span></button>
-        <button class="btn-s" style="background:linear-gradient(135deg,rgba(255,51,68,0.2),rgba(255,136,0,0.2));border-color:var(--accent);color:#fff;font-weight:900;" onclick="challengeFriend()">⚔️ Вызвать друга на дуэль</button>
+        <button class="btn-s" style="background:linear-gradient(135deg,rgba(255,51,68,0.2),rgba(255,136,0,0.2));border-color:var(--accent);color:#fff;font-weight:900;" onclick="challengeFriend()"><span id="t-challenge-btn">⚔️ Вызвать друга на дуэль</span></button>
         <button class="btn-s" onclick="share()">📤 <span id="t-share">Поделиться результатом</span></button>
         <button class="btn-s" onclick="openDonate()">⭐ <span id="t-donate-res">Поддержать проект (TON / Stars)</span></button>
         <button class="btn-s" onclick="openReport()">🚨 <span id="t-report-btn">Сообщить об ошибке автору</span></button>
@@ -565,7 +565,12 @@ const I18N = {
         refShareBtn: "Пригласить в Telegram",
         refClose: "Закрыть",
         refCopiedToast: "✅ Реферальная ссылка скопирована!",
-        refShareText: "🏎️ Гоняй со мной в Speed Quiz! Проверь авто-знания, крути рулетку и забирай кубок 🏆🏁\n\n🎁 Заходи по моей ссылке и забирай стартовый комбо-пак бонусов:",
+        refShareText: "🏎️ Гоняй со мной в Speed Quiz! Проверь авто-знания, крути рулетку и забирай кубок 🏆🏁\n\n🎁 Заходи по моей ссылке и забирай стартовый набор бонусов: +1 Спин рулетки, +2 Подсказки 50/50 и +2 Пропуска вопросов!\n👉 Играть:",
+        duelText: "⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ {name} бросает тебе вызов!\n⭐ Рекорд: {score} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆\n👉 Играть: {url}",
+        refWelcomeToast: "🎁 Добро пожаловать! Тебе начислен стартовый набор бонусов:\n🎡 +1 Спин рулетки\n✂️ +2 Подсказки 50/50\n⏭️ +2 Пропуска вопросов!",
+        hintAdded50: "🎉 +5 Подсказок 50/50 успешно добавлены в твой профиль!",
+        hintAddedSkip: "🎉 +5 Пропусков вопросов успешно добавлены в твой профиль!",
+        hintAddedBundle: "🎉 Набор «Чемпион» активирован! +5 50/50, +5 Пропусков и +2 Жизни!",
         
         
         
@@ -630,7 +635,12 @@ const I18N = {
         refShareBtn: "Invite in Telegram",
         refClose: "Close",
         refCopiedToast: "✅ Invite link copied to clipboard!",
-        refShareText: "🏎️ Race with me in Speed Quiz! Test your car knowledge, spin the wheel & win trophies 🏆🏁\n\n🎁 Join via my link and claim starter booster pack:",
+        refShareText: "🏎️ Race with me in Speed Quiz! Test your car knowledge, spin the wheel & win trophies 🏆🏁\n\n🎁 Join via my link and claim your starter booster pack: +1 Lucky Spin, +2 50/50 Hints and +2 Question Skips!\n👉 Play:",
+        duelText: "⚔️ SPEED QUIZ DUEL!\n\n🏎️ {name} challenges you to a race!\n⭐ Record: {score} PTS\n\nCan you beat this score and take 1st place? 🏁🏆\n👉 Play: {url}",
+        refWelcomeToast: "🎁 Welcome! You received a starter bonus pack:\n🎡 +1 Lucky Spin\n✂️ +2 50/50 Hints\n⏭️ +2 Question Skips!",
+        hintAdded50: "🎉 +5 50/50 Hints added to your profile!",
+        hintAddedSkip: "🎉 +5 Question Skips added to your profile!",
+        hintAddedBundle: "🎉 Champion Bundle activated! +5 50/50, +5 Skips and +2 Lives!",
         donateBtn: "Support", leaderBtn: "Leaders", wheelBtn: "Lucky Wheel", exit: "Quit",
         shopBtn: "Shop", shopDesc: "Buy hints with ⭐ Telegram Stars and dominate the race!",
         shopTitle: "🛒 SHOP",
@@ -685,7 +695,12 @@ const I18N = {
         refShareBtn: "In Telegram einladen",
         refClose: "Schließen",
         refCopiedToast: "✅ Einladungslink in die Zwischenablage kopiert!",
-        refShareText: "🏎️ Fahre mit mir in Speed Quiz! Teste dein Autowissen, drehe das Glücksrad und gewinne Pokale 🏆🏁\n\n🎁 Nutze meinen Link für ein Starter-Bonuspaket:",
+        refShareText: "🏎️ Fahre mit mir in Speed Quiz! Teste dein Autowissen, drehe das Glücksrad und gewinne Pokale 🏆🏁\n\n🎁 Nutze meinen Link für ein Starter-Bonuspaket: +1 Gratisdreh, +2 50/50 Joker und +2 Fragen-Sprünge!\n👉 Spielen:",
+        duelText: "⚔️ DUELL IN SPEED QUIZ!\n\n🏎️ {name} fordert dich zum Rennen heraus!\n⭐ Rekord: {score} PTS\n\nKannst du diese Punktzahl schlagen und Platz 1 holen? 🏁🏆\n👉 Spielen: {url}",
+        refWelcomeToast: "🎁 Willkommen! Du hast ein Starter-Bonuspaket erhalten:\n🎡 +1 Gratisdreh\n✂️ +2 50/50 Joker\n⏭️ +2 Fragen-Sprünge!",
+        hintAdded50: "🎉 +5 50/50 Hinweise wurden deinem Profil hinzugefügt!",
+        hintAddedSkip: "🎉 +5 Fragen-Sprünge wurden deinem Profil hinzugefügt!",
+        hintAddedBundle: "🎉 Champion-Paket aktiviert! +5 50/50, +5 Sprünge und +2 Leben!",
         donateBtn: "Unterstützen", leaderBtn: "Bestenliste", wheelBtn: "Glücksrad", exit: "Beenden",
         shopBtn: "Shop", shopDesc: "Kaufe Hinweise mit ⭐ Telegram Stars und gewinne Rennen!",
         shopTitle: "🛒 SHOP",
@@ -740,7 +755,12 @@ const I18N = {
         refShareBtn: "Invitar en Telegram",
         refClose: "Cerrar",
         refCopiedToast: "✅ ¡Enlace de invitación copiado al portapapeles!",
-        refShareText: "🏎️ ¡Compite conmigo en Speed Quiz! Pon a prueba tus conocimientos sobre coches, gira la ruleta y gana el trofeo 🏆🏁\n\n🎁 Únete con mi enlace para recibir un pack de bienvenida:",
+        refShareText: "🏎️ ¡Compite conmigo en Speed Quiz! Pon a prueba tus conocimientos sobre coches, gira la ruleta y gana trofeos 🏆🏁\n\n🎁 Únete con mi enlace para recibir tu pack de bienvenida: +1 Giro de ruleta, +2 Comodines 50/50 y +2 Saltos de preguntas!\n👉 Jugar:",
+        duelText: "⚔️ ¡DUELO EN SPEED QUIZ!\n\n🏎️ ¡{name} te desafía a una carrera!\n⭐ Récord: {score} PTS\n\n¿Puedes superar esta puntuación y llevarte el 1.er lugar? 🏁🏆\n👉 Jugar: {url}",
+        refWelcomeToast: "🎁 ¡Bienvenido! Recibiste tu pack de bienvenida:\n🎡 +1 Giro de ruleta\n✂️ +2 Comodines 50/50\n⏭️ +2 Saltos de preguntas!",
+        hintAdded50: "🎉 ¡+5 Pistas 50/50 añadidas a tu perfil!",
+        hintAddedSkip: "🎉 ¡+5 Saltos de pregunta añadidos a tu perfil!",
+        hintAddedBundle: "🎉 ¡Paquete Campeón activado! +5 50/50, +5 Saltos y +2 Vidas!",
         donateBtn: "Apoyar", leaderBtn: "Líderes", wheelBtn: "Ruleta", exit: "Salir",
         shopBtn: "Tienda", shopDesc: "¡Compra pistas con ⭐ Telegram Stars y gana carreras!",
         shopTitle: "🛒 TIENDA",
@@ -23235,6 +23255,7 @@ function setLang(lang) {
     document.getElementById('t-r-acc').textContent = t.rAcc;
     document.getElementById('t-r-str').textContent = t.rStr;
     document.getElementById('t-again').textContent = t.again;
+    if (document.getElementById('t-challenge-btn')) document.getElementById('t-challenge-btn').textContent = t.challengeBtn;
     document.getElementById('t-share').textContent = t.share;
     document.getElementById('t-donate-res').textContent = t.donateRes;
     if (document.getElementById('t-report-btn')) document.getElementById('t-report-btn').textContent = t.reportBtn;
@@ -23878,20 +23899,24 @@ async function checkReferralIncoming() {
     if (startParam.startsWith('ref_')) {
         const referrerId = startParam.replace('ref_', '');
         const currentUserId = getPlayerInfo().id;
+        const t = I18N[currentLang] || I18N.ru;
         
         if (referrerId && referrerId !== currentUserId && !localStorage.getItem('sr_welcomed_ref')) {
             localStorage.setItem('sr_welcomed_ref', referrerId);
             
             // Give welcome starter bonus pack
-            stats.bonus50 = (stats.bonus50 || 0) + 2;
-            stats.bonusFr = (stats.bonusFr || 0) + 2;
-            stats.bonusSk = (stats.bonusSk || 0) + 1;
-            stats.freeSpins = (stats.freeSpins || 0) + 1;
+            stats.h50 = (stats.h50 || 0) + 2;
+            stats.hsk = (stats.hsk || 0) + 2;
+            G.h50 = stats.h50;
+            G.hsk = stats.hsk;
             localStorage.setItem('sr_stats', JSON.stringify(stats));
+            updateStatsUI();
+
+            alert(t.refWelcomeToast || "🎁 Добро пожаловать! Тебе начислен стартовый набор бонусов:\n🎡 +1 Спин рулетки\n✂️ +2 Подсказки 50/50\n⏭️ +2 Пропуска вопросов!");
 
             // Notify server to award referrer
             try {
-                await fetch(`${PAYMENT_WORKER_URL}/referral/record`, {
+                const res = await fetch(`${PAYMENT_WORKER_URL}/referral/record`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -23900,6 +23925,16 @@ async function checkReferralIncoming() {
                         newUserName: getPlayerInfo().name
                     })
                 });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.ok && data.stats) {
+                        stats.refCount = data.stats.count;
+                        stats.refRewards = data.stats.rewards;
+                        localStorage.setItem('sr_stats', JSON.stringify(stats));
+                        if (document.getElementById('refCountNum')) document.getElementById('refCountNum').textContent = stats.refCount;
+                        if (document.getElementById('refBonusNum')) document.getElementById('refBonusNum').textContent = stats.refRewards;
+                    }
+                }
             } catch (e) {
                 console.warn('Record referral error:', e);
             }
@@ -24064,18 +24099,25 @@ async function buyHintPack(packType) {
 }
 
 function applyHintPackReward(packType) {
+    const t = I18N[currentLang] || I18N.ru;
     if (packType === 'h50') {
-        G.h50 = (G.h50 || 0) + 5;
-        alert("🎉 +5 Подсказок 50/50 успешно добавлены!");
+        stats.h50 = (stats.h50 || 0) + 5;
+        G.h50 = stats.h50;
+        alert(t.hintAdded50 || "🎉 +5 Подсказок 50/50 успешно добавлены в твой профиль!");
     } else if (packType === 'skip') {
-        G.hsk = (G.hsk || 0) + 5;
-        alert("🎉 +5 Пропусков вопросов успешно добавлены!");
+        stats.hsk = (stats.hsk || 0) + 5;
+        G.hsk = stats.hsk;
+        alert(t.hintAddedSkip || "🎉 +5 Пропусков вопросов успешно добавлены в твой профиль!");
     } else if (packType === 'bundle') {
-        G.h50 = (G.h50 || 0) + 5;
-        G.hsk = (G.hsk || 0) + 5;
+        stats.h50 = (stats.h50 || 0) + 5;
+        stats.hsk = (stats.hsk || 0) + 5;
+        G.h50 = stats.h50;
+        G.hsk = stats.hsk;
         G.lv = (G.lv || 3) + 2;
-        alert("🎉 Набор «Чемпион» активирован! +5 50/50, +5 Пропусков и +2 Жизни!");
+        alert(t.hintAddedBundle || "🎉 Набор «Чемпион» активирован! +5 50/50, +5 Пропусков и +2 Жизни!");
     }
+    localStorage.setItem('sr_stats', JSON.stringify(stats));
+    updateStatsUI();
     if (document.getElementById('h5c')) document.getElementById('h5c').textContent = G.h50;
     if (document.getElementById('hsc')) document.getElementById('hsc').textContent = G.hsk;
 }
@@ -24216,9 +24258,10 @@ function challengeFriend() {
     const player = getPlayerInfo();
     const score = G.sc > 0 ? G.sc : stats.b;
     const botUrl = `https://t.me/SHRTRCNGQuizBot?start=duel_${player.id}_${score}`;
-    const text = currentLang === 'ru'
-        ? `⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ ${player.name} бросает тебе вызов!\n⭐ Рекорд: ${score.toLocaleString()} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆\n👉 Играть: ${botUrl}`
-        : `⚔️ SPEED QUIZ DUEL!\n\n🏎️ ${player.name} challenges you!\n⭐ Score: ${score.toLocaleString()} PTS\n\nCan you beat this record? 🏁🏆\n👉 Play: ${botUrl}`;
+    const t = I18N[currentLang] || I18N.ru;
+    
+    let text = t.duelText || "⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ {name} бросает тебе вызов!\n⭐ Рекорд: {score} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆\n👉 Играть: {url}";
+    text = text.replace('{name}', player.name).replace('{score}', score.toLocaleString()).replace('{url}', botUrl);
 
     const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(botUrl)}&text=${encodeURIComponent(text)}`;
     if (tg?.openTelegramLink) {
@@ -24236,12 +24279,14 @@ function end() {
     const acc = G.ans > 0 ? Math.round((G.ok / G.ans) * 100) : 0;
 
     stats.g++;
-    stats.b = Math.max(stats.b, G.sc);
     stats.c += G.ok;
+    
+    // STRICT: ONLY Survival (Endless) mode updates personal best and submits score to leaderboard
+    if (G.cat === 'endless') {
+        stats.b = Math.max(stats.b || 0, G.sc);
+        submitScoreToBackend(G.sc);
+    }
     localStorage.setItem('sr_stats', JSON.stringify(stats));
-
-    // Submit score to leaderboard
-    submitScoreToBackend(Math.max(G.sc, stats.b));
 
     const t = I18N[currentLang] || I18N.ru;
     let rankName = t.ranks[0];
@@ -24251,10 +24296,10 @@ function end() {
 
     document.getElementById('rE').textContent = acc >= 70 ? '🏆' : '🏁';
     document.getElementById('rT').textContent = acc >= 70 ? 'CHAMPION!' : 'FINISHED!';
-    document.getElementById('rS').textContent = `${G.sc} Очков`;
+    document.getElementById('rS').textContent = `${G.sc} ${t.ptsUnit || 'Очков'}`;
     document.getElementById('rR').textContent = rankName;
     document.getElementById('rC').textContent = `${G.ok}/${G.ans}`;
-    document.getElementById('rTm').textContent = `${totalTime}с`;
+    document.getElementById('rTm').textContent = `${totalTime}${t.secUnit || 'с'}`;
     document.getElementById('rA').textContent = `${acc}%`;
     document.getElementById('rSt').textContent = G.bstr;
 
