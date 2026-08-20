@@ -456,13 +456,13 @@
                 <!-- Sector Labels Centered in Each Quadrant -->
                 <div style="position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:3;">
                     <!-- Sector 0: 45° -->
-                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(45deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-h5">✂️ +5 50/50</div>
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(45deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-h5">✂️ +2 50/50</div>
                     <!-- Sector 1: 135° -->
                     <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(135deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-s2">⏭️ +2 Пропуска</div>
                     <!-- Sector 2: 225° -->
                     <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(225deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-s3">⏭️ +3 Пропуска</div>
                     <!-- Sector 3: 315° -->
-                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(315deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-combo">⚡ +5 Комбо</div>
+                    <div style="position:absolute;top:50%;left:50%;width:100px;height:30px;margin-top:-15px;margin-left:-50px;transform:rotate(315deg) translate(62px) rotate(90deg);display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:12px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" id="t-w-combo">⚡ Супер-Пак</div>
                 </div>
 
                 <!-- Center Hub Pin -->
@@ -600,8 +600,7 @@ const I18N = {
         wheelLimitStatus: "⏳ Использовано попыток: {used}/{max}. Следующая попытка завтра!",
         wheelVipStatus: "🏅 VIP Статус: у тебя 2 бесплатных спина в день! (Осталось: {rem})",
         wheelSpinBtnText: "КРУТИТЬ РУЛЕТКУ",
-        wH2: "✂️ +2 Подсказки", wS2: "⏭️ +2 Пропуска", wF2: "⏱️ +2 Заморозки", wCombo: "⚡ +3 Комбо-Пак",
-        bonusPrizeH5: "✂️ +5 Подсказок 50/50", bonusPrizeS4: "⏭️ +4 Пропуска вопросов", bonusPrizeF5: "⏱️ +5 Заморозок времени", bonusPrizeCombo: "⚡ +9 Мега-Комбо",
+        wH2: "✂️ +2 50/50", wS2: "⏭️ +2 Пропуска", wS3: "⏭️ +3 Пропуска", wSuper: "⚡ Супер-Пак", wSuperDesc: "⚡ Супер-Пак (+2 50/50, +2 Пропуска)", wheelSpinAgain: "КРУТИТЬ ЕЩЁ РАЗ", bonusPrizeH5: "✂️ +5 50/50", bonusPrizeS4: "⏭️ +4 Пропуска", bonusPrizeS6: "⏭️ +6 Пропусков", bonusPrizeCombo: "⚡ Мега-Пак (+4 50/50, +3 Пропуска)",
         wheelWinAlert: "🎉 ВЫИГРЫШ: {prize}! Бонус начислен!",
         wheelLimitAlert: "Достигнут лимит прокруток на сегодня ({max} из {max})! Возвращайся завтра ⏳",
         reportModalTitle: "🚨 СООБЩИТЬ ОБ ОШИБКЕ",
@@ -656,8 +655,7 @@ const I18N = {
         wheelLimitStatus: "⏳ Spins used today: {used}/{max}. Come back tomorrow!",
         wheelVipStatus: "🏅 VIP Status: you get 2 free spins daily! (Remaining: {rem})",
         wheelSpinBtnText: "SPIN THE WHEEL",
-        wH2: "✂️ +2 Hints", wS2: "⏭️ +2 Skips", wF2: "⏱️ +2 Freezes", wCombo: "⚡ +3 Combo Pack",
-        bonusPrizeH5: "✂️ +5 50/50 Hints", bonusPrizeS4: "⏭️ +4 Question Skips", bonusPrizeF5: "⏱️ +5 Time Freezes", bonusPrizeCombo: "⚡ +9 Mega Combo",
+        wH2: "✂️ +2 50/50", wS2: "⏭️ +2 Skips", wS3: "⏭️ +3 Skips", wSuper: "⚡ Super Pack", wSuperDesc: "⚡ Super Pack (+2 50/50, +2 Skips)", wheelSpinAgain: "SPIN AGAIN", bonusPrizeH5: "✂️ +5 50/50 Hints", bonusPrizeS4: "⏭️ +4 Question Skips", bonusPrizeS6: "⏭️ +6 Question Skips", bonusPrizeCombo: "⚡ Mega Pack (+4 50/50, +3 Skips)",
         wheelWinAlert: "🎉 WINNER: {prize}! Bonus claimed!",
         wheelLimitAlert: "Daily spin limit reached ({max} of {max})! Come back tomorrow ⏳",
         reportModalTitle: "🚨 REPORT AN ISSUE",
@@ -712,8 +710,7 @@ const I18N = {
         wheelLimitStatus: "⏳ Versuche heute verbraucht: {used}/{max}. Komm morgen wieder!",
         wheelVipStatus: "🏅 VIP-Status: du hast 2 gratis Drehs täglich! (Verbleibend: {rem})",
         wheelSpinBtnText: "GLÜCKSRAD DREHEN",
-        wH2: "✂️ +2 Hinweise", wS2: "⏭️ +2 Sprünge", wF2: "⏱️ +2 Einfrieren", wCombo: "⚡ +3 Kombi-Paket",
-        bonusPrizeH5: "✂️ +5 50/50 Hinweise", bonusPrizeS4: "⏭️ +4 Fragen-Sprünge", bonusPrizeF5: "⏱️ +5 Zeit-Einfrieren", bonusPrizeCombo: "⚡ +9 Mega-Kombi",
+        wH2: "✂️ +2 50/50", wS2: "⏭️ +2 Sprünge", wS3: "⏭️ +3 Sprünge", wSuper: "⚡ Super-Paket", wSuperDesc: "⚡ Super-Paket (+2 50/50, +2 Sprünge)", wheelSpinAgain: "NOCHMAL DREHEN", bonusPrizeH5: "✂️ +5 50/50 Hinweise", bonusPrizeS4: "⏭️ +4 Fragen-Sprünge", bonusPrizeS6: "⏭️ +6 Fragen-Sprünge", bonusPrizeCombo: "⚡ Mega-Paket (+4 50/50, +3 Sprünge)",
         wheelWinAlert: "🎉 GEWINN: {prize}! Bonus gutgeschrieben!",
         wheelLimitAlert: "Tägliches Limit erreicht ({max} von {max})! Komm morgen wieder ⏳",
         reportModalTitle: "🚨 FEHLER MELDEN",
@@ -768,8 +765,7 @@ const I18N = {
         wheelLimitStatus: "⏳ Giros usados hoy: {used}/{max}. ¡Vuelve mañana!",
         wheelVipStatus: "🏅 Estado VIP: ¡tienes 2 giros gratis al día! (Restantes: {rem})",
         wheelSpinBtnText: "GIRAR RULETA",
-        wH2: "✂️ +2 Pistas", wS2: "⏭️ +2 Saltos", wF2: "⏱️ +2 Congelar", wCombo: "⚡ +3 Pack Combo",
-        bonusPrizeH5: "✂️ +5 Pistas 50/50", bonusPrizeS4: "⏭️ +4 Saltos de Pregunta", bonusPrizeF5: "⏱️ +5 Congelar Tiempo", bonusPrizeCombo: "⚡ +9 Mega Combo",
+        wH2: "✂️ +2 50/50", wS2: "⏭️ +2 Saltos", wS3: "⏭️ +3 Saltos", wSuper: "⚡ Súper Pack", wSuperDesc: "⚡ Súper Pack (+2 50/50, +2 Saltos)", wheelSpinAgain: "GIRAR DE NUEVO", bonusPrizeH5: "✂️ +5 Pistas 50/50", bonusPrizeS4: "⏭️ +4 Saltos de Pregunta", bonusPrizeS6: "⏭️ +6 Saltos de Pregunta", bonusPrizeCombo: "⚡ Mega Pack (+4 50/50, +3 Saltos)",
         wheelWinAlert: "🎉 ¡GANASTE: {prize}! ¡Bono acreditado!",
         wheelLimitAlert: "¡Límite de giros alcanzado ({max} de {max})! Vuelve mañana ⏳",
         reportModalTitle: "🚨 REPORTAR UN PROBLEMA",
@@ -1083,7 +1079,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/mercedes_g63_amg.png",
                 "a": [
-                        "Mercedes-AMG G63 (Гелендваген)",
+                        "Mercedes-AMG G63",
                         "Mercedes-Benz GLE 63",
                         "Land Rover Defender",
                         "BMW X5 M"
@@ -1094,19 +1090,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Mercedes-AMG G63 (Гелендваген)",
+                        "Mercedes-AMG G63",
                         "Mercedes-Benz GLE 63",
                         "Land Rover Defender",
                         "BMW X5 M"
                 ],
                 "de_a": [
-                        "Mercedes-AMG G63 (Гелендваген)",
+                        "Mercedes-AMG G63",
                         "Mercedes-Benz GLE 63",
                         "Land Rover Defender",
                         "BMW X5 M"
                 ],
                 "es_a": [
-                        "Mercedes-AMG G63 (Гелендваген)",
+                        "Mercedes-AMG G63",
                         "Mercedes-Benz GLE 63",
                         "Land Rover Defender",
                         "BMW X5 M"
@@ -1182,7 +1178,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/dodge_viper_gts.png",
                 "a": [
-                        "Dodge Viper GTS (Coupe)",
+                        "Dodge Viper GTS",
                         "Chevrolet Corvette C5",
                         "Ford GT",
                         "Shelby Cobra Daytona"
@@ -1193,19 +1189,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Dodge Viper GTS (Coupe)",
+                        "Dodge Viper GTS",
                         "Chevrolet Corvette C5",
                         "Ford GT",
                         "Shelby Cobra Daytona"
                 ],
                 "de_a": [
-                        "Dodge Viper GTS (Coupe)",
+                        "Dodge Viper GTS",
                         "Chevrolet Corvette C5",
                         "Ford GT",
                         "Shelby Cobra Daytona"
                 ],
                 "es_a": [
-                        "Dodge Viper GTS (Coupe)",
+                        "Dodge Viper GTS",
                         "Chevrolet Corvette C5",
                         "Ford GT",
                         "Shelby Cobra Daytona"
@@ -1215,7 +1211,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/bmw_e30_m3.png",
                 "a": [
-                        "BMW M3 (E30 Classic)",
+                        "BMW M3 (E30)",
                         "BMW M3 (E36)",
                         "Mercedes 190E 2.5-16",
                         "Audi Quattro"
@@ -1226,19 +1222,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "BMW M3 (E30 Classic)",
+                        "BMW M3 (E30)",
                         "BMW M3 (E36)",
                         "Mercedes 190E 2.5-16",
                         "Audi Quattro"
                 ],
                 "de_a": [
-                        "BMW M3 (E30 Classic)",
+                        "BMW M3 (E30)",
                         "BMW M3 (E36)",
                         "Mercedes 190E 2.5-16",
                         "Audi Quattro"
                 ],
                 "es_a": [
-                        "BMW M3 (E30 Classic)",
+                        "BMW M3 (E30)",
                         "BMW M3 (E36)",
                         "Mercedes 190E 2.5-16",
                         "Audi Quattro"
@@ -1545,7 +1541,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/golf_gti.png",
                 "a": [
-                        "Volkswagen Golf Mk1 GTI (Classic)",
+                        "Volkswagen Golf GTI (Mk1)",
                         "Volkswagen Golf Mk7 GTI",
                         "Peugeot 205 GTI",
                         "Renault 5 Turbo"
@@ -1556,19 +1552,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Volkswagen Golf Mk1 GTI (Classic)",
+                        "Volkswagen Golf GTI (Mk1)",
                         "Volkswagen Golf Mk7 GTI",
                         "Peugeot 205 GTI",
                         "Renault 5 Turbo"
                 ],
                 "de_a": [
-                        "Volkswagen Golf Mk1 GTI (Classic)",
+                        "Volkswagen Golf GTI (Mk1)",
                         "Volkswagen Golf Mk7 GTI",
                         "Peugeot 205 GTI",
                         "Renault 5 Turbo"
                 ],
                 "es_a": [
-                        "Volkswagen Golf Mk1 GTI (Classic)",
+                        "Volkswagen Golf GTI (Mk1)",
                         "Volkswagen Golf Mk7 GTI",
                         "Peugeot 205 GTI",
                         "Renault 5 Turbo"
@@ -1578,7 +1574,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/corvette_c8.png",
                 "a": [
-                        "Chevrolet Corvette C8 Stingray (Orange)",
+                        "Chevrolet Corvette C8 Stingray",
                         "Chevrolet Corvette C7",
                         "Ford GT",
                         "Acura NSX"
@@ -1589,19 +1585,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Chevrolet Corvette C8 Stingray (Orange)",
+                        "Chevrolet Corvette C8 Stingray",
                         "Chevrolet Corvette C7",
                         "Ford GT",
                         "Acura NSX"
                 ],
                 "de_a": [
-                        "Chevrolet Corvette C8 Stingray (Orange)",
+                        "Chevrolet Corvette C8 Stingray",
                         "Chevrolet Corvette C7",
                         "Ford GT",
                         "Acura NSX"
                 ],
                 "es_a": [
-                        "Chevrolet Corvette C8 Stingray (Orange)",
+                        "Chevrolet Corvette C8 Stingray",
                         "Chevrolet Corvette C7",
                         "Ford GT",
                         "Acura NSX"
@@ -1611,7 +1607,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/chevrolet_corvette_c6.png",
                 "a": [
-                        "Chevrolet Corvette C8 Stingray (Red)",
+                        "Chevrolet Corvette C8 Z51 Coupe",
                         "Chevrolet Corvette C6 Z06",
                         "Dodge Viper GTS",
                         "Ferrari 488 GTB"
@@ -1622,19 +1618,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Chevrolet Corvette C8 Stingray (Red)",
+                        "Chevrolet Corvette C8 Z51 Coupe",
                         "Chevrolet Corvette C6 Z06",
                         "Dodge Viper GTS",
                         "Ferrari 488 GTB"
                 ],
                 "de_a": [
-                        "Chevrolet Corvette C8 Stingray (Red)",
+                        "Chevrolet Corvette C8 Z51 Coupe",
                         "Chevrolet Corvette C6 Z06",
                         "Dodge Viper GTS",
                         "Ferrari 488 GTB"
                 ],
                 "es_a": [
-                        "Chevrolet Corvette C8 Stingray (Red)",
+                        "Chevrolet Corvette C8 Z51 Coupe",
                         "Chevrolet Corvette C6 Z06",
                         "Dodge Viper GTS",
                         "Ferrari 488 GTB"
@@ -1743,7 +1739,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/honda_nsx.png",
                 "a": [
-                        "Honda NSX (NA1 Pop-up)",
+                        "Honda NSX (NA1)",
                         "Toyota MR2 (SW20)",
                         "Nissan 300ZX (Z32)",
                         "Mazda RX-7 (FC)"
@@ -1754,19 +1750,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Honda NSX (NA1 Pop-up)",
+                        "Honda NSX (NA1)",
                         "Toyota MR2 (SW20)",
                         "Nissan 300ZX (Z32)",
                         "Mazda RX-7 (FC)"
                 ],
                 "de_a": [
-                        "Honda NSX (NA1 Pop-up)",
+                        "Honda NSX (NA1)",
                         "Toyota MR2 (SW20)",
                         "Nissan 300ZX (Z32)",
                         "Mazda RX-7 (FC)"
                 ],
                 "es_a": [
-                        "Honda NSX (NA1 Pop-up)",
+                        "Honda NSX (NA1)",
                         "Toyota MR2 (SW20)",
                         "Nissan 300ZX (Z32)",
                         "Mazda RX-7 (FC)"
@@ -2007,7 +2003,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/nissan_silvia_s13.png",
                 "a": [
-                        "Nissan Silvia (S13 Two-Tone)",
+                        "Nissan Silvia (S13)",
                         "Nissan 180SX",
                         "Nissan Silvia S14",
                         "Toyota AE86 Levin"
@@ -2018,19 +2014,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Nissan Silvia (S13 Two-Tone)",
+                        "Nissan Silvia (S13)",
                         "Nissan 180SX",
                         "Nissan Silvia S14",
                         "Toyota AE86 Levin"
                 ],
                 "de_a": [
-                        "Nissan Silvia (S13 Two-Tone)",
+                        "Nissan Silvia (S13)",
                         "Nissan 180SX",
                         "Nissan Silvia S14",
                         "Toyota AE86 Levin"
                 ],
                 "es_a": [
-                        "Nissan Silvia (S13 Two-Tone)",
+                        "Nissan Silvia (S13)",
                         "Nissan 180SX",
                         "Nissan Silvia S14",
                         "Toyota AE86 Levin"
@@ -2337,7 +2333,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/gr_yaris.png",
                 "a": [
-                        "Toyota GR Yaris (GR-FOUR Turbo)",
+                        "Toyota GR Yaris",
                         "Ford Fiesta ST",
                         "Hyundai i20 N",
                         "Mini JCW GP"
@@ -2348,19 +2344,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Toyota GR Yaris (GR-FOUR Turbo)",
+                        "Toyota GR Yaris",
                         "Ford Fiesta ST",
                         "Hyundai i20 N",
                         "Mini JCW GP"
                 ],
                 "de_a": [
-                        "Toyota GR Yaris (GR-FOUR Turbo)",
+                        "Toyota GR Yaris",
                         "Ford Fiesta ST",
                         "Hyundai i20 N",
                         "Mini JCW GP"
                 ],
                 "es_a": [
-                        "Toyota GR Yaris (GR-FOUR Turbo)",
+                        "Toyota GR Yaris",
                         "Ford Fiesta ST",
                         "Hyundai i20 N",
                         "Mini JCW GP"
@@ -2403,7 +2399,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/ford_gt_2017.png",
                 "a": [
-                        "Ford Focus ST-R (EcoBoost Race Car)",
+                        "Ford Focus ST-R",
                         "Ford GT (2017)",
                         "Ford Fiesta ST Rally",
                         "Ford Focus RS RX"
@@ -2414,19 +2410,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Ford Focus ST-R (EcoBoost Race Car)",
+                        "Ford Focus ST-R",
                         "Ford GT (2017)",
                         "Ford Fiesta ST Rally",
                         "Ford Focus RS RX"
                 ],
                 "de_a": [
-                        "Ford Focus ST-R (EcoBoost Race Car)",
+                        "Ford Focus ST-R",
                         "Ford GT (2017)",
                         "Ford Fiesta ST Rally",
                         "Ford Focus RS RX"
                 ],
                 "es_a": [
-                        "Ford Focus ST-R (EcoBoost Race Car)",
+                        "Ford Focus ST-R",
                         "Ford GT (2017)",
                         "Ford Fiesta ST Rally",
                         "Ford Focus RS RX"
@@ -2436,7 +2432,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/megane_rs.png",
                 "a": [
-                        "Renault Megane R.S. (Mk4 Liquid Yellow)",
+                        "Renault Megane R.S. (Mk4)",
                         "Peugeot 308 GTI",
                         "Cupra Leon",
                         "Ford Focus ST"
@@ -2447,19 +2443,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Renault Megane R.S. (Mk4 Liquid Yellow)",
+                        "Renault Megane R.S. (Mk4)",
                         "Peugeot 308 GTI",
                         "Cupra Leon",
                         "Ford Focus ST"
                 ],
                 "de_a": [
-                        "Renault Megane R.S. (Mk4 Liquid Yellow)",
+                        "Renault Megane R.S. (Mk4)",
                         "Peugeot 308 GTI",
                         "Cupra Leon",
                         "Ford Focus ST"
                 ],
                 "es_a": [
-                        "Renault Megane R.S. (Mk4 Liquid Yellow)",
+                        "Renault Megane R.S. (Mk4)",
                         "Peugeot 308 GTI",
                         "Cupra Leon",
                         "Ford Focus ST"
@@ -2568,7 +2564,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/dodge_challenger.png",
                 "a": [
-                        "Dodge Challenger SRT Demon (Эмблема Demon)",
+                        "Dodge Challenger SRT Demon",
                         "Dodge Charger Hellcat",
                         "Dodge Viper ACR",
                         "Plymouth Barracuda"
@@ -2579,19 +2575,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Dodge Challenger SRT Demon (Эмблема Demon)",
+                        "Dodge Challenger SRT Demon",
                         "Dodge Charger Hellcat",
                         "Dodge Viper ACR",
                         "Plymouth Barracuda"
                 ],
                 "de_a": [
-                        "Dodge Challenger SRT Demon (Эмблема Demon)",
+                        "Dodge Challenger SRT Demon",
                         "Dodge Charger Hellcat",
                         "Dodge Viper ACR",
                         "Plymouth Barracuda"
                 ],
                 "es_a": [
-                        "Dodge Challenger SRT Demon (Эмблема Demon)",
+                        "Dodge Challenger SRT Demon",
                         "Dodge Charger Hellcat",
                         "Dodge Viper ACR",
                         "Plymouth Barracuda"
@@ -2601,7 +2597,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/amg_gt_black.png",
                 "a": [
-                        "Mercedes-AMG GT S (C190 Yellow)",
+                        "Mercedes-AMG GT S (C190)",
                         "Mercedes-AMG GT Black Series",
                         "Mercedes SLS AMG",
                         "Porsche 911 Turbo"
@@ -2612,19 +2608,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Mercedes-AMG GT S (C190 Yellow)",
+                        "Mercedes-AMG GT S (C190)",
                         "Mercedes-AMG GT Black Series",
                         "Mercedes SLS AMG",
                         "Porsche 911 Turbo"
                 ],
                 "de_a": [
-                        "Mercedes-AMG GT S (C190 Yellow)",
+                        "Mercedes-AMG GT S (C190)",
                         "Mercedes-AMG GT Black Series",
                         "Mercedes SLS AMG",
                         "Porsche 911 Turbo"
                 ],
                 "es_a": [
-                        "Mercedes-AMG GT S (C190 Yellow)",
+                        "Mercedes-AMG GT S (C190)",
                         "Mercedes-AMG GT Black Series",
                         "Mercedes SLS AMG",
                         "Porsche 911 Turbo"
@@ -2700,7 +2696,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/porsche_carrera_gt.png",
                 "a": [
-                        "Porsche Carrera GT (V10)",
+                        "Porsche Carrera GT",
                         "Mercedes-Benz SLR McLaren",
                         "Porsche 918 Spyder",
                         "Ferrari Enzo"
@@ -2711,19 +2707,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Porsche Carrera GT (V10)",
+                        "Porsche Carrera GT",
                         "Mercedes-Benz SLR McLaren",
                         "Porsche 918 Spyder",
                         "Ferrari Enzo"
                 ],
                 "de_a": [
-                        "Porsche Carrera GT (V10)",
+                        "Porsche Carrera GT",
                         "Mercedes-Benz SLR McLaren",
                         "Porsche 918 Spyder",
                         "Ferrari Enzo"
                 ],
                 "es_a": [
-                        "Porsche Carrera GT (V10)",
+                        "Porsche Carrera GT",
                         "Mercedes-Benz SLR McLaren",
                         "Porsche 918 Spyder",
                         "Ferrari Enzo"
@@ -3129,7 +3125,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/pagani_huayra.png",
                 "a": [
-                        "Pagani Huayra Roadster (Matte Blue Carbon)",
+                        "Pagani Huayra Roadster",
                         "Pagani Huayra BC Coupe",
                         "Pagani Zonda Cinque",
                         "Pagani Utopia"
@@ -3140,19 +3136,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Pagani Huayra Roadster (Matte Blue Carbon)",
+                        "Pagani Huayra Roadster",
                         "Pagani Huayra BC Coupe",
                         "Pagani Zonda Cinque",
                         "Pagani Utopia"
                 ],
                 "de_a": [
-                        "Pagani Huayra Roadster (Matte Blue Carbon)",
+                        "Pagani Huayra Roadster",
                         "Pagani Huayra BC Coupe",
                         "Pagani Zonda Cinque",
                         "Pagani Utopia"
                 ],
                 "es_a": [
-                        "Pagani Huayra Roadster (Matte Blue Carbon)",
+                        "Pagani Huayra Roadster",
                         "Pagani Huayra BC Coupe",
                         "Pagani Zonda Cinque",
                         "Pagani Utopia"
@@ -3195,7 +3191,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/rimac_nevera.png",
                 "a": [
-                        "Rimac Nevera Time Attack (1914 hp EV)",
+                        "Rimac Nevera",
                         "Pininfarina Battista",
                         "Lotus Evija",
                         "Aspark Owl"
@@ -3206,19 +3202,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Rimac Nevera Time Attack (1914 hp EV)",
+                        "Rimac Nevera",
                         "Pininfarina Battista",
                         "Lotus Evija",
                         "Aspark Owl"
                 ],
                 "de_a": [
-                        "Rimac Nevera Time Attack (1914 hp EV)",
+                        "Rimac Nevera",
                         "Pininfarina Battista",
                         "Lotus Evija",
                         "Aspark Owl"
                 ],
                 "es_a": [
-                        "Rimac Nevera Time Attack (1914 hp EV)",
+                        "Rimac Nevera",
                         "Pininfarina Battista",
                         "Lotus Evija",
                         "Aspark Owl"
@@ -3228,7 +3224,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/lotus_evija.png",
                 "a": [
-                        "Lotus Evija (2000 hp Electric Hypercar)",
+                        "Lotus Evija",
                         "Rimac Nevera",
                         "NIO EP9",
                         "Porsche Mission X"
@@ -3239,19 +3235,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Lotus Evija (2000 hp Electric Hypercar)",
+                        "Lotus Evija",
                         "Rimac Nevera",
                         "NIO EP9",
                         "Porsche Mission X"
                 ],
                 "de_a": [
-                        "Lotus Evija (2000 hp Electric Hypercar)",
+                        "Lotus Evija",
                         "Rimac Nevera",
                         "NIO EP9",
                         "Porsche Mission X"
                 ],
                 "es_a": [
-                        "Lotus Evija (2000 hp Electric Hypercar)",
+                        "Lotus Evija",
                         "Rimac Nevera",
                         "NIO EP9",
                         "Porsche Mission X"
@@ -3261,7 +3257,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/apollo_ie.png",
                 "a": [
-                        "Apollo Intensa Emozione (V12 IE)",
+                        "Apollo Intensa Emozione",
                         "Gumpert Apollo S",
                         "Zenvo TSR-S",
                         "Aston Martin Vulcan"
@@ -3272,19 +3268,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Apollo Intensa Emozione (V12 IE)",
+                        "Apollo Intensa Emozione",
                         "Gumpert Apollo S",
                         "Zenvo TSR-S",
                         "Aston Martin Vulcan"
                 ],
                 "de_a": [
-                        "Apollo Intensa Emozione (V12 IE)",
+                        "Apollo Intensa Emozione",
                         "Gumpert Apollo S",
                         "Zenvo TSR-S",
                         "Aston Martin Vulcan"
                 ],
                 "es_a": [
-                        "Apollo Intensa Emozione (V12 IE)",
+                        "Apollo Intensa Emozione",
                         "Gumpert Apollo S",
                         "Zenvo TSR-S",
                         "Aston Martin Vulcan"
@@ -3294,7 +3290,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/tvr_sagaris.png",
                 "a": [
-                        "TVR Sagaris (Chameleon Straight-6)",
+                        "TVR Sagaris",
                         "Noble M600",
                         "TVR Tuscan Speed Six",
                         "Marcos TSO GT2"
@@ -3305,19 +3301,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "TVR Sagaris (Chameleon Straight-6)",
+                        "TVR Sagaris",
                         "Noble M600",
                         "TVR Tuscan Speed Six",
                         "Marcos TSO GT2"
                 ],
                 "de_a": [
-                        "TVR Sagaris (Chameleon Straight-6)",
+                        "TVR Sagaris",
                         "Noble M600",
                         "TVR Tuscan Speed Six",
                         "Marcos TSO GT2"
                 ],
                 "es_a": [
-                        "TVR Sagaris (Chameleon Straight-6)",
+                        "TVR Sagaris",
                         "Noble M600",
                         "TVR Tuscan Speed Six",
                         "Marcos TSO GT2"
@@ -3327,7 +3323,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/tvr_speed12.png",
                 "a": [
-                        "TVR Cerbera Speed 12 (7.7L V12)",
+                        "TVR Cerbera Speed 12",
                         "Lister Storm",
                         "Spectre R42",
                         "Ascari A10"
@@ -3338,19 +3334,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "TVR Cerbera Speed 12 (7.7L V12)",
+                        "TVR Cerbera Speed 12",
                         "Lister Storm",
                         "Spectre R42",
                         "Ascari A10"
                 ],
                 "de_a": [
-                        "TVR Cerbera Speed 12 (7.7L V12)",
+                        "TVR Cerbera Speed 12",
                         "Lister Storm",
                         "Spectre R42",
                         "Ascari A10"
                 ],
                 "es_a": [
-                        "TVR Cerbera Speed 12 (7.7L V12)",
+                        "TVR Cerbera Speed 12",
                         "Lister Storm",
                         "Spectre R42",
                         "Ascari A10"
@@ -3360,7 +3356,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/saleen_s7.png",
                 "a": [
-                        "Saleen S7 Twin Turbo (7.0L V8)",
+                        "Saleen S7 Twin Turbo",
                         "Mosler MT900S",
                         "SSC Ultimate Aero",
                         "Vector M12"
@@ -3371,19 +3367,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Saleen S7 Twin Turbo (7.0L V8)",
+                        "Saleen S7 Twin Turbo",
                         "Mosler MT900S",
                         "SSC Ultimate Aero",
                         "Vector M12"
                 ],
                 "de_a": [
-                        "Saleen S7 Twin Turbo (7.0L V8)",
+                        "Saleen S7 Twin Turbo",
                         "Mosler MT900S",
                         "SSC Ultimate Aero",
                         "Vector M12"
                 ],
                 "es_a": [
-                        "Saleen S7 Twin Turbo (7.0L V8)",
+                        "Saleen S7 Twin Turbo",
                         "Mosler MT900S",
                         "SSC Ultimate Aero",
                         "Vector M12"
@@ -3393,7 +3389,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/jaguar_xj220.png",
                 "a": [
-                        "Jaguar XJ220 (Twin-Turbo V6)",
+                        "Jaguar XJ220",
                         "Bugatti EB110 GT",
                         "Jaguar XJR-15",
                         "Vector W8"
@@ -3404,19 +3400,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Jaguar XJ220 (Twin-Turbo V6)",
+                        "Jaguar XJ220",
                         "Bugatti EB110 GT",
                         "Jaguar XJR-15",
                         "Vector W8"
                 ],
                 "de_a": [
-                        "Jaguar XJ220 (Twin-Turbo V6)",
+                        "Jaguar XJ220",
                         "Bugatti EB110 GT",
                         "Jaguar XJR-15",
                         "Vector W8"
                 ],
                 "es_a": [
-                        "Jaguar XJ220 (Twin-Turbo V6)",
+                        "Jaguar XJ220",
                         "Bugatti EB110 GT",
                         "Jaguar XJR-15",
                         "Vector W8"
@@ -3426,7 +3422,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/vector_w8.png",
                 "a": [
-                        "Vector W8 Twin Turbo (Kevlar Body)",
+                        "Vector W8 Twin Turbo",
                         "Cizeta-Moroder V16T",
                         "Consulier GTP",
                         "De Tomaso Pantera GT5"
@@ -3437,19 +3433,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Vector W8 Twin Turbo (Kevlar Body)",
+                        "Vector W8 Twin Turbo",
                         "Cizeta-Moroder V16T",
                         "Consulier GTP",
                         "De Tomaso Pantera GT5"
                 ],
                 "de_a": [
-                        "Vector W8 Twin Turbo (Kevlar Body)",
+                        "Vector W8 Twin Turbo",
                         "Cizeta-Moroder V16T",
                         "Consulier GTP",
                         "De Tomaso Pantera GT5"
                 ],
                 "es_a": [
-                        "Vector W8 Twin Turbo (Kevlar Body)",
+                        "Vector W8 Twin Turbo",
                         "Cizeta-Moroder V16T",
                         "Consulier GTP",
                         "De Tomaso Pantera GT5"
@@ -3459,7 +3455,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/cizeta_v16t.png",
                 "a": [
-                        "Cizeta-Moroder V16T (6.0L V16 4 Pop-ups)",
+                        "Cizeta-Moroder V16T",
                         "Vector W8",
                         "Lamborghini Diablo SE30",
                         "Bugatti EB110 SS"
@@ -3470,19 +3466,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Cizeta-Moroder V16T (6.0L V16 4 Pop-ups)",
+                        "Cizeta-Moroder V16T",
                         "Vector W8",
                         "Lamborghini Diablo SE30",
                         "Bugatti EB110 SS"
                 ],
                 "de_a": [
-                        "Cizeta-Moroder V16T (6.0L V16 4 Pop-ups)",
+                        "Cizeta-Moroder V16T",
                         "Vector W8",
                         "Lamborghini Diablo SE30",
                         "Bugatti EB110 SS"
                 ],
                 "es_a": [
-                        "Cizeta-Moroder V16T (6.0L V16 4 Pop-ups)",
+                        "Cizeta-Moroder V16T",
                         "Vector W8",
                         "Lamborghini Diablo SE30",
                         "Bugatti EB110 SS"
@@ -3558,7 +3554,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/maserati_mc20.png",
                 "a": [
-                        "Maserati MC20 (Nettuno V6)",
+                        "Maserati MC20",
                         "Ferrari 296 GTB",
                         "McLaren Artura",
                         "Lamborghini Huracan"
@@ -3569,19 +3565,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Maserati MC20 (Nettuno V6)",
+                        "Maserati MC20",
                         "Ferrari 296 GTB",
                         "McLaren Artura",
                         "Lamborghini Huracan"
                 ],
                 "de_a": [
-                        "Maserati MC20 (Nettuno V6)",
+                        "Maserati MC20",
                         "Ferrari 296 GTB",
                         "McLaren Artura",
                         "Lamborghini Huracan"
                 ],
                 "es_a": [
-                        "Maserati MC20 (Nettuno V6)",
+                        "Maserati MC20",
                         "Ferrari 296 GTB",
                         "McLaren Artura",
                         "Lamborghini Huracan"
@@ -3624,7 +3620,7 @@ const RAW_QUESTIONS = {
                 "q": "Угадай автомобиль на фото:",
                 "photo": "images/lexus_lfa.png",
                 "a": [
-                        "Lexus LFA (4.8L V10)",
+                        "Lexus LFA",
                         "Nissan GT-R Nismo",
                         "Toyota 2000GT",
                         "Acura NSX Type S"
@@ -3635,19 +3631,19 @@ const RAW_QUESTIONS = {
                 "de_q": "Errate das Auto auf dem Foto:",
                 "es_q": "Adivina el coche de la foto:",
                 "en_a": [
-                        "Lexus LFA (4.8L V10)",
+                        "Lexus LFA",
                         "Nissan GT-R Nismo",
                         "Toyota 2000GT",
                         "Acura NSX Type S"
                 ],
                 "de_a": [
-                        "Lexus LFA (4.8L V10)",
+                        "Lexus LFA",
                         "Nissan GT-R Nismo",
                         "Toyota 2000GT",
                         "Acura NSX Type S"
                 ],
                 "es_a": [
-                        "Lexus LFA (4.8L V10)",
+                        "Lexus LFA",
                         "Nissan GT-R Nismo",
                         "Toyota 2000GT",
                         "Acura NSX Type S"
@@ -8138,35 +8134,35 @@ const RAW_QUESTIONS = {
             ]
         },
         {
-            "q": "Какой гиперкар Pagani оснащён двигателем Mercedes-AMG V12 Twin-Turbo?",
+            "q": "Какой культовый гиперкар Pagani впервые перешёл на битурбированный двигатель V12 от Mercedes-AMG?",
             "a": [
-                "Huayra",
-                "Zonda",
-                "Utopia",
-                "Все вышеперечисленные"
+                "Pagani Huayra",
+                "Pagani Zonda C12",
+                "Pagani Zonda F",
+                "Pagani Zonda Cinque"
             ],
             "c": 0,
             "d": "med",
-            "en_q": "Which Pagani hypercar is equipped with a Mercedes-AMG V12 Twin-Turbo engine?",
-            "de_q": "Welches Pagani-Hypercar ist mit einem Mercedes-AMG V12 Twin-Turbo-Motor ausgestattet?",
-            "es_q": "¿Qué hipercoche Pagani está equipado con un motor Mercedes-AMG V12 Twin-Turbo?",
+            "en_q": "Which iconic Pagani hypercar first switched to a Twin-Turbo Mercedes-AMG V12 engine?",
+            "de_q": "Welches legendäre Pagani-Hypercar wechselte erstmals zu einem Biturbo-V12-Motor von Mercedes-AMG?",
+            "es_q": "¿Qué icónico hipercoche Pagani fue el primero en adoptar un motor V12 Biturbo de Mercedes-AMG?",
             "en_a": [
-                "Huayra",
-                "Zonda",
-                "Utopia",
-                "All of the above"
+                "Pagani Huayra",
+                "Pagani Zonda C12",
+                "Pagani Zonda F",
+                "Pagani Zonda Cinque"
             ],
             "de_a": [
-                "Huayra",
-                "Zonda",
-                "Utopia",
-                "Alle oben genannten"
+                "Pagani Huayra",
+                "Pagani Zonda C12",
+                "Pagani Zonda F",
+                "Pagani Zonda Cinque"
             ],
             "es_a": [
-                "Huayra",
-                "Zonda",
-                "Utopia",
-                "Todo lo anterior"
+                "Pagani Huayra",
+                "Pagani Zonda C12",
+                "Pagani Zonda F",
+                "Pagani Zonda Cinque"
             ]
         },
         {
@@ -11055,7 +11051,7 @@ const RAW_QUESTIONS = {
             "q": "Какая NFS впервые использовала движок Frostbite от DICE?",
             "a": [
                 "NFS: Rivals",
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Payback",
                 "NFS: Heat"
             ],
@@ -11066,19 +11062,19 @@ const RAW_QUESTIONS = {
             "es_q": "¿Qué NFS utilizó por primera vez el motor Frostbite de DICE?",
             "en_a": [
                 "NFS: Rivals",
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Payback",
                 "NFS: Heat"
             ],
             "de_a": [
                 "NFS: Rivals",
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Payback",
                 "NFS: Heat"
             ],
             "es_a": [
                 "NFS: Rivals",
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Payback",
                 "NFS: Heat"
             ]
@@ -11662,7 +11658,7 @@ const RAW_QUESTIONS = {
         {
             "q": "В какой NFS был впервые введён режим Photo Mode для скриншотов?",
             "a": [
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Heat",
                 "NFS: Payback",
                 "NFS: Rivals"
@@ -11673,19 +11669,19 @@ const RAW_QUESTIONS = {
             "de_q": "In welchem ​​NFS wurde der Fotomodus für Screenshots erstmals eingeführt?",
             "es_q": "¿En qué NFS se introdujo por primera vez el Modo Foto para capturas de pantalla?",
             "en_a": [
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Heat",
                 "NFS: Payback",
                 "NFS: Rivals"
             ],
             "de_a": [
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Heat",
                 "NFS: Payback",
                 "NFS: Rivals"
             ],
             "es_a": [
-                "NFS",
+                "Need for Speed (2015)",
                 "NFS: Heat",
                 "NFS: Payback",
                 "NFS: Rivals"
@@ -23269,10 +23265,10 @@ function setLang(lang) {
     if (document.getElementById('t-spin-btn-text')) document.getElementById('t-spin-btn-text').textContent = t.wheelSpinBtnText;
     if (document.getElementById('t-bonus-spin-text')) document.getElementById('t-bonus-spin-text').textContent = t.bonusSpin;
     if (document.getElementById('dailyWheelStatus')) document.getElementById('dailyWheelStatus').textContent = t.wheelDefaultStatus;
-    if (document.getElementById('t-w-h5')) document.getElementById('t-w-h5').textContent = t.wH5 || '✂️ +5 50/50';
-    if (document.getElementById('t-w-s2')) document.getElementById('t-w-s2').textContent = t.wS2 || '⏭️ +2 Skips';
-    if (document.getElementById('t-w-s3')) document.getElementById('t-w-s3').textContent = t.wS3 || '⏭️ +3 Skips';
-    if (document.getElementById('t-w-combo')) document.getElementById('t-w-combo').textContent = t.wCombo || '⚡ +5 Combo';
+    if (document.getElementById('t-w-h5')) document.getElementById('t-w-h5').textContent = t.wH2 || '✂️ +2 50/50';
+    if (document.getElementById('t-w-s2')) document.getElementById('t-w-s2').textContent = t.wS2 || '⏭️ +2 Пропуска';
+    if (document.getElementById('t-w-s3')) document.getElementById('t-w-s3').textContent = t.wS3 || '⏭️ +3 Пропуска';
+    if (document.getElementById('t-w-combo')) document.getElementById('t-w-combo').textContent = t.wSuper || '⚡ Супер-Пак';
 
     // Report Modal
     if (document.getElementById('t-report-modal-title')) document.getElementById('t-report-modal-title').textContent = t.reportModalTitle;
@@ -23446,6 +23442,18 @@ function lq() {
 
     const ai = [0, 1, 2, 3];
     shuffle(ai);
+    
+    // Always pin "All of the above" / "None of the above" / "Все вышеперечисленные" to the very bottom button
+    const bottomKeywords = ['все вышеперечислен', 'ни один из', 'all of the above', 'none of the above', 'alle oben', 'todo lo anterior', 'ninguna de las'];
+    const bottomIdx = ai.findIndex(oi => {
+        const tRu = ((q.a && q.a[oi]) || '').toLowerCase();
+        const tEn = ((q.en_a && q.en_a[oi]) || '').toLowerCase();
+        return bottomKeywords.some(kw => tRu.includes(kw) || tEn.includes(kw));
+    });
+    if (bottomIdx !== -1 && bottomIdx !== ai.length - 1) {
+        const [item] = ai.splice(bottomIdx, 1);
+        ai.push(item);
+    }
     const container = document.getElementById('ac');
     container.innerHTML = '';
     
@@ -23900,23 +23908,36 @@ async function checkReferralIncoming() {
 }
 
 function openDailyWheel() {
+    const isVip = (stats.vip === 1 || stats.vip === true || stats.isVip || (tg?.initDataUnsafe?.user?.id && [491443901, '491443901'].includes(tg.initDataUnsafe.user.id)));
     const maxSpins = isVip ? 2 : 1;
     const spinsUsed = getDailySpinCount();
     const t = I18N[currentLang] || I18N.ru;
     
     const spinBtn = document.getElementById('spinWheelBtn');
+    const spinBtnText = document.getElementById('t-spin-btn-text');
     const statusText = document.getElementById('dailyWheelStatus');
+    const bonusSpinBtn = document.getElementById('bonusSpinBtn');
     
     if (spinsUsed >= maxSpins) {
         spinBtn.disabled = true;
         spinBtn.style.opacity = '0.5';
+        if (spinBtnText) spinBtnText.textContent = t.wheelSpinBtnText;
         statusText.textContent = t.wheelLimitStatus.replace('{used}', spinsUsed).replace('{max}', maxSpins);
+        if (bonusSpinBtn) bonusSpinBtn.style.display = 'flex';
     } else {
         spinBtn.disabled = false;
         spinBtn.style.opacity = '1';
-        statusText.textContent = isVip 
-            ? t.wheelVipStatus.replace('{rem}', maxSpins - spinsUsed)
-            : t.wheelDefaultStatus;
+        if (isVip && spinsUsed > 0) {
+            if (spinBtnText) spinBtnText.textContent = (t.wheelSpinAgain || 'КРУТИТЬ ЕЩЁ РАЗ') + ` (${maxSpins - spinsUsed})`;
+            statusText.textContent = t.wheelVipStatus.replace('{rem}', maxSpins - spinsUsed);
+        } else if (isVip) {
+            if (spinBtnText) spinBtnText.textContent = t.wheelSpinBtnText;
+            statusText.textContent = t.wheelVipStatus.replace('{rem}', maxSpins - spinsUsed);
+        } else {
+            if (spinBtnText) spinBtnText.textContent = t.wheelSpinBtnText;
+            statusText.textContent = t.wheelDefaultStatus;
+        }
+        if (bonusSpinBtn) bonusSpinBtn.style.display = 'none';
     }
     
     document.getElementById('dailyWheelModal').classList.add('active');
@@ -23927,6 +23948,7 @@ function closeDailyWheel() {
 }
 
 function spinDailyWheel() {
+    const isVip = (stats.vip === 1 || stats.vip === true || stats.isVip || (tg?.initDataUnsafe?.user?.id && [491443901, '491443901'].includes(tg.initDataUnsafe.user.id)));
     const maxSpins = isVip ? 2 : 1;
     const spinsUsed = getDailySpinCount();
     const todayUTC = new Date().toISOString().slice(0, 10);
@@ -23939,14 +23961,17 @@ function spinDailyWheel() {
 
     const wheel = document.getElementById('wheelCircle');
     const btn = document.getElementById('spinWheelBtn');
+    const spinBtnText = document.getElementById('t-spin-btn-text');
+    const statusText = document.getElementById('dailyWheelStatus');
     btn.disabled = true;
+    btn.style.opacity = '0.5';
     
     // Ordered to match sector angles: Sector 0 (45°), Sector 1 (135°), Sector 2 (225°), Sector 3 (315°)
     const prizes = [
         { name: t.wH2, apply: () => { stats.h50 = (stats.h50 || 0) + 2; G.h50 = stats.h50; } }, // Sector 0 (0-90 deg)
         { name: t.wS2, apply: () => { stats.hsk = (stats.hsk || 0) + 2; G.hsk = stats.hsk; } }, // Sector 1 (90-180 deg)
-        { name: t.wH3 || t.wH2, apply: () => { stats.h50 = (stats.h50 || 0) + 3; G.h50 = stats.h50; } }, // Sector 2 (180-270 deg)
-        { name: t.wCombo, apply: () => { 
+        { name: t.wS3, apply: () => { stats.hsk = (stats.hsk || 0) + 3; G.hsk = stats.hsk; } }, // Sector 2 (180-270 deg)
+        { name: t.wSuperDesc || t.wSuper, apply: () => { 
             stats.h50 = (stats.h50 || 0) + 2; stats.hsk = (stats.hsk || 0) + 2;
             G.h50 = stats.h50; G.hsk = stats.hsk;
         } }, // Sector 3 (270-360 deg)
@@ -23957,10 +23982,10 @@ function spinDailyWheel() {
 
     const centers = [45, 135, 225, 315];
     const targetSectorDeg = (360 - centers[prizeIndex]) % 360;
-    const randomOffset = (Math.random() * 30) - 15; // Random offset inside 30-deg safety cone
-    const totalDeg = (5 * 360) + targetSectorDeg + randomOffset;
+    const randomOffset = (Math.random() * 30) - 15;
     
-    wheel.style.transform = `rotate(${totalDeg}deg)`;
+    window._wheelRotation = (window._wheelRotation || 0) + (5 * 360) + targetSectorDeg + randomOffset;
+    wheel.style.transform = `rotate(${window._wheelRotation}deg)`;
 
     setTimeout(() => {
         prize.apply();
@@ -23972,9 +23997,22 @@ function spinDailyWheel() {
         updateStatsUI();
 
         alert(t.wheelWinAlert.replace('{prize}', prize.name));
-        document.getElementById('bonusSpinBtn').style.display = 'flex';
-        document.getElementById('spinWheelBtn').disabled = true;
-        document.getElementById('spinWheelBtn').style.opacity = '0.5';
+
+        if (newSpinCount < maxSpins) {
+            // Still has VIP spin left!
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            if (spinBtnText) spinBtnText.textContent = (t.wheelSpinAgain || 'КРУТИТЬ ЕЩЁ РАЗ') + ` (${maxSpins - newSpinCount})`;
+            if (statusText) statusText.textContent = t.wheelVipStatus.replace('{rem}', maxSpins - newSpinCount);
+            document.getElementById('bonusSpinBtn').style.display = 'none';
+        } else {
+            // All spins used for today
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            if (spinBtnText) spinBtnText.textContent = t.wheelSpinBtnText;
+            if (statusText) statusText.textContent = t.wheelLimitStatus.replace('{used}', newSpinCount).replace('{max}', maxSpins);
+            document.getElementById('bonusSpinBtn').style.display = 'flex';
+        }
     }, 3800);
 }
 
@@ -24146,7 +24184,7 @@ function executeBonusSpin() {
     const bonusPrizes = [
         { name: t.bonusPrizeH5, apply: () => { stats.h50 = (stats.h50 || 0) + 5; G.h50 = stats.h50; } }, // Sector 0 (0-90 deg)
         { name: t.bonusPrizeS4, apply: () => { stats.hsk = (stats.hsk || 0) + 4; G.hsk = stats.hsk; } }, // Sector 1 (90-180 deg)
-        { name: t.bonusPrizeH6 || t.bonusPrizeH5, apply: () => { stats.h50 = (stats.h50 || 0) + 6; G.h50 = stats.h50; } }, // Sector 2 (180-270 deg)
+        { name: t.bonusPrizeS6 || t.bonusPrizeS4, apply: () => { stats.hsk = (stats.hsk || 0) + 6; G.hsk = stats.hsk; } }, // Sector 2 (180-270 deg)
         { name: t.bonusPrizeCombo, apply: () => { 
             stats.h50 = (stats.h50 || 0) + 4; stats.hsk = (stats.hsk || 0) + 3;
             G.h50 = stats.h50; G.hsk = stats.hsk;
@@ -24159,9 +24197,10 @@ function executeBonusSpin() {
     const centers = [45, 135, 225, 315];
     const targetSectorDeg = (360 - centers[prizeIndex]) % 360;
     const randomOffset = (Math.random() * 30) - 15;
-    const totalDeg = (5 * 360) + targetSectorDeg + randomOffset;
+    
+    window._wheelRotation = (window._wheelRotation || 0) + (5 * 360) + targetSectorDeg + randomOffset;
+    wheel.style.transform = `rotate(${window._wheelRotation}deg)`;
 
-    wheel.style.transform = `rotate(${totalDeg}deg)`;
     setTimeout(() => {
         prize.apply();
         localStorage.setItem('sr_stats', JSON.stringify(stats));
