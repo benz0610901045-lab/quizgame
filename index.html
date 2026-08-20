@@ -566,6 +566,7 @@ const I18N = {
         refClose: "Закрыть",
         refCopiedToast: "✅ Реферальная ссылка скопирована!",
         refShareText: "🏎️ Гоняй со мной в Speed Quiz! Проверь авто-знания, крути рулетку и забирай кубок 🏆🏁\n\n🎁 Заходи по моей ссылке и забирай стартовый набор бонусов: +1 Спин рулетки, +2 Подсказки 50/50 и +2 Пропуска вопросов!\n👉 Играть:",
+        refRewardClaimedToast: "🎉 Твой друг присоединился по ссылке! Тебе начислено:\n✂️ +{h5} 50/50\n⏭️ +{hsk} Пропуска!",
         duelText: "⚔️ ДУЭЛЬ В SPEED QUIZ!\n\n🏎️ {name} бросает тебе вызов!\n⭐ Рекорд: {score} PTS\n\nСможешь обогнать и занять 1 место? 🏁🏆\n👉 Играть: {url}",
         refWelcomeToast: "🎁 Добро пожаловать! Тебе начислен стартовый набор бонусов:\n🎡 +1 Спин рулетки\n✂️ +2 Подсказки 50/50\n⏭️ +2 Пропуска вопросов!",
         hintAdded50: "🎉 +5 Подсказок 50/50 успешно добавлены в твой профиль!",
@@ -636,6 +637,7 @@ const I18N = {
         refClose: "Close",
         refCopiedToast: "✅ Invite link copied to clipboard!",
         refShareText: "🏎️ Race with me in Speed Quiz! Test your car knowledge, spin the wheel & win trophies 🏆🏁\n\n🎁 Join via my link and claim your starter booster pack: +1 Lucky Spin, +2 50/50 Hints and +2 Question Skips!\n👉 Play:",
+        refRewardClaimedToast: "🎉 A friend joined using your link! You received:\n✂️ +{h5} 50/50 Hints\n⏭️ +{hsk} Question Skips!",
         duelText: "⚔️ SPEED QUIZ DUEL!\n\n🏎️ {name} challenges you to a race!\n⭐ Record: {score} PTS\n\nCan you beat this score and take 1st place? 🏁🏆\n👉 Play: {url}",
         refWelcomeToast: "🎁 Welcome! You received a starter bonus pack:\n🎡 +1 Lucky Spin\n✂️ +2 50/50 Hints\n⏭️ +2 Question Skips!",
         hintAdded50: "🎉 +5 50/50 Hints added to your profile!",
@@ -696,6 +698,7 @@ const I18N = {
         refClose: "Schließen",
         refCopiedToast: "✅ Einladungslink in die Zwischenablage kopiert!",
         refShareText: "🏎️ Fahre mit mir in Speed Quiz! Teste dein Autowissen, drehe das Glücksrad und gewinne Pokale 🏆🏁\n\n🎁 Nutze meinen Link für ein Starter-Bonuspaket: +1 Gratisdreh, +2 50/50 Joker und +2 Fragen-Sprünge!\n👉 Spielen:",
+        refRewardClaimedToast: "🎉 Ein Freund ist über deinen Link beigetreten! Du hast erhalten:\n✂️ +{h5} 50/50 Joker\n⏭️ +{hsk} Fragen-Sprünge!",
         duelText: "⚔️ DUELL IN SPEED QUIZ!\n\n🏎️ {name} fordert dich zum Rennen heraus!\n⭐ Rekord: {score} PTS\n\nKannst du diese Punktzahl schlagen und Platz 1 holen? 🏁🏆\n👉 Spielen: {url}",
         refWelcomeToast: "🎁 Willkommen! Du hast ein Starter-Bonuspaket erhalten:\n🎡 +1 Gratisdreh\n✂️ +2 50/50 Joker\n⏭️ +2 Fragen-Sprünge!",
         hintAdded50: "🎉 +5 50/50 Hinweise wurden deinem Profil hinzugefügt!",
@@ -756,6 +759,7 @@ const I18N = {
         refClose: "Cerrar",
         refCopiedToast: "✅ ¡Enlace de invitación copiado al portapapeles!",
         refShareText: "🏎️ ¡Compite conmigo en Speed Quiz! Pon a prueba tus conocimientos sobre coches, gira la ruleta y gana trofeos 🏆🏁\n\n🎁 Únete con mi enlace para recibir tu pack de bienvenida: +1 Giro de ruleta, +2 Comodines 50/50 y +2 Saltos de preguntas!\n👉 Jugar:",
+        refRewardClaimedToast: "🎉 ¡Un amigo se unió con tu enlace! Has recibido:\n✂️ +{h5} Pistas 50/50\n⏭️ +{hsk} Saltos de pregunta!",
         duelText: "⚔️ ¡DUELO EN SPEED QUIZ!\n\n🏎️ ¡{name} te desafía a una carrera!\n⭐ Récord: {score} PTS\n\n¿Puedes superar esta puntuación y llevarte el 1.er lugar? 🏁🏆\n👉 Jugar: {url}",
         refWelcomeToast: "🎁 ¡Bienvenido! Recibiste tu pack de bienvenida:\n🎡 +1 Giro de ruleta\n✂️ +2 Comodines 50/50\n⏭️ +2 Saltos de preguntas!",
         hintAdded50: "🎉 ¡+5 Pistas 50/50 añadidas a tu perfil!",
@@ -23899,17 +23903,38 @@ function shareReferralLink() {
 
 async function syncReferralStats() {
     const player = getPlayerInfo();
-    if (!player.id) return;
+    if (!player.id || player.id === 'guest') return;
     try {
         const res = await fetch(`${PAYMENT_WORKER_URL}/referral/stats?userId=${player.id}`);
         if (res.ok) {
             const data = await res.json();
             if (data.ok) {
+                const totalRewards = data.refRewards || 0;
+                const claimed = stats.claimedRefRewards || 0;
+                
                 stats.refCount = data.refCount || stats.refCount || 0;
-                stats.refRewards = data.refRewards || stats.refRewards || 0;
-                localStorage.setItem('sr_stats', JSON.stringify(stats));
-                document.getElementById('refCountNum').textContent = stats.refCount;
-                document.getElementById('refBonusNum').textContent = stats.refRewards;
+                stats.refRewards = totalRewards;
+
+                // Credit new referral rewards if friends joined
+                if (totalRewards > claimed) {
+                    const newFriends = totalRewards - claimed;
+                    stats.h50 = (stats.h50 || 0) + (newFriends * 2);
+                    stats.hsk = (stats.hsk || 0) + (newFriends * 2);
+                    stats.claimedRefRewards = totalRewards;
+                    localStorage.setItem('sr_stats', JSON.stringify(stats));
+                    updateStatsUI();
+
+                    const t = I18N[currentLang] || I18N.ru;
+                    const notifText = (t.refRewardClaimedToast || "🎉 Твой друг присоединился по ссылке! Тебе начислено:\n✂️ +{h5} 50/50\n⏭️ +{hsk} Пропуска!")
+                        .replace('{h5}', newFriends * 2)
+                        .replace('{hsk}', newFriends * 2);
+                    alert(notifText);
+                } else {
+                    localStorage.setItem('sr_stats', JSON.stringify(stats));
+                }
+
+                if (document.getElementById('refCountNum')) document.getElementById('refCountNum').textContent = stats.refCount;
+                if (document.getElementById('refBonusNum')) document.getElementById('refBonusNum').textContent = stats.refRewards;
             }
         }
     } catch (e) {
@@ -23921,43 +23946,32 @@ async function checkReferralIncoming() {
     const startParam = tg?.initDataUnsafe?.start_param || '';
     if (startParam.startsWith('ref_')) {
         const referrerId = startParam.replace('ref_', '');
-        const currentUserId = getPlayerInfo().id;
+        const player = getPlayerInfo();
+        const currentUserId = player.id;
         const t = I18N[currentLang] || I18N.ru;
         
         if (referrerId && referrerId !== currentUserId && !localStorage.getItem('sr_welcomed_ref')) {
             localStorage.setItem('sr_welcomed_ref', referrerId);
             
-            // Give welcome starter bonus pack
+            // Give welcome starter bonus pack to the new player
             stats.h50 = (stats.h50 || 0) + 2;
             stats.hsk = (stats.hsk || 0) + 2;
-            G.h50 = stats.h50;
-            G.hsk = stats.hsk;
             localStorage.setItem('sr_stats', JSON.stringify(stats));
             updateStatsUI();
 
-            alert(t.refWelcomeToast || "🎁 Добро пожаловать! Тебе начислен стартовый набор бонусов:\n🎡 +1 Спин рулетки\n✂️ +2 Подсказки 50/50\n⏭️ +2 Пропуска вопросов!");
+            alert(t.refWelcomeToast || "🎁 Добро пожаловать! Тебе начислен стартовый набор бонусов:\n✂️ +2 Подсказки 50/50\n⏭️ +2 Пропуска вопросов!");
 
             // Notify server to award referrer
             try {
-                const res = await fetch(`${PAYMENT_WORKER_URL}/referral/record`, {
+                await fetch(`${PAYMENT_WORKER_URL}/referral/record`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         referrerId: referrerId,
                         newUserId: currentUserId,
-                        newUserName: getPlayerInfo().name
+                        newUserName: player.name
                     })
                 });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.ok && data.stats) {
-                        stats.refCount = data.stats.count;
-                        stats.refRewards = data.stats.rewards;
-                        localStorage.setItem('sr_stats', JSON.stringify(stats));
-                        if (document.getElementById('refCountNum')) document.getElementById('refCountNum').textContent = stats.refCount;
-                        if (document.getElementById('refBonusNum')) document.getElementById('refBonusNum').textContent = stats.refRewards;
-                    }
-                }
             } catch (e) {
                 console.warn('Record referral error:', e);
             }
@@ -24488,6 +24502,8 @@ function show(id) {
 isVip = checkIsVip();
 setLang(currentLang);
 renderVipSection();
+checkReferralIncoming();
+syncReferralStats();
 </script>
 </body>
 </html>
